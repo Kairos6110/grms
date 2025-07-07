@@ -22,7 +22,7 @@
             background-color: var(--dark-bg);
             color: var(--light-text);
             margin: 0;
-            padding: 0; /* Removed padding to allow full width */
+            padding: 0;
             line-height: 1.6;
             display: flex;
             flex-direction: column;
@@ -32,14 +32,14 @@
         }
 
         .container {
-            width: 100%; /* Take full width */
-            max-width: none; /* Remove max-width constraint */
+            width: 100%;
+            max-width: none;
             background-color: var(--medium-dark-bg);
             padding: 20px;
-            border-radius: 0; /* Remove border-radius for full width */
+            border-radius: 0;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             box-sizing: border-box;
-            border: none; /* Removed border */
+            border: none;
             text-align: center;
             margin-bottom: 20px;
         }
@@ -90,19 +90,18 @@
             transform: translateY(0);
         }
 
-        /* Styles for the iframe container */
         .iframe-container {
-            width: 100%; /* Take full width */
-            max-width: none; /* Remove max-width constraint */
+            width: 100%;
+            max-width: none;
             background-color: var(--medium-dark-bg);
-            border-radius: 0; /* Remove border-radius */
+            border-radius: 0;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            border: none; /* Removed border */
+            border: none;
             overflow: hidden;
             display: none;
             position: relative;
-            height: calc(100vh - 60px); /* Calculate height to fill remaining viewport, assuming 60px for menu/header */
-            margin-top: 0; /* Ensure no margin at the top */
+            height: calc(100vh - 60px);
+            margin-top: 0;
         }
 
         .iframe-container.active {
@@ -118,23 +117,13 @@
 
         .iframe-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end; /* Align to end for only close button */
             align-items: center;
             padding: 10px 15px;
             background-color: var(--dark-bg);
             border-bottom: 1px solid var(--border-color);
             color: var(--light-text);
             font-family: var(--header-font);
-        }
-
-        .iframe-title {
-            font-size: 1.1em;
-            flex-grow: 1;
-            text-align: left;
-            margin-right: 10px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .close-button {
@@ -152,6 +141,7 @@
             justify-content: center;
             align-items: center;
             flex-shrink: 0;
+            margin: 0 auto; /* Center the X button */
         }
 
         .close-button:hover {
@@ -175,7 +165,7 @@
             }
 
             .iframe-container {
-                height: calc(100vh - 50px); /* Adjust height for smaller screens, assuming 50px for menu/header */
+                height: calc(100vh - 50px);
             }
         }
 
@@ -194,13 +184,10 @@
             }
 
             .iframe-container {
-                height: calc(100vh - 40px); /* Further adjust height for very small screens, assuming 40px for menu/header */
+                height: calc(100vh - 40px);
             }
             .iframe-header {
                 padding: 8px 10px;
-            }
-            .iframe-title {
-                font-size: 1em;
             }
             .close-button {
                 width: 25px;
@@ -214,19 +201,18 @@
     <div class="container">
         <h1>Ghost Recon MILSIM Tools</h1>
         <ul class="link-list">
-            <li><a href="Callsigns.html" data-title="Callsigns List">Callsigns list</a></li>
-            <li><a href="OperationsArchive/opords.html" data-title="Breakpoint Operations Vault">Breakpoint Operations Vault</a></li>
-            <li><a href="BpOpGenerator.html" data-title="Breakpoint Operation Generator">Breakpoint Operation Generator</a></li>
-            <li><a href="WlOpGenerator.html" data-title="Wildlands Operation Generator">Wildlands Operation Generator</a></li>
-            <li><a href="soundboard.html" data-title="Soundboard for Roleplay">Soundboard for roleplay</a></li>
-            <li><a href="TacGuide.html" data-title="Tier 1 Tactical Guide">Tier 1 Tactical Guide</a></li>
-            <li><a href="teamleadtips.html" data-title="Team Lead Tips">Team Lead Tips</a></li>
+            <li><a href="javascript:void(0);" data-href="Callsigns.html">Callsigns list</a></li>
+            <li><a href="javascript:void(0);" data-href="OperationsArchive/opords.html">Breakpoint Operations Vault</a></li>
+            <li><a href="javascript:void(0);" data-href="BpOpGenerator.html">Breakpoint Operation Generator</a></li>
+            <li><a href="javascript:void(0);" data-href="WlOpGenerator.html">Wildlands Operation Generator</a></li>
+            <li><a href="javascript:void(0);" data-href="soundboard.html">Soundboard for roleplay</a></li>
+            <li><a href="javascript:void(0);" data-href="TacGuide.html">Tier 1 Tactical Guide</a></li>
+            <li><a href="javascript:void(0);" data-href="teamleadtips.html">Team Lead Tips</a></li>
         </ul>
     </div>
 
     <div class="iframe-container" id="contentIframeContainer">
         <div class="iframe-header">
-            <span class="iframe-title" id="iframeTitle"></span>
             <button class="close-button" id="closeIframeButton">&times;</button>
         </div>
         <iframe id="contentIframe" src="" title="Content Display Area"></iframe>
@@ -237,33 +223,68 @@
             const links = document.querySelectorAll('.link-list a');
             const iframeContainer = document.getElementById('contentIframeContainer');
             const contentIframe = document.getElementById('contentIframe');
-            const iframeTitle = document.getElementById('iframeTitle');
             const closeButton = document.getElementById('closeIframeButton');
 
+            function loadAndDisplayIframeContent(url, pushHistory = true) {
+                // Add cache-busting parameter
+                const timestamp = new Date().getTime();
+                const cacheBustedUrl = url.includes('?') ? `${url}&_=${timestamp}` : `${url}?_=${timestamp}`;
+
+                contentIframe.src = cacheBustedUrl;
+                iframeContainer.classList.add('active');
+                iframeContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                if (pushHistory) {
+                    const newUrl = `${window.location.pathname}?page=${encodeURIComponent(url)}`;
+                    history.pushState({ iframeUrl: url }, '', newUrl);
+                }
+            }
+
+            // --- Event Listeners ---
+
+            // Handle clicks on navigation links
             links.forEach(link => {
                 link.addEventListener('click', function(event) {
                     event.preventDefault(); // Prevent default link behavior
-                    let url = this.getAttribute('href');
-                    const title = this.getAttribute('data-title') || this.textContent; // Get title from data-title or link text
-
-                    // Append a cache-busting timestamp to the URL
-                    const timestamp = new Date().getTime();
-                    url = url.includes('?') ? `${url}&_=${timestamp}` : `${url}?_=${timestamp}`;
-
-                    contentIframe.src = url;
-                    iframeTitle.textContent = title; // Set the title for the iframe header
-                    iframeContainer.classList.add('active'); // Show the iframe container
-
-                    // Scroll to the iframe container, especially useful on mobile
-                    iframeContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const url = this.getAttribute('data-href'); // Get from data-href
+                    loadAndDisplayIframeContent(url, true); // Push new state to history
                 });
             });
 
+            // Handle close button click
             closeButton.addEventListener('click', function() {
                 contentIframe.src = 'about:blank'; // Clear the iframe content
                 iframeContainer.classList.remove('active'); // Hide the iframe container
-                iframeTitle.textContent = ''; // Clear the title
+
+                // Update history to reflect no iframe content (back to base URL without ?page param)
+                history.pushState({}, document.title, window.location.pathname);
             });
+
+            // --- Handle Browser Back/Forward Buttons (popstate) ---
+            window.addEventListener('popstate', function(event) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const pageUrl = urlParams.get('page'); // Get the 'page' parameter from the URL
+
+                if (pageUrl) {
+                    loadAndDisplayIframeContent(pageUrl, false); // Do not push history again
+                } else {
+                    // No 'page' parameter, means we've navigated back to the main page state
+                    contentIframe.src = 'about:blank';
+                    iframeContainer.classList.remove('active');
+                }
+            });
+
+            // --- Initial Page Load / Refresh Handling ---
+            // Check if there's a 'page' query parameter when the page first loads
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialPageUrl = urlParams.get('page');
+
+            if (initialPageUrl) {
+                // We use replaceState to ensure the initial URL with the ?page parameter
+                // is correctly captured in history without creating a duplicate entry
+                history.replaceState({ iframeUrl: initialPageUrl }, '', `${window.location.pathname}?page=${encodeURIComponent(initialPageUrl)}`);
+                loadAndDisplayIframeContent(initialPageUrl, false); // Don't push history again
+            }
         });
     </script>
 </body>
