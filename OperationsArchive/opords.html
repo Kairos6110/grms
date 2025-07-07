@@ -44,7 +44,7 @@
 <script>
     function pickRandomOperation() {
         // Get all valid links excluding those with 'discord' in the href and using relative paths
-        const links = Array.from(document.querySelectorAll('a[href]')).filter(link => !link.href.includes('discord') && !link.href.startsWith('http'));
+        const links = Array.from(document.querySelectorAll('div > a[href]')).filter(link => !link.href.includes('discord') && !link.href.startsWith('http'));
 
         // Proceed only if there are valid links
         if (links.length > 0) {
@@ -304,6 +304,6 @@ const urls = [
 </div>
 
 <hr>
-<p style="font-size: 0.7em">*All content is entirely fictional and created for Ghost Recon Breakpoint milsim roleplay, intended solely for gaming entertainment purposes.These were written by Kairos of JSOC Ghost Division for players to enjoy.</p>
+<p style="font-size: 0.7em">*All content is entirely fictional roleplay and created for Ghost Recon Breakpoint milsim roleplay, intended solely for gaming entertainment purposes.These were written by Kairos of JSOC Ghost Division for players to enjoy.</p>
 </body>
 </html>
