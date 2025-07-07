@@ -137,6 +137,8 @@
             text-overflow: ellipsis;
         }
 
+        
+
         .close-button {
             background: var(--accent-green);
             color: var(--dark-bg);
@@ -248,7 +250,7 @@
                     const title = this.getAttribute('data-title') || this.textContent; // Get title from data-title or link text
 
                     contentIframe.src = url;
-                    iframeTitle.textContent = title;
+                    iframeTitle.textContent = ' ';
                     iframeContainer.classList.add('active'); // Show the iframe container
 
                     // Scroll to the iframe container, especially useful on mobile
