@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/png" href="patch.png">
+    <link rel="icon" type="image/png" href="patch.png">
     <title>Ghost Recon MILSIM Tools </title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Oswald:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -137,8 +137,6 @@
             text-overflow: ellipsis;
         }
 
-        
-
         .close-button {
             background: var(--accent-green);
             color: var(--dark-bg);
@@ -216,8 +214,7 @@
     <div class="container">
         <h1>Ghost Recon MILSIM Tools</h1>
         <ul class="link-list">
-                        <li><a href="Callsigns.html" data-title="Callsigns List">Callsigns list</a></li>
-
+            <li><a href="Callsigns.html" data-title="Callsigns List">Callsigns list</a></li>
             <li><a href="OperationsArchive/opords.html" data-title="Breakpoint Operations Vault">Breakpoint Operations Vault</a></li>
             <li><a href="BpOpGenerator.html" data-title="Breakpoint Operation Generator">Breakpoint Operation Generator</a></li>
             <li><a href="WlOpGenerator.html" data-title="Wildlands Operation Generator">Wildlands Operation Generator</a></li>
@@ -246,11 +243,15 @@
             links.forEach(link => {
                 link.addEventListener('click', function(event) {
                     event.preventDefault(); // Prevent default link behavior
-                    const url = this.getAttribute('href');
+                    let url = this.getAttribute('href');
                     const title = this.getAttribute('data-title') || this.textContent; // Get title from data-title or link text
 
+                    // Append a cache-busting timestamp to the URL
+                    const timestamp = new Date().getTime();
+                    url = url.includes('?') ? `${url}&_=${timestamp}` : `${url}?_=${timestamp}`;
+
                     contentIframe.src = url;
-                    iframeTitle.textContent = ' ';
+                    iframeTitle.textContent = title; // Set the title for the iframe header
                     iframeContainer.classList.add('active'); // Show the iframe container
 
                     // Scroll to the iframe container, especially useful on mobile
