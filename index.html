@@ -66,10 +66,10 @@
         }
 
         .link-list a {
-            display: inline-flex; /* Changed to inline-flex */
-            align-items: center; /* Align items vertically in the middle */
-            justify-content: center; /* Center content horizontally */
-            gap: 10px; /* Space between emoji and text */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             padding: 12px 25px;
             background-color: var(--accent-green);
             color: var(--dark-bg);
@@ -93,9 +93,9 @@
             transform: translateY(0);
         }
 
-        .link-list a .emoji { /* Style for emojis */
-            font-size: 1.2em; /* Make emoji slightly larger or same size as text */
-            line-height: 1; /* Ensure proper vertical alignment */
+        .link-list a .emoji {
+            font-size: 1.2em;
+            line-height: 1;
         }
 
         .iframe-container {
@@ -125,7 +125,7 @@
 
         .iframe-header {
             display: flex;
-            justify-content: flex-end; /* Align to end for only close button */
+            justify-content: flex-end;
             align-items: center;
             padding: 10px 15px;
             background-color: var(--dark-bg);
@@ -149,7 +149,7 @@
             justify-content: center;
             align-items: center;
             flex-shrink: 0;
-            margin: 0 auto; /* Center the X button */
+            margin: 0 auto;
         }
 
         .close-button:hover {
@@ -209,13 +209,13 @@
     <div class="container">
         <h1>Ghost Recon MILSIM Tools</h1>
         <ul class="link-list">
-            <li><a href="javascript:void(0);" data-href="Callsigns.html"><span class="emoji">🏷️</span> Callsigns list</a></li>
-            <li><a href="javascript:void(0);" data-href="OperationsArchive/opords.html"><span class="emoji">🗄️</span> Breakpoint Operations Vault</a></li>
-            <li><a href="javascript:void(0);" data-href="BpOpGenerator.html"><span class="emoji">📝</span> Breakpoint Operation Generator</a></li>
-            <li><a href="javascript:void(0);" data-href="WlOpGenerator.html"><span class="emoji">✍️</span> Wildlands Operation Generator</a></li>
-            <li><a href="javascript:void(0);" data-href="soundboard.html"><span class="emoji">🔊</span> Soundboard for roleplay</a></li>
-            <li><a href="javascript:void(0);" data-href="TacGuide.html"><span class="emoji">📖</span> Tier 1 Tactical Guide</a></li>
-            <li><a href="javascript:void(0);" data-href="teamleadtips.html"><span class="emoji">💡</span> Team Lead Tips</a></li>
+            <li><a href="Callsigns.html" data-href="Callsigns.html" target="_blank"><span class="emoji">🏷️</span> Callsigns list</a></li>
+            <li><a href="OperationsArchive/opords.html" data-href="OperationsArchive/opords.html" target="_blank"><span class="emoji">🗄️</span> Breakpoint Operations Vault</a></li>
+            <li><a href="BpOpGenerator.html" data-href="BpOpGenerator.html" target="_blank"><span class="emoji">📝</span> Breakpoint Operation Generator</a></li>
+            <li><a href="WlOpGenerator.html" data-href="WlOpGenerator.html" target="_blank"><span class="emoji">✍️</span> Wildlands Operation Generator</a></li>
+            <li><a href="soundboard.html" data-href="soundboard.html" target="_blank"><span class="emoji">🔊</span> Soundboard for roleplay</a></li>
+            <li><a href="TacGuide.html" data-href="TacGuide.html" target="_blank"><span class="emoji">📖</span> Tier 1 Tactical Guide</a></li>
+            <li><a href="teamleadtips.html" data-href="teamleadtips.html" target="_blank"><span class="emoji">💡</span> Team Lead Tips</a></li>
         </ul>
     </div>
 
@@ -253,9 +253,14 @@
             // Handle clicks on navigation links
             links.forEach(link => {
                 link.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent default link behavior
-                    const url = this.getAttribute('data-href'); // Get from data-href
-                    loadAndDisplayIframeContent(url, true); // Push new state to history
+                    // Only prevent default if not a middle-click or Ctrl/Cmd-click (which usually open in new tab)
+                    if (!(event.button === 1 || event.ctrlKey || event.metaKey)) {
+                        event.preventDefault(); // Prevent default link behavior
+                        const url = this.getAttribute('data-href'); // Get from data-href
+                        loadAndDisplayIframeContent(url, true); // Push new state to history
+                    }
+                    // For right-click or long-press, the browser's default context menu will appear,
+                    // allowing "Open in new tab" if the href is set.
                 });
             });
 
