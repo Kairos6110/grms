@@ -66,7 +66,10 @@
         }
 
         .link-list a {
-            display: inline-block;
+            display: inline-flex; /* Changed to inline-flex */
+            align-items: center; /* Align items vertically in the middle */
+            justify-content: center; /* Center content horizontally */
+            gap: 10px; /* Space between emoji and text */
             padding: 12px 25px;
             background-color: var(--accent-green);
             color: var(--dark-bg);
@@ -88,6 +91,11 @@
         .link-list a:active {
             background-color: #3e8e41;
             transform: translateY(0);
+        }
+
+        .link-list a .emoji { /* Style for emojis */
+            font-size: 1.2em; /* Make emoji slightly larger or same size as text */
+            line-height: 1; /* Ensure proper vertical alignment */
         }
 
         .iframe-container {
@@ -201,13 +209,13 @@
     <div class="container">
         <h1>Ghost Recon MILSIM Tools</h1>
         <ul class="link-list">
-            <li><a href="javascript:void(0);" data-href="Callsigns.html">Callsigns list</a></li>
-            <li><a href="javascript:void(0);" data-href="OperationsArchive/opords.html">Breakpoint Operations Vault</a></li>
-            <li><a href="javascript:void(0);" data-href="BpOpGenerator.html">Breakpoint Operation Generator</a></li>
-            <li><a href="javascript:void(0);" data-href="WlOpGenerator.html">Wildlands Operation Generator</a></li>
-            <li><a href="javascript:void(0);" data-href="soundboard.html">Soundboard for roleplay</a></li>
-            <li><a href="javascript:void(0);" data-href="TacGuide.html">Tier 1 Tactical Guide</a></li>
-            <li><a href="javascript:void(0);" data-href="teamleadtips.html">Team Lead Tips</a></li>
+            <li><a href="javascript:void(0);" data-href="Callsigns.html"><span class="emoji">🏷️</span> Callsigns list</a></li>
+            <li><a href="javascript:void(0);" data-href="OperationsArchive/opords.html"><span class="emoji">🗄️</span> Breakpoint Operations Vault</a></li>
+            <li><a href="javascript:void(0);" data-href="BpOpGenerator.html"><span class="emoji">📝</span> Breakpoint Operation Generator</a></li>
+            <li><a href="javascript:void(0);" data-href="WlOpGenerator.html"><span class="emoji">✍️</span> Wildlands Operation Generator</a></li>
+            <li><a href="javascript:void(0);" data-href="soundboard.html"><span class="emoji">🔊</span> Soundboard for roleplay</a></li>
+            <li><a href="javascript:void(0);" data-href="TacGuide.html"><span class="emoji">📖</span> Tier 1 Tactical Guide</a></li>
+            <li><a href="javascript:void(0);" data-href="teamleadtips.html"><span class="emoji">💡</span> Team Lead Tips</a></li>
         </ul>
     </div>
 
