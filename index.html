@@ -15,6 +15,7 @@
             --border-color: #444;
             --header-font: 'Oswald', sans-serif;
             --body-font: 'Roboto Mono', monospace;
+            --light-grey-line: #555; /* New variable for the light gray line */
         }
 
         body {
@@ -70,25 +71,29 @@
             justify-content: center;
             gap: 10px;
             padding: 12px 25px;
-            background-color: var(--accent-green);
-            color: var(--dark-bg);
+            background-color: #000000; /* Changed button background to black */
+            color: var(--accent-green);
             text-decoration: none;
             border-radius: 5px;
-            font-family: var(--header-font);
+            font-family: var(--body-font); /* Changed font-family to var(--body-font) (Roboto Mono) */
             font-size: 1.2em;
             text-transform: uppercase;
+            font-weight: bold;
             letter-spacing: 1px;
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
         }
 
         .link-list a:hover {
-            background-color: #5cb85c;
+            background-color: #333333; /* Darker grey on hover */
+            border-color: var(--accent-green);
             transform: translateY(-2px);
         }
 
         .link-list a:active {
-            background-color: #3e8e41;
+            background-color: var(--accent-green);
+            color: var(--dark-bg);
             transform: translateY(0);
         }
 
@@ -108,6 +113,8 @@
             position: relative;
             height: calc(100vh - 60px);
             margin-top: 0;
+            /* Added top border for the light gray line */
+            border-top: 1px solid var(--light-grey-line);
         }
 
         .iframe-container.active {
@@ -147,7 +154,7 @@
             justify-content: center;
             align-items: center;
             flex-shrink: 0;
-             margin: -10px auto 0 auto; /* Adjusted here */
+            margin: 0 auto 0 auto; /* Adjusted here */
         }
 
         .close-button:hover {
@@ -208,7 +215,7 @@
         <img src="title.png" alt="Ghost Recon Tactical Operations Center" class="title-image">
         <ul class="link-list">
             <li><a href="OperationsArchive/opords.html" data-href="OperationsArchive/opords.html" target="_blank"><span class="emoji">🗃️</span> Breakpoint Operations Vault</a></li>
-                        <li><a href="Callsigns.html" data-href="Callsigns.html" target="_blank"><span class="emoji">🏷️</span> Callsigns for Operators/Comms</a></li>
+            <li><a href="Callsigns.html" data-href="Callsigns.html" target="_blank"><span class="emoji">🏷️</span> Callsigns for Operators/Comms</a></li>
 
             <li><a href="BpOpGenerator.html" data-href="BpOpGenerator.html" target="_blank"><span class="emoji">📝</span> Breakpoint Operation Generator</a></li>
             <li><a href="WlOpGenerator.html" data-href="WlOpGenerator.html" target="_blank"><span class="emoji">✍️</span> Wildlands Operation Generator</a></li>
