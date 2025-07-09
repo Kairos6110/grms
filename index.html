@@ -11,7 +11,9 @@
             --dark-bg: #1a1a1a;
             --medium-dark-bg: #2a2a2a;
             --light-text: #e0e0e0;
-            --accent-green: #4CAF50;
+            --accent-off-white: #e6e6e6; /* Changed from accent-green to accent-off-white */
+            --accent-off-white-hover: #ffffff; /* Slightly lighter for hover effect */
+            --accent-off-white-active: #cccccc; /* Slightly darker for active effect */
             --border-color: #444;
             --header-font: 'Oswald', sans-serif;
             --body-font: 'Roboto Mono', monospace;
@@ -44,15 +46,15 @@
             margin-bottom: 20px;
         }
 
-        h1 {
-            font-family: var(--header-font);
-            color: var(--accent-green);
-            font-size: 2.5em;
-            margin-top: 0;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        /* Styling for the title image */
+        .title-image {
+            width: 100%; /* Default to 100% width for mobile-first approach */
+            max-width: 500px; /* Limits the image to a maximum of 500px */
+            height: auto; /* Maintains aspect ratio */
+            display: block; /* Removes extra space below the image */
+            margin: 0 auto 15px auto; /* Centers the image and adds bottom margin */
+            padding-bottom: 15px; /* Matches the padding of the original h1 */
+            border-bottom: 2px solid var(--accent-off-white); /* Matches the border of the original h1 */
         }
 
         .link-list {
@@ -71,8 +73,8 @@
             justify-content: center;
             gap: 10px;
             padding: 12px 25px;
-            background-color: var(--accent-green);
-            color: var(--dark-bg);
+            background-color: var(--accent-off-white); /* Changed to off-white */
+            color: var(--dark-bg); /* Text color remains dark for contrast */
             text-decoration: none;
             border-radius: 5px;
             font-family: var(--header-font);
@@ -84,12 +86,12 @@
         }
 
         .link-list a:hover {
-            background-color: #5cb85c;
+            background-color: var(--accent-off-white-hover); /* Changed hover color */
             transform: translateY(-2px);
         }
 
         .link-list a:active {
-            background-color: #3e8e41;
+            background-color: var(--accent-off-white-active); /* Changed active color */
             transform: translateY(0);
         }
 
@@ -135,13 +137,13 @@
         }
 
         .close-button {
-            background: var(--accent-green);
-            color: var(--dark-bg);
+            background: var(--accent-off-white); /* Changed to off-white */
+            color: var(--dark-bg); /* Text color remains dark for contrast */
             border: none;
             border-radius: 50%;
-            width: 30px;            /* Increased size */
-            height: 30px;           /* Increased size */
-            font-size: 2em;           /* Enlarged the "X" symbol */
+            width: 30px;
+            height: 30px;
+            font-size: 2em;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
@@ -153,14 +155,14 @@
         }
 
         .close-button:hover {
-            background-color: #5cb85c;
+            background-color: var(--accent-off-white-hover); /* Changed hover color */
             transform: scale(1.1);
         }
 
         /* Media queries for responsiveness */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
+            .title-image {
+                padding-bottom: 10px; /* Adjust padding for smaller screens */
             }
 
             .link-list a {
@@ -182,8 +184,8 @@
                 padding: 10px;
             }
 
-            h1 {
-                font-size: 1.8em;
+            .title-image {
+                padding-bottom: 8px; /* Further adjust padding for very small screens */
             }
 
             .link-list a {
@@ -198,19 +200,20 @@
                 padding: 8px 10px;
             }
             .close-button {
-                width: 30px;            /* Increased size */
-                height: 30px;           /* Increased size */
-                font-size: 2em;           /* Enlarged the "X" symbol */
+                width: 30px;
+                height: 30px;
+                font-size: 2em;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Ghost Recon Tactical Operations Center</h1>
+        <img src="title.png" alt="Ghost Recon Tactical Operations Center" class="title-image">
         <ul class="link-list">
-            <li><a href="Callsigns.html" data-href="Callsigns.html" target="_blank"><span class="emoji">🏷️</span> Callsigns list</a></li>
+
             <li><a href="OperationsArchive/opords.html" data-href="OperationsArchive/opords.html" target="_blank"><span class="emoji">🗄️</span> Breakpoint Operations Vault</a></li>
+                        <li><a href="Callsigns.html" data-href="Callsigns.html" target="_blank"><span class="emoji">🏷️</span> Callsigns for operators/comms</a></li>
             <li><a href="BpOpGenerator.html" data-href="BpOpGenerator.html" target="_blank"><span class="emoji">📝</span> Breakpoint Operation Generator</a></li>
             <li><a href="WlOpGenerator.html" data-href="WlOpGenerator.html" target="_blank"><span class="emoji">✍️</span> Wildlands Operation Generator</a></li>
             <li><a href="soundboard.html" data-href="soundboard.html" target="_blank"><span class="emoji">🔊</span> Soundboard for roleplay</a></li>
