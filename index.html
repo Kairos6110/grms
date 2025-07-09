@@ -269,6 +269,9 @@
                 contentIframe.src = 'about:blank'; // Clear the iframe content
                 iframeContainer.classList.remove('active'); // Hide the iframe container
 
+                // Scroll to the top of the page
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
                 // Update history to reflect no iframe content (back to base URL without ?page param)
                 history.pushState({}, document.title, window.location.pathname);
             });
@@ -284,6 +287,8 @@
                     // No 'page' parameter, means we've navigated back to the main page state
                     contentIframe.src = 'about:blank';
                     iframeContainer.classList.remove('active');
+                    // Scroll to top when iframe is closed via back button as well
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
 
