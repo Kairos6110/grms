@@ -11,10 +11,16 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            
+            /* Removed flexbox properties from body to allow the image to be at the very top */
+        }
+
+        .header-image {
+            display: block; /* Ensures the image takes up its own block space */
+            margin: 0 auto; /* Centers the image horizontally */
+            width: 380px; /* Sets the width of the image */
+            max-width: 100%;
+            /* height: auto; /* Maintains aspect ratio */
+            /* You can also use max-width: 100%; to make it responsive */
         }
 
         p {
@@ -23,10 +29,11 @@
     </style>
 </head>
 <body>
-<center>
-    <p>
-
-	General short callsign list:
+    <br>
+    <img src="cstitle.png" alt="Title Image" class="header-image">
+    <center>
+        <p>
+            General short callsign list:
 	<br><br>
 	Avalanche, Avatar, Archer, Anima, Barracuda, Banshee, Blackout, Blitz, Blizzard, Bolt, Bulldog, Butcher, Carnival, Castle, Charger, Cobra, Comet, Crimson, Crow, Crusader, Dagger, Darkstar, Disciple, Dragon, Eagle, Eclipse, Enigma, Erebus, Excalibur, Falcon, Firestorm, Fox, Frost, Fury, Gamma, Goliath, Gladiator, Ghost, Griffin, Grinch, Guardian, Harrier, Havoc, Hazard, Hellhound, Helios, Horus, Hydra, Hunter, Hurricane, Hammer, Inferno, Ironhide, Ironclad, Ivory, Jaguar, Jackal, Juggernaut, Kodiak, Kestrel, Knight, Kuma, Lancer, Lightning, Lynx, Magician, Mamba, Maverick, Marauder, Mirage, Mongoose, Mustang, Nebula, Nemesis, Nighthawk, Nightshade, Neptune, Nova, Obsidian, Omega, Onyx, Oracle, Orion, Oxide, Outlaw, Panther, Paladin, Phantom, Phoenix, Puma, Pyro, Poseidon, Quaker, Raptor, Razor, Razorback, Reaper, Renegade, Riptide, Ronin, Rubedo, Saber, Sapphire, Sandman, Sandstorm, Scaler, Scorpion, Shadow, Solo, Spectre, Spitfire, Stalker, Stormrider, Striker, Talon, Tempest, Thunder, Titan, Typhoon, Undertaker, Undertow, Ursa, Valkyrie, Vengeance, Venom, Vigilante, Viper, Vortex, Vulture, Warbringer, Warcry, Warhawk, Warlock, Warlord, Warden, Whisper,  Widowmaker, Wolverine, Wraith, Wyvern, X-ray, Xerxes, Yankee, Yellowjacket, Yukon, Zeus, Zero, Zephyr, Zodiac. 
 	<br><br>
