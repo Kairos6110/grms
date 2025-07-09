@@ -12,6 +12,7 @@
             --medium-dark-bg: #2a2a2a;
             --light-text: #e0e0e0;
             --accent-green: #4CAF50;
+            --lighter-green: #6CFF70; /* A lighter shade of green for hover/active text */
             --border-color: #444;
             --header-font: 'Oswald', sans-serif;
             --body-font: 'Roboto Mono', monospace;
@@ -71,29 +72,29 @@
             justify-content: center;
             gap: 10px;
             padding: 12px 25px;
-            background-color: #000000; /* Changed button background to black */
+            background-color: #000000; /* Kept button background black */
             color: var(--accent-green);
             text-decoration: none;
             border-radius: 5px;
-            font-family: var(--body-font); /* Changed font-family to var(--body-font) (Roboto Mono) */
+            font-family: var(--body-font);
             font-size: 1.2em;
             text-transform: uppercase;
-            font-weight: bold;
+            font-weight: 900;
             letter-spacing: 1px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; /* Transition for color and border */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border-color);
         }
 
         .link-list a:hover {
-            background-color: #333333; /* Darker grey on hover */
-            border-color: var(--accent-green);
+            color: var(--lighter-green); /* Text color changes to lighter green on hover */
+            border-color: var(--lighter-green); /* Border color changes to lighter green on hover */
             transform: translateY(-2px);
         }
 
         .link-list a:active {
-            background-color: var(--accent-green);
-            color: var(--dark-bg);
+            color: var(--lighter-green); /* Text color stays lighter green on active */
+            border-color: var(--lighter-green); /* Border color stays lighter green on active */
             transform: translateY(0);
         }
 
@@ -130,13 +131,16 @@
 
         .iframe-header {
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
             padding: 10px 15px;
             background-color: var(--dark-bg);
             border-bottom: 1px solid var(--border-color);
             color: var(--light-text);
             font-family: var(--header-font);
+            /* Ensure a fixed height for consistent vertical centering */
+            height: 60px; /* Adjust as needed based on desired header height */
+            box-sizing: border-box; /* Include padding in the height */
         }
 
         .close-button {
@@ -154,7 +158,6 @@
             justify-content: center;
             align-items: center;
             flex-shrink: 0;
-            margin : 0 auto; /* Center the button horizontally */
         }
 
         .close-button:hover {
@@ -180,6 +183,9 @@
             .iframe-container {
                 height: calc(100vh - 50px);
             }
+            .iframe-header {
+                height: 50px; /* Adjust header height for smaller screens */
+            }
         }
 
         @media (max-width: 480px) {
@@ -201,6 +207,7 @@
             }
             .iframe-header {
                 padding: 8px 10px;
+                height: 40px; /* Adjust header height for very small screens */
             }
             .close-button {
                 width: 30px;
