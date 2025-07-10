@@ -286,7 +286,9 @@
             <li><a href="WlOpGenerator.html" data-href="WlOpGenerator.html" target="_blank"><span class="emoji">✍️</span> Wildlands Operation Generator</a></li>
             <li><a href="soundboard.html" data-href="soundboard.html" target="_blank"><span class="emoji">🔊</span> Soundboard for roleplay</a></li>
             <li><a href="TacGuide.html" data-href="TacGuide.html" target="_blank"><span class="emoji">📖</span> Tier 1 Tactical Guide</a></li>
-            <li><a href="teamleadtips.html" data-href="teamleadtips.html" target="_blank"><span class="emoji">💡</span> Team Lead Tips</a></li>
+            <li><a href="teamleadtips.html" data-href="teamleadtips.html" target="_blank"><span class="emoji">💡</span> Team Leader Tips</a></li>
+            <li><a href="https://discord.gg/6gxfdc7VJQ" target="_blank" id="discordLink"><span class="emoji">🎮</span>PlayStation Team</a></li>
+
         </ul>
     </div>
 
@@ -299,10 +301,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const links = document.querySelectorAll('.link-list a');
+            const links = document.querySelectorAll('.link-list a:not(#discordLink)'); // Select all links except the discord one
             const iframeContainer = document.getElementById('contentIframeContainer');
             const contentIframe = document.getElementById('contentIframe');
             const closeButton = document.getElementById('closeIframeButton');
+            const discordLink = document.getElementById('discordLink');
 
             function loadAndDisplayIframeContent(url, pushHistory = true) {
                 // Add cache-busting parameter
@@ -321,7 +324,7 @@
 
             // --- Event Listeners ---
 
-            // Handle clicks on navigation links
+            // Handle clicks on navigation links (excluding the Discord link)
             links.forEach(link => {
                 link.addEventListener('click', function(event) {
                     // Only prevent default if not a middle-click or Ctrl/Cmd-click (which usually open in new tab)
@@ -334,6 +337,16 @@
                     // allowing "Open in new tab" if the href is set.
                 });
             });
+
+            // Handle the PlayStation Discord button specifically
+            if (discordLink) {
+                discordLink.addEventListener('click', function(event) {
+                    // This button should *always* open in a new window, so we let default behavior occur
+                    // The 'target="_blank"' attribute on the HTML link already handles this.
+                    // We prevent the loadAndDisplayIframeContent from being called for this specific link.
+                    // No `event.preventDefault()` here.
+                });
+            }
 
             // Handle close button click
             closeButton.addEventListener('click', function() {
