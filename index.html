@@ -65,18 +65,23 @@
             list-style: none;
             padding: 0;
             margin-top: 30px;
+            /* Set list to 70% of parent width, centered */
+            width: 70%; 
+            max-width: 800px; /* Optional: set a max-width if 70% becomes too wide on very large screens */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .link-list li {
-            margin-bottom: 25px; /* Increased vertical spacing between buttons */
+            margin-bottom: 15px; /* Reduced vertical spacing between buttons */
         }
 
         .link-list a {
-            display: flex; /* Changed from inline-flex to flex for full width */
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 20px 25px; /* Increased vertical padding to make buttons taller */
+            padding: 15px 25px; /* Reduced vertical padding to make buttons less tall */
             background-color: #000000; /* Kept button background black */
             color: var(--accent-green);
             text-decoration: none;
@@ -90,7 +95,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border-color);
             cursor: pointer;
-            width: 100%; /* Make them take the full width of their parent */
+            width: 100%; /* Make them take the full width of their parent (link-list) */
             box-sizing: border-box; /* Include padding and border in the width */
         }
 
@@ -203,13 +208,17 @@
                 padding-bottom: 10px; /* Adjust padding for smaller screens */
             }
 
+            .link-list {
+                width: 70%; /* Set width to 70% for screens up to 768px */
+            }
+
             .link-list li {
-                margin-bottom: 20px; /* Adjust vertical spacing for smaller screens */
+                margin-bottom: 15px; /* Adjust vertical spacing for smaller screens */
             }
 
             .link-list a {
                 font-size: 1em;
-                padding: 15px 20px; /* Adjust padding for smaller screens */
+                padding: 12px 20px; /* Adjust padding for smaller screens */
             }
 
             .iframe-close-button {
@@ -238,13 +247,17 @@
                 padding-bottom: 8px; /* Further adjust padding for very small screens */
             }
 
+            .link-list {
+                width: 95%; /* Maintain 70% width for very small screens */
+            }
+
             .link-list li {
-                margin-bottom: 15px; /* Adjust vertical spacing for very small screens */
+                margin-bottom: 10px; /* Adjust vertical spacing for very small screens */
             }
 
             .link-list a {
                 font-size: 0.9em;
-                padding: 12px 15px; /* Adjust padding for very small screens */
+                padding: 10px 15px; /* Adjust padding for very small screens */
             }
 
             .iframe-close-button {
