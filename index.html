@@ -156,9 +156,14 @@
         }
 
         .grid-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0, 255, 100, 0.25); /* Green tint */
-            border-color: rgba(80, 255, 180, 0.3); /* Green tint */
+            transform: translateY(0); /* Removed raise effect */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Reset box-shadow */
+            border-color: var(--glass-border); /* Reset border-color */
+        }
+        .grid-item:active {
+            transform: translateY(0); /* Removed raise effect */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Reset box-shadow */
+            border-color: var(--glass-border); /* Reset border-color */
         }
 
         .grid-item .emoji {
@@ -713,16 +718,16 @@
                 history.replaceState({}, document.title, window.location.pathname);
             }
             
-            // Add subtle hover effects to all grid items
-            gridItems.forEach(item => {
-                item.addEventListener('mouseenter', () => {
-                    item.style.transform = 'translateY(-8px)';
-                });
+            // Removed subtle hover effects as per user request
+            // gridItems.forEach(item => {
+            //     item.addEventListener('mouseenter', () => {
+            //         item.style.transform = 'translateY(-8px)';
+            //     });
                 
-                item.addEventListener('mouseleave', () => {
-                    item.style.transform = 'translateY(0)';
-                });
-            });
+            //     item.addEventListener('mouseleave', () => {
+            //         item.style.transform = 'translateY(0)';
+            //     });
+            // });
         });
     </script>
 </body>
