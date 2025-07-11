@@ -144,11 +144,13 @@
             overflow: hidden;
             transition: var(--transition);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            height: 70px;
+            /* Reduced height from 70px to 60px */
+            height: 60px; 
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding: 8px 20px;
+            /* Adjusted vertical padding for better fit */
+            padding: 5px 20px; 
             cursor: pointer;
             transform: translateY(0);
             text-align: left;
@@ -334,8 +336,8 @@
             }
             
             .grid-item {
-                height: 60px;
-                padding: 8px 15px;
+                height: 55px; /* Further reduced height for mobile */
+                padding: 5px 15px; /* Adjusted padding */
             }
             
             .grid-item .emoji {
@@ -373,8 +375,8 @@
             }
             
             .grid-item {
-                height: 55px;
-                padding: 6px 12px;
+                height: 50px; /* Even smaller height for small screens */
+                padding: 5px 12px; /* Adjusted padding */
             }
             
             .grid-item .emoji {
