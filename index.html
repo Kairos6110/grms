@@ -88,7 +88,7 @@
         }
 
         .main-content-wrapper {
-            width: 100%;
+            width: 95%; /* Adjusted to 95% of screen width */
             max-width: 500px;
             margin: 20px auto 30px;
             display: flex;
@@ -132,7 +132,7 @@
         .content-grid {
             display: flex; 
             flex-direction: column; 
-            gap: 15px; 
+            gap: 10px; /* Reduced gap between buttons */
             width: 100%;
         }
 
@@ -145,12 +145,10 @@
             overflow: hidden;
             transition: var(--transition);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            /* Reduced height from 70px to 60px */
-            height: 60px; 
+            height: 50px; /* Reduced vertical height */
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            /* Adjusted vertical padding for better fit */
             padding: 5px 20px; 
             cursor: pointer;
             transform: translateY(0);
@@ -164,7 +162,7 @@
         }
 
         .grid-item .emoji {
-            font-size: 2rem;
+            font-size: 1.8rem; /* Slightly smaller emoji */
             margin-right: 15px;
             text-shadow: none; /* Removed text glow */
             flex-shrink: 0;
@@ -173,7 +171,7 @@
         .grid-item h3 {
             font-family: var(--header-font);
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem; /* Slightly smaller text */
             color: var(--text-lighter);
             margin-bottom: 0;
             letter-spacing: 1px;
@@ -210,10 +208,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px 20px; /* Adjusted vertical padding */
+            padding: 10px 20px; /* Adjusted vertical padding */
             background: rgba(10, 30, 20, 0.95); /* Greenish tint for iframe header */
             border-bottom: 1px solid rgba(0, 255, 150, 0.2); /* Green tint */
-            height: 60px; /* Reduced height */
+            height: 55px; /* Reduced height */
             position: relative;
         }
 
@@ -225,13 +223,13 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: var(--subtle-white);
-            width: 40px;
-            height: 40px;
+            width: 35px; /* Slightly smaller close button */
+            height: 35px; /* Slightly smaller close button */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.2rem; /* Slightly smaller font size for close button */
             cursor: pointer;
             transition: var(--transition);
             box-shadow: none; /* Removed glow around close button */
@@ -265,24 +263,36 @@
             background: rgba(10, 30, 20, 0.8); /* Greenish tint for status bar */
             border-top: 1px solid rgba(0, 255, 150, 0.1); /* Green tint */
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Changed to center */
             font-size: 0.8rem;
             color: var(--status-text-bright);
             font-family: var(--header-font);
             letter-spacing: 1px;
             align-items: center;
+            flex-wrap: wrap; /* Allow items to wrap */
         }
 
         .status-time {
             white-space: nowrap;
+            margin: 0 10px; /* Adjusted spacing for centering */
         }
 
         .status-indicators {
             display: flex;
             gap: 20px;
             flex-wrap: nowrap;
-            justify-content: flex-end;
+            justify-content: center; /* Changed to center */
+            width: 100%; /* Occupy full width to center effectively */
+            margin-top: 5px; /* Add some space if it wraps */
         }
+
+        @media (min-width: 768px) {
+            .status-indicators {
+                width: auto; /* Revert width on larger screens */
+                margin-top: 0;
+            }
+        }
+
 
         .status-item {
             display: flex;
@@ -337,28 +347,27 @@
             }
             
             .grid-item {
-                height: 55px; /* Further reduced height for mobile */
+                height: 48px; /* Further reduced height for mobile */
                 padding: 5px 15px; /* Adjusted padding */
             }
             
             .grid-item .emoji {
-                font-size: 1.8rem;
+                font-size: 1.7rem; /* Slightly smaller emoji */
                 margin-right: 12px;
             }
             
             .grid-item h3 {
-                font-size: 1rem;
+                font-size: 0.95rem; /* Slightly smaller text */
             }
             
             .status-bar {
-                flex-direction: row;
-                justify-content: space-between;
-                gap: 10px;
+                flex-direction: column; /* Changed to column for better centering on small screens */
                 padding: 8px 15px;
             }
             .status-indicators {
-                flex-wrap: nowrap;
+                flex-wrap: wrap;
                 gap: 10px;
+                margin-top: 10px; /* Add more space when in column layout */
             }
         }
 
@@ -376,17 +385,17 @@
             }
             
             .grid-item {
-                height: 50px; /* Even smaller height for small screens */
+                height: 45px; /* Even smaller height for small screens */
                 padding: 5px 12px; /* Adjusted padding */
             }
             
             .grid-item .emoji {
-                font-size: 1.6rem;
+                font-size: 1.5rem; /* Smaller emoji */
                 margin-right: 10px;
             }
             
             .grid-item h3 {
-                font-size: 0.9rem;
+                font-size: 0.85rem; /* Smaller text */
             }
             .status-bar {
                 padding: 8px 10px;
@@ -461,13 +470,14 @@
     </div>
 
     <div class="status-bar">
-        <div class="status-time">23:45:17 ZULU</div>
-        <div class="status-indicators">
-            <div class="status-item">
-                <div class="status-dot"></div>
-                <span>SEC-DT-CLR1-LNK</span>
-            </div>
+        <div id="timezone-clocks">
+            <span class="status-time" id="pdt-time"></span>
+            <span class="status-time" id="edt-time"></span>
+            <span class="status-time" id="zulu-time"></span>
+            <span class="status-time" id="sgt-time"></span>
         </div>
+        <div class="status-indicators">
+            </div>
     </div>
 
     <div class="footer">
@@ -480,20 +490,33 @@
             const gridItems = document.querySelectorAll('.grid-item:not(#discordLink)');
             const discordItem = document.getElementById('discordLink');
             const iframeContainer = document.getElementById('contentIframeContainer');
-            const contentIframe = document.getElementById('contentIframe');
             const closeButton = document.getElementById('closeIframeButton');
             const iframeTitle = document.getElementById('iframeTitle');
-            
-            // Set current time
-            function updateDateTime() {
+            const loadedIframes = {}; // Store loaded iframes by URL
+
+            // Update multiple timezone clocks
+            function updateTimezones() {
                 const now = new Date();
-                const timeString = now.toUTCString().split(' ')[4];
-                const dateElement = document.querySelector('.status-time');
-                if(dateElement) dateElement.textContent = timeString + ' ZULU';
+
+                // PDT (UTC-7)
+                const pdtOptions = { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', hour12: false };
+                document.getElementById('pdt-time').textContent = `PDT ${now.toLocaleTimeString('en-US', pdtOptions).replace(':', '')}`;
+
+                // EDT (UTC-4)
+                const edtOptions = { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false };
+                document.getElementById('edt-time').textContent = `EDT ${now.toLocaleTimeString('en-US', edtOptions).replace(':', '')}`;
+
+                // Zulu (UTC+0)
+                const zuluOptions = { timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false };
+                document.getElementById('zulu-time').textContent = `ZULU ${now.toLocaleTimeString('en-US', zuluOptions).replace(':', '')}`;
+
+                // SGT (UTC+8)
+                const sgtOptions = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', hour12: false };
+                document.getElementById('sgt-time').textContent = `SGT ${now.toLocaleTimeString('en-US', sgtOptions).replace(':', '')}`;
             }
             
-            setInterval(updateDateTime, 1000);
-            updateDateTime();
+            setInterval(updateTimezones, 1000);
+            updateTimezones(); // Initial call to display time immediately
 
             // Initialize particles.js
             particlesJS('particles-js', {
@@ -602,24 +625,46 @@
                 "retina_detect": true
             });
 
+            function loadIframeContent(url, title) {
+                // If the iframe already exists, show it
+                if (loadedIframes[url]) {
+                    // Hide all other iframes
+                    document.querySelectorAll('.iframe-content iframe').forEach(iframe => {
+                        iframe.style.display = 'none';
+                    });
+                    loadedIframes[url].style.display = 'block';
+                } else {
+                    // Create a new iframe
+                    const newIframe = document.createElement('iframe');
+                    newIframe.id = `iframe-${Date.now()}`; // Unique ID
+                    newIframe.src = url;
+                    newIframe.title = title;
+                    newIframe.style.width = '100%';
+                    newIframe.style.height = '100%';
+                    newIframe.style.border = 'none';
+
+                    // Hide all existing iframes before appending the new one
+                    document.querySelectorAll('.iframe-content iframe').forEach(iframe => {
+                        iframe.style.display = 'none';
+                    });
+
+                    document.querySelector('.iframe-content').appendChild(newIframe);
+                    loadedIframes[url] = newIframe; // Store the new iframe
+                }
+
+                iframeTitle.textContent = title;
+                iframeContainer.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
             // Handle clicks on grid items
             gridItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const url = this.getAttribute('data-href');
                     const title = this.querySelector('h3').textContent;
                     
-                    // Add cache-busting parameter
-                    const timestamp = new Date().getTime();
-                    const cacheBustedUrl = url.includes('?') ? 
-                        `${url}&_=${timestamp}` : `${url}?_=${timestamp}`;
-                    
-                    contentIframe.src = cacheBustedUrl;
-                    iframeTitle.textContent = title;
-                    iframeContainer.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    
-                    // Push to history
-                    history.pushState({ iframeUrl: url }, '', `?page=${encodeURIComponent(url)}`);
+                    loadIframeContent(url, title);
+                    history.pushState({ iframeUrl: url, title: title }, title, `?page=${encodeURIComponent(url)}`);
                 });
             });
             
@@ -633,48 +678,39 @@
 
             // Handle close button click
             closeButton.addEventListener('click', function() {
-                contentIframe.src = '';
                 iframeContainer.classList.remove('active');
                 document.body.style.overflow = 'auto';
-                history.pushState({}, document.title, window.location.pathname);
+                history.pushState({}, document.title, window.location.pathname); // Go back to the main page URL
             });
             
             // Handle browser back/forward
             window.addEventListener('popstate', function(event) {
-                const urlParams = new URLSearchParams(window.location.search);
-                const pageUrl = urlParams.get('page');
-                
-                if (pageUrl) {
-                    const title = Array.from(gridItems).find(item => 
-                        item.getAttribute('data-href') === pageUrl)?.querySelector('h3').textContent || 'OPERATION CONTROL';
-                    
-                    iframeTitle.textContent = title;
-                    contentIframe.src = pageUrl;
-                    iframeContainer.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+                if (event.state && event.state.iframeUrl) {
+                    // If we're going back to an iframe state
+                    loadIframeContent(event.state.iframeUrl, event.state.title);
                 } else {
-                    contentIframe.src = '';
+                    // If we're going back to the main page or an initial load
                     iframeContainer.classList.remove('active');
                     document.body.style.overflow = 'auto';
+                    // Hide all iframes when returning to the main page view
+                    document.querySelectorAll('.iframe-content iframe').forEach(iframe => {
+                        iframe.style.display = 'none';
+                    });
                 }
             });
             
-            // Check for initial page parameter
+            // Check for initial page parameter on first load
             const urlParams = new URLSearchParams(window.location.search);
             const initialPageUrl = urlParams.get('page');
             
             if (initialPageUrl) {
                 const title = Array.from(gridItems).find(item => 
                     item.getAttribute('data-href') === initialPageUrl)?.querySelector('h3').textContent || 'OPERATION CONTROL';
-                
-                iframeTitle.textContent = title;
-                contentIframe.src = initialPageUrl;
-                iframeContainer.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Replace state to avoid duplicate entries
-                history.replaceState({ iframeUrl: initialPageUrl }, '', 
-                    `${window.location.pathname}?page=${encodeURIComponent(initialPageUrl)}`);
+                loadIframeContent(initialPageUrl, title);
+                // Replace the state to ensure the initial load doesn't add an extra history entry
+                history.replaceState({ iframeUrl: initialPageUrl, title: title }, title, `?page=${encodeURIComponent(initialPageUrl)}`);
+            } else {
+                history.replaceState({}, document.title, window.location.pathname);
             }
             
             // Add subtle hover effects to all grid items
