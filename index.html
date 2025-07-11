@@ -8,30 +8,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --dark-bg: #0a0f17;
-            --darker-bg: #050a12;
-            --glass-bg: rgba(15, 25, 40, 0.7);
-            --glass-border: rgba(80, 150, 255, 0.15);
-            --accent-green: #00e676;
-            --accent-blue: #00b0ff;
-            --accent-red: #ff3d71;
-            --text-light: #e0f2ff;
-            --text-lighter: #ffffff;
+            /* Base dark colors, now with a subtle green tint */
+            --dark-bg: #0a170f; /* Changed from blue-ish to green-ish dark */
+            --darker-bg: #05120a; /* Changed from blue-ish to green-ish darker */
+            
+            /* Glassmorphism elements with green hues */
+            --glass-bg: rgba(15, 40, 25, 0.7); /* Green tint for glass background */
+            --glass-border: rgba(80, 255, 150, 0.15); /* Green tint for glass border */
+            
+            /* Accent colors */
+            --accent-green: #00e676; /* Bright primary green accent - kept */
+            --secondary-accent-green: #33cc66; /* New secondary green accent, replaces accent-blue */
+            --accent-red: #ff3d71; /* Red accent - kept */
+            
+            /* Text colors with subtle green tint */
+            --text-light: #e0ffe0; /* Light green-ish white */
+            --text-lighter: #ffffff; /* Pure white - kept */
+            
+            /* Subtle white for close button, kept for contrast */
+            --subtle-white: rgba(255, 255, 255, 0.6);
+            --subtle-white-hover: rgba(255, 255, 255, 0.8);
+            
+            /* Brighter status bar text color, now green-tinted */
+            --status-text-bright: #e0ffe0; 
+            
             --header-font: 'Roboto Mono', monospace;
             --body-font: 'Roboto Mono', monospace;
             --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            /* New variable for subtle white */
-            --subtle-white: rgba(255, 255, 255, 0.6);
-            --subtle-white-hover: rgba(255, 255, 255, 0.8);
-            /* Brighter status bar text color */
-            --status-text-bright: #e0f2ff; /* Using --text-light for consistency and brightness */
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: var(--body-font); /* Apply Roboto Mono to all elements by default */
+            font-family: var(--body-font);
         }
 
         body {
@@ -40,8 +50,8 @@
             min-height: 100vh;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 80, 150, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 180, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 10% 20%, rgba(0, 150, 80, 0.1) 0%, transparent 20%), /* Green tint */
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 180, 0.1) 0%, transparent 20%), /* Green tint */
                 linear-gradient(to bottom, var(--darker-bg), var(--dark-bg));
             background-attachment: fixed;
             position: relative;
@@ -59,8 +69,8 @@
             width: 100%;
             height: 100%;
             background: 
-                linear-gradient(rgba(0, 80, 150, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 80, 150, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(0, 150, 80, 0.03) 1px, transparent 1px), /* Green tint */
+                linear-gradient(90deg, rgba(0, 150, 80, 0.03) 1px, transparent 1px); /* Green tint */
             background-size: 40px 40px;
             pointer-events: none;
             z-index: -1;
@@ -79,12 +89,12 @@
 
         .main-content-wrapper {
             width: 100%;
-            max-width: 500px; /* Set a max-width for the entire main content area */
+            max-width: 500px;
             margin: 20px auto 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px; /* Gap between title and buttons */
+            gap: 15px;
         }
 
         .title-container {
@@ -96,15 +106,15 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             text-align: center;
-            width: 100%; /* Make title container take full width of its parent */
+            width: 100%;
         }
 
         .title-image {
             width: 100%;
-            max-width: 600px; /* This max-width applies inside the title-container */
+            max-width: 600px;
             height: auto;
             margin: 0 auto;
-            filter: drop-shadow(0 5px 15px rgba(0, 180, 255, 0.3));
+            filter: drop-shadow(0 5px 15px rgba(0, 255, 180, 0.3)); /* Green tint */
         }
 
         .title-subtext {
@@ -115,14 +125,14 @@
             margin-top: 20px;
             color: var(--accent-green);
             font-weight: 500;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+            text-shadow: 0 0 0 transparent; /* Removed text glow */
         }
 
         .content-grid {
             display: flex; 
             flex-direction: column; 
             gap: 15px; 
-            width: 100%; /* Make buttons take full width of their parent */
+            width: 100%;
         }
 
         .grid-item {
@@ -134,44 +144,44 @@
             overflow: hidden;
             transition: var(--transition);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            height: 70px; /* Increased height for taller buttons */
+            height: 70px;
             display: flex;
-            align-items: center; /* Align items horizontally in the middle */
-            justify-content: flex-start; /* Align content to the start (left) */
-            padding: 8px 20px; /* Adjusted padding */
+            align-items: center;
+            justify-content: flex-start;
+            padding: 8px 20px;
             cursor: pointer;
             transform: translateY(0);
-            text-align: left; /* Align text to the left */
+            text-align: left;
         }
 
         .grid-item:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0, 100, 255, 0.25);
-            border-color: rgba(80, 180, 255, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 255, 100, 0.25); /* Green tint */
+            border-color: rgba(80, 255, 180, 0.3); /* Green tint */
         }
 
         .grid-item .emoji {
-            font-size: 2rem; /* Adjusted emoji size to be bigger */
-            margin-right: 15px; /* Added margin to separate icon and text */
-            text-shadow: 0 0 15px rgba(0, 230, 118, 0.5);
-            flex-shrink: 0; /* Prevent emoji from shrinking */
+            font-size: 2rem;
+            margin-right: 15px;
+            text-shadow: none; /* Removed text glow */
+            flex-shrink: 0;
         }
 
         .grid-item h3 {
             font-family: var(--header-font);
             font-weight: 600;
-            font-size: 1.1rem; /* Adjusted font size for title to be bigger */
+            font-size: 1.1rem;
             color: var(--text-lighter);
             margin-bottom: 0;
             letter-spacing: 1px;
-            white-space: nowrap; /* Prevent text from wrapping */
-            overflow: hidden; /* Hide overflow text */
-            text-overflow: ellipsis; /* Add ellipsis for overflow text */
-            text-transform: uppercase; /* Convert button text to uppercase */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
         }
 
         .grid-item p {
-            display: none; /* Hide the description/caption */
+            display: none;
         }
 
         .iframe-container {
@@ -195,24 +205,23 @@
 
         .iframe-header {
             display: flex;
-            justify-content: center; /* Center the close button */
+            justify-content: center;
             align-items: center;
             padding: 20px;
-            background: rgba(10, 20, 35, 0.95);
-            border-bottom: 1px solid rgba(0, 150, 255, 0.2);
+            background: rgba(10, 30, 20, 0.95); /* Greenish tint for iframe header */
+            border-bottom: 1px solid rgba(0, 255, 150, 0.2); /* Green tint */
             height: 70px;
-            position: relative; /* Needed for absolute positioning of close button if title is hidden */
+            position: relative;
         }
 
         .iframe-title {
-            display: none; /* Hide the iframe title */
+            display: none;
         }
 
         .close-button {
-            /* Changed from var(--accent-red) to var(--subtle-white) and its rgba variant */
-            background: rgba(255, 255, 255, 0.05); /* Very subtle white background */
-            border: 1px solid rgba(255, 255, 255, 0.15); /* Very subtle white border */
-            color: var(--subtle-white); /* Subtle white color for the 'X' */
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--subtle-white);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -222,13 +231,13 @@
             font-size: 1.3rem;
             cursor: pointer;
             transition: var(--transition);
+            box-shadow: none; /* Removed glow around close button */
         }
 
         .close-button:hover {
-            /* Changed from var(--accent-red) to var(--subtle-white-hover) and its rgba variant */
-            background: rgba(255, 255, 255, 0.1); /* Slightly more visible on hover */
-            border-color: rgba(255, 255, 255, 0.25); /* Slightly more visible border on hover */
-            color: var(--subtle-white-hover); /* Brighter white on hover */
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: var(--subtle-white-hover);
             transform: rotate(90deg);
         }
 
@@ -250,26 +259,26 @@
             left: 0;
             width: 100%;
             padding: 10px 20px;
-            background: rgba(10, 20, 35, 0.8);
-            border-top: 1px solid rgba(0, 150, 255, 0.1);
+            background: rgba(10, 30, 20, 0.8); /* Greenish tint for status bar */
+            border-top: 1px solid rgba(0, 255, 150, 0.1); /* Green tint */
             display: flex;
             justify-content: space-between;
             font-size: 0.8rem;
-            color: var(--status-text-bright); /* Use the new brighter variable */
+            color: var(--status-text-bright);
             font-family: var(--header-font);
             letter-spacing: 1px;
-            align-items: center; /* Vertically align items in the status bar */
+            align-items: center;
         }
 
         .status-time {
-            white-space: nowrap; /* Prevent ZULU from wrapping */
+            white-space: nowrap;
         }
 
         .status-indicators {
             display: flex;
             gap: 20px;
-            flex-wrap: nowrap; /* Prevent items from wrapping on smaller screens */
-            justify-content: flex-end; /* Align to the right */
+            flex-wrap: nowrap;
+            justify-content: flex-end;
         }
 
         .status-item {
@@ -282,32 +291,32 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--accent-green);
-            box-shadow: 0 0 8px var(--accent-green);
+            background: var(--accent-green); /* Primary green dot */
+            box-shadow: none; /* Removed glow */
         }
 
-        .status-dot.blue {
-            background: var(--accent-blue);
-            box-shadow: 0 0 8px var(--accent-blue);
+        .status-dot.blue { /* This class is now repurposed for a secondary green dot */
+            background: var(--secondary-accent-green); /* Secondary green dot */
+            box-shadow: none; /* Removed glow */
         }
 
         .footer {
             margin-top: 50px;
             text-align: center;
             padding: 20px;
-            color: rgba(150, 190, 220, 0.6);
+            color: rgba(150, 190, 220, 0.6); /* Kept subtle blue-ish tint for footer text */
             font-size: 0.9rem;
         }
 
         /* Animations */
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 230, 118, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); } /* Removed glow */
+            70% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); } /* Removed glow */
+            100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); } /* Removed glow */
         }
 
         .pulse {
-            animation: pulse 2s infinite;
+            animation: none; /* Disabled pulse animation for glow */
         }
 
         /* Responsive design */
@@ -321,32 +330,32 @@
             }
             
             .main-content-wrapper {
-                max-width: 500px; /* Keep consistent max-width for mobile */
+                max-width: 500px;
             }
             
             .grid-item {
-                height: 60px; /* Adjusted height for smaller screens */
-                padding: 8px 15px; /* Adjusted padding */
+                height: 60px;
+                padding: 8px 15px;
             }
             
             .grid-item .emoji {
-                font-size: 1.8rem; /* Adjusted emoji size */
-                margin-right: 12px; /* Adjusted margin */
+                font-size: 1.8rem;
+                margin-right: 12px;
             }
             
             .grid-item h3 {
-                font-size: 1rem; /* Adjusted font size */
+                font-size: 1rem;
             }
             
             .status-bar {
-                flex-direction: row; /* Changed to row to keep items on one line */
-                justify-content: space-between; /* Space out the items */
-                gap: 10px; /* Adjusted gap for smaller screens */
-                padding: 8px 15px; /* Adjusted padding */
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 10px;
+                padding: 8px 15px;
             }
             .status-indicators {
-                flex-wrap: nowrap; /* Ensure indicators stay on one line */
-                gap: 10px; /* Adjusted gap for indicators */
+                flex-wrap: nowrap;
+                gap: 10px;
             }
         }
 
@@ -364,25 +373,24 @@
             }
             
             .grid-item {
-                height: 55px; /* Even smaller height for very small screens */
-                padding: 6px 12px; /* Adjusted padding */
+                height: 55px;
+                padding: 6px 12px;
             }
             
             .grid-item .emoji {
-                font-size: 1.6rem; /* Smallest emoji size */
-                margin-right: 10px; /* Smallest margin */
+                font-size: 1.6rem;
+                margin-right: 10px;
             }
             
             .grid-item h3 {
-                font-size: 0.9rem; /* Smallest font size */
+                font-size: 0.9rem;
             }
-            /* Further refine status bar for very small screens if needed */
             .status-bar {
-                padding: 8px 10px; /* Slightly more padding for very small screens */
-                font-size: 0.75rem; /* Smaller font size for status bar */
+                padding: 8px 10px;
+                font-size: 0.75rem;
             }
             .status-indicators {
-                gap: 8px; /* Reduce gap further for very small screens */
+                gap: 8px;
             }
         }
     </style>
@@ -530,7 +538,7 @@
                     "line_linked": {
                         "enable": true,
                         "distance": 150,
-                        "color": "#00b0ff", /* Accent blue */
+                        "color": "#33cc66", /* Changed to secondary accent green */
                         "opacity": 0.3,
                         "width": 1
                     },
