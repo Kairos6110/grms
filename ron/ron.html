@@ -7,13 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS for dark military vibes */
+        /* Custom CSS for dark military vibes and modern enhancements */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a202c; /* Dark blue background */
-            color: #e2e8f0; /* Light text */
+            background-color: #121212; /* Even darker background for modern feel */
+            color: #e0e0e0; /* Light text */
             overflow-x: hidden; /* Prevent horizontal scroll */
-            position: relative; /* For z-index context */
         }
 
         .container {
@@ -23,20 +22,20 @@
 
         /* Mission card styling */
         .mission-card {
-            background-color: #2d3748; /* Slightly lighter dark background for cards */
-            border: 1px solid #4a5568; /* Subtle border */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Darker shadow */
+            background-color: #1e1e1e; /* Slightly lighter dark background for cards */
+            border: 1px solid #333333; /* Subtle border */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
         .mission-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
         }
 
         /* Heading styling */
         h1, h2 {
-            color: #cbd5e0; /* Lighter heading text */
+            color: #f0f0f0; /* Lighter heading text */
         }
 
         /* Image container for aspect ratio and overlay */
@@ -46,10 +45,13 @@
             padding-bottom: 75%; /* 4:3 Aspect Ratio (height / width * 100). Adjust as needed, e.g., 56.25% for 16:9 */
             height: 0;
             overflow: hidden;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem; /* More rounded corners */
             cursor: pointer;
-            margin-bottom: 1.5rem; /* Added margin for spacing between image containers */
-            background-color: #e6e6e6; /* Added background color for images */
+            margin-bottom: 1.5rem;
+            background-color: #2a2a2a; /* Added background color for images */
+            display: flex; /* Flexbox for centering content within */
+            align-items: center;
+            justify-content: center;
         }
 
         .image-container img {
@@ -59,7 +61,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain; /* Ensures the entire image is visible without cropping, maintaining aspect ratio */
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
         }
 
         .image-overlay {
@@ -68,13 +70,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent dark overlay */
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transition: opacity 0.3s ease;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
         }
 
         .image-container:hover .image-overlay {
@@ -84,8 +86,9 @@
         .image-overlay-text {
             color: white;
             font-weight: bold;
-            font-size: 1.25rem;
+            font-size: 1.15rem; /* Slightly smaller for better fit */
             text-align: center;
+            padding: 0.5rem; /* Add some padding */
         }
 
         /* Text styling for tips */
@@ -98,6 +101,12 @@
             margin-bottom: 0.5rem;
         }
 
+        .tips-text ul ul { /* Nested list styling */
+            list-style-type: circle;
+            margin-left: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
         /* Full-size image modal */
         .modal {
             position: fixed;
@@ -107,12 +116,13 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: #e6e6e6; /* Changed to #e6e6e6 */
+            background-color: rgba(18, 18, 18, 0.95); /* Darker, more opaque modal background */
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px); /* Increased blur */
+            -webkit-backdrop-filter: blur(8px);
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -126,27 +136,61 @@
         .modal-content {
             margin: auto;
             display: block;
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 95%; /* Increased max-width */
+            max-height: 85%; /* Adjusted max-height to make space for caption */
             object-fit: contain;
+            border-radius: 0.75rem;
+        }
+
+        .modal-caption {
+            color: #f0f0f0;
+            font-weight: bold;
+            font-size: 1.6rem; /* Slightly larger caption */
+            text-align: center;
+            margin-top: 15px; /* Space between image and text */
+            padding-bottom: 20px;
         }
 
         .close {
             position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #000; /* Changed to black */
-            font-size: 40px;
-            font-weight: bold;
+            top: 20px; /* Adjusted position */
+            right: 25px; /* Adjusted position */
+            color: #f0f0f0;
+            font-size: 48px; /* Larger close button */
+            font-weight: lighter; /* Lighter font weight for 'x' */
             transition: 0.3s;
             cursor: pointer;
         }
 
         .close:hover,
         .close:focus {
-            color: #bbb;
+            color: #cccccc;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        /* Responsive adjustments for overall layout */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            h1 {
+                font-size: 3rem; /* Smaller heading on mobile */
+            }
+
+            h1 span:last-child {
+                font-size: 1.8rem;
+            }
+
+            .mission-card {
+                padding: 1.25rem;
+            }
+
+            .image-overlay-text {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -158,16 +202,16 @@
                 <span class="block text-xl md:text-3xl font-light text-gray-400 mt-2">Maps and Mission Tips</span>
             </h1>
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-                Click maps to enlarge and view details.
-                </p>
+                Click maps to enlarge and view details
+            </p>
         </header>
 
         <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-200">1. Thank You, Come Again</h2>
-                <div class="image-container rounded-lg" data-image-src="m1.png">
-                    <img src="m1.png" alt="Map for Thank You, Come Again" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Map+Missing'">
+                <div class="image-container rounded-lg" data-image-src="m1.jpg" data-caption="Thank You, Come Again Map">
+                    <img src="m1.jpg" alt="Map for Thank You, Come Again" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Click to view full size</span>
                     </div>
@@ -184,20 +228,20 @@
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-200">2. 23 Megabytes a Second</h2>
-                <div class="image-container rounded-lg" data-image-src="m2g.png">
-                    <img src="m2g.png" alt="Ground Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
+                <div class="image-container rounded-lg" data-image-src="m20.jpg" data-caption="23 Megabytes a Second - Ground Floor">
+                    <img src="m20.jpg" alt="Ground Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Ground Floor</span>
                     </div>
                 </div>
-                <div class="image-container rounded-lg" data-image-src="m2f1.png">
-                    <img src="m2f1.png" alt="First Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=First+Floor+Map+Missing'">
+                <div class="image-container rounded-lg" data-image-src="m21.jpg" data-caption="23 Megabytes a Second - First Floor">
+                    <img src="m21.jpg" alt="First Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=First+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">First Floor</span>
                     </div>
                 </div>
-                <div class="image-container rounded-lg" data-image-src="m2f2.png">
-                    <img src="m2f2.png" alt="Top Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Top+Floor+Map+Missing'">
+                <div class="image-container rounded-lg" data-image-src="m22.jpg" data-caption="23 Megabytes a Second - Top Floor">
+                    <img src="m22.jpg" alt="Top Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Top+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Top Floor</span>
                     </div>
@@ -218,10 +262,28 @@
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-200">3. Twisted Nerve</h2>
-                <div class="image-container rounded-lg" data-image-src="https://placehold.co/600x450/333/FFF?text=Map+Placeholder+-+Twisted+Nerve">
-                    <img src="https://placehold.co/600x450/333/FFF?text=Map+Placeholder+-+Twisted+Nerve" alt="Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Map+Missing'">
+                <div class="image-container rounded-lg" data-image-src="m30.jpg" data-caption="Twisted Nerve - Ground Floor">
+                    <img src="m30.jpg" alt="Ground Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
                     <div class="image-overlay">
-                        <span class="image-overlay-text">Click to view full size</span>
+                        <span class="image-overlay-text">Ground Floor</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m31.jpg" data-caption="Twisted Nerve - First Floor">
+                    <img src="m31.jpg" alt="First Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=First+Floor+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">First Floor</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m32.jpg" data-caption="Twisted Nerve - Second Floor">
+                    <img src="m32.jpg" alt="Second Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Second+Floor+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Second Floor</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m33.jpg" data-caption="Twisted Nerve - Underground Tunnel">
+                    <img src="m33.jpg" alt="Underground Tunnel Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Underground+Tunnel+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Underground Tunnel</span>
                     </div>
                 </div>
                 <div class="tips-text text-gray-300 leading-relaxed">
@@ -246,10 +308,16 @@
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-200">4. The Spider</h2>
-                <div class="image-container rounded-lg" data-image-src="https://placehold.co/600x450/333/FFF?text=Map+Placeholder+-+The+Spider">
-                    <img src="https://placehold.co/600x450/333/FFF?text=Map+Placeholder+-+The+Spider" alt="Map for The Spider" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Map+Missing'">
+                <div class="image-container rounded-lg" data-image-src="m40.jpg" data-caption="The Spider - Ground Floor">
+                    <img src="m40.jpg" alt="Ground Floor Map for The Spider" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
                     <div class="image-overlay">
-                        <span class="image-overlay-text">Click to view full size</span>
+                        <span class="image-overlay-text">Ground Floor</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m41.jpg" data-caption="The Spider - Top Floor / Roof">
+                    <img src="m41.jpg" alt="Top Floor Map for The Spider" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Top+Floor+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Top Floor / Roof</span>
                     </div>
                 </div>
                 <div class="tips-text text-gray-300 leading-relaxed">
@@ -265,10 +333,22 @@
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-200">5. A Lethal Obsession</h2>
-                <div class="image-container rounded-lg" data-image-src="https://placehold.co/600x450/333/FFF?text=Map+Placeholder+-+Lethal+Obsession">
-                    <img src="https://placehold.co/600x450/333/FFF?text=Map+Placeholder+-+Lethal+Obsession" alt="Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Map+Missing'">
+                <div class="image-container rounded-lg" data-image-src="m50.jpg" data-caption="A Lethal Obsession - Ground Floor">
+                    <img src="m50.jpg" alt="Ground Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
                     <div class="image-overlay">
-                        <span class="image-overlay-text">Click to view full size</span>
+                        <span class="image-overlay-text">Ground Floor</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m51.jpg" data-caption="A Lethal Obsession - First Floor">
+                    <img src="m51.jpg" alt="First Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=First+Floor+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">First Floor</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m52.jpg" data-caption="A Lethal Obsession - Second Floor">
+                    <img src="m52.jpg" alt="Second Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Second+Floor+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Second Floor</span>
                     </div>
                 </div>
                 <div class="tips-text text-gray-300 leading-relaxed">
@@ -291,18 +371,21 @@
     <div id="imageModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
+        <div id="caption" class="modal-caption"></div>
     </div>
 
     <script>
         // Image Modal functionality
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("img01");
+        const captionText = document.getElementById("caption");
         const closeBtn = document.getElementsByClassName("close")[0];
 
         document.querySelectorAll('.image-container').forEach(container => {
             container.addEventListener('click', function() {
                 modal.classList.add('show');
                 modalImg.src = this.dataset.imageSrc; // Use data-image-src for the original full-size image
+                captionText.innerHTML = this.dataset.caption || ''; // Get caption from data-caption attribute
             });
         });
 
@@ -310,9 +393,9 @@
             modal.classList.remove('show');
         });
 
-        // Close modal when clicking on the image or outside the image
+        // Close modal when clicking on the modal background or the image itself
         modal.addEventListener('click', function(e) {
-            if (e.target === modal || e.target === modalImg) { // Added modalImg to close on image click
+            if (e.target === modal || e.target === modalImg) {
                 modal.classList.remove('show');
             }
         });
