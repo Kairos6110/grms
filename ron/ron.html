@@ -7,29 +7,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS for dark military vibes and particle background */
+        /* Custom CSS for dark military vibes */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a202c; /* Dark background */
+            background-color: #1a202c; /* Dark blue background */
             color: #e2e8f0; /* Light text */
             overflow-x: hidden; /* Prevent horizontal scroll */
             position: relative; /* For z-index context */
         }
 
-        /* Canvas for particle animation */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Send to background */
-            opacity: 0.7; /* Slightly transparent */
-        }
-
         .container {
             position: relative;
-            z-index: 1; /* Keep content above particles */
+            z-index: 1; /* Keep content above background */
         }
 
         /* Mission card styling */
@@ -117,7 +106,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: #2d3748; /* Changed to lighter dark blue, same as mission card background */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -161,17 +150,14 @@
     </style>
 </head>
 <body class="antialiased">
-    <canvas id="particle-canvas"></canvas>
-
     <div class="container mx-auto px-4 py-8 md:py-12">
         <header class="text-center mb-10 md:mb-16">
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-gray-100">
                 <span class="block">READY OR NOT</span>
-                <span class="block text-xl md:text-3xl font-light text-gray-400 mt-2">Mission Tips and Maps</span>
+                <span class="block text-xl md:text-3xl font-light text-gray-400 mt-2">Maps and Mission Tips</span>
             </h1>
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-             
-            </p>
+                </p>
         </header>
 
         <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -295,9 +281,9 @@
 
         </main>
 
-<footer class="text-center mt-12 pt-8 border-t border-gray-700 text-gray-500 text-sm">
-    <p>Made for the benefit of the whole community as a helpful guide. Maps sourced from <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3137562299" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" target="_blank" rel="noopener noreferrer">this steam post</a>.</p>
-</footer>
+        <footer class="text-center mt-12 pt-8 border-t border-gray-700 text-gray-500 text-sm">
+            <p>Made for the benefit of the whole community as a helpful guide. Maps sourced from <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3137562299" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" target="_blank" rel="noopener noreferrer">this steam post</a>.</p>
+        </footer>
     </div>
 
     <div id="imageModal" class="modal">
@@ -306,116 +292,6 @@
     </div>
 
     <script>
-        // Particle Animation JavaScript
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        const maxParticles = 100; // Number of particles
-
-        // Function to set canvas dimensions
-        function setCanvasDimensions() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        // Particle constructor
-        function Particle(x, y, size, speedX, speedY, color) {
-            this.x = x;
-            this.y = y;
-            this.size = size;
-            this.speedX = speedX;
-            this.speedY = speedY;
-            this.color = color;
-            this.opacity = Math.random() * 0.7 + 0.3; // Random opacity for fading effect
-        }
-
-        // Draw particle
-        Particle.prototype.draw = function() {
-            ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        // Update particle position and opacity
-        Particle.prototype.update = function() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-
-            // Fade out as it moves
-            this.opacity -= 0.005;
-
-            // If particle goes off screen or fades out, reset it
-            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height || this.opacity <= 0) {
-                this.reset();
-            }
-        }
-
-        // Reset particle to a new random position and properties
-        Particle.prototype.reset = function() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 1; // Size between 1 and 3
-            this.speedX = (Math.random() - 0.5) * 0.5; // Slow random movement
-            this.speedY = (Math.random() - 0.5) * 0.5;
-            this.opacity = Math.random() * 0.7 + 0.3;
-            // Dark military colors (grays, dark blues, subtle greens)
-            const colors = [
-                {r: 100, g: 116, b: 139}, // slate-500
-                {r: 71, g: 85, b: 105},  // slate-700
-                {r: 51, g: 65, b: 85},   // slate-800
-                {r: 30, g: 41, b: 59},   // slate-900
-                {r: 60, g: 70, b: 80},   // custom dark grey
-                {r: 40, g: 50, b: 60}    // custom darker grey
-            ];
-            this.color = colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        // Initialize particles
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < maxParticles; i++) {
-                const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-                const size = Math.random() * 2 + 1;
-                const speedX = (Math.random() - 0.5) * 0.5;
-                const speedY = (Math.random() - 0.5) * 0.5;
-                const colors = [
-                    {r: 100, g: 116, b: 139},
-                    {r: 71, g: 85, b: 105},
-                    {r: 51, g: 65, b: 85},
-                    {r: 30, g: 41, b: 59},
-                    {r: 60, g: 70, b: 80},
-                    {r: 40, g: 50, b: 60}
-                ];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                particles.push(new Particle(x, y, size, speedX, speedY, color));
-            }
-        }
-
-        // Animation loop
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-
-        // Event listeners for particles
-        window.addEventListener('load', () => {
-            setCanvasDimensions();
-            initParticles();
-            animateParticles();
-        });
-
-        window.addEventListener('resize', () => {
-            setCanvasDimensions();
-            // Re-initialize particles to distribute them evenly on new size
-            initParticles();
-        });
-
         // Image Modal functionality
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("img01");
@@ -432,9 +308,9 @@
             modal.classList.remove('show');
         });
 
-        // Close modal when clicking outside the image
+        // Close modal when clicking on the image or outside the image
         modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
+            if (e.target === modal || e.target === modalImg) { // Added modalImg to close on image click
                 modal.classList.remove('show');
             }
         });
