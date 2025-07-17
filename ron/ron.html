@@ -7,11 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS for dark military vibes and modern enhancements */
+        /* Custom CSS for dark blue military vibes and modern enhancements */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #121212; /* Even darker background for modern feel */
-            color: #e0e0e0; /* Light text */
+            background-color: #0F172A; /* Very dark muted blue (slate-950 equivalent) */
+            color: #E2E8F0; /* Light text (slate-200 equivalent) */
             overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
@@ -22,8 +22,8 @@
 
         /* Mission card styling */
         .mission-card {
-            background-color: #1e1e1e; /* Slightly lighter dark background for cards */
-            border: 1px solid #333333; /* Subtle border */
+            background-color: #1E293B; /* Slightly lighter dark blue for cards (slate-900 equivalent) */
+            border: 1px solid #334155; /* Subtle border (slate-700 equivalent) */
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
@@ -35,7 +35,7 @@
 
         /* Heading styling */
         h1, h2 {
-            color: #f0f0f0; /* Lighter heading text */
+            color: #F8FAFC; /* Lighter heading text (slate-50 equivalent) */
         }
 
         /* Image container for aspect ratio and overlay */
@@ -48,7 +48,7 @@
             border-radius: 0.75rem; /* More rounded corners */
             cursor: pointer;
             margin-bottom: 1.5rem;
-            background-color: #2a2a2a; /* Added background color for images */
+            background-color: #334155; /* Dark blue for image placeholders (slate-700 equivalent) */
             display: flex; /* Flexbox for centering content within */
             align-items: center;
             justify-content: center;
@@ -70,7 +70,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent dark overlay */
+            background-color: rgba(15, 23, 42, 0.6); /* Semi-transparent dark blue overlay */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -116,7 +116,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(18, 18, 18, 0.95); /* Darker, more opaque modal background */
+            background-color: rgba(15, 23, 42, 0.95); /* Darker, more opaque modal background */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -143,7 +143,7 @@
         }
 
         .modal-caption {
-            color: #f0f0f0;
+            color: #F8FAFC; /* Lighter caption text */
             font-weight: bold;
             font-size: 1.6rem; /* Slightly larger caption */
             text-align: center;
@@ -155,7 +155,7 @@
             position: absolute;
             top: 20px; /* Adjusted position */
             right: 25px; /* Adjusted position */
-            color: #f0f0f0;
+            color: #F8FAFC; /* Lighter close button color */
             font-size: 48px; /* Larger close button */
             font-weight: lighter; /* Lighter font weight for 'x' */
             transition: 0.3s;
@@ -164,7 +164,7 @@
 
         .close:hover,
         .close:focus {
-            color: #cccccc;
+            color: #94A3B8; /* Muted blue on hover (slate-400 equivalent) */
             text-decoration: none;
             cursor: pointer;
         }
@@ -197,11 +197,11 @@
 <body class="antialiased">
     <div class="container mx-auto px-4 py-8 md:py-12">
         <header class="text-center mb-10 md:mb-16">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-gray-100">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-slate-100">
                 <span class="block">READY OR NOT</span>
-                <span class="block text-xl md:text-3xl font-light text-gray-400 mt-2">Maps and Mission Tips</span>
+                <span class="block text-xl md:text-3xl font-light text-slate-400 mt-2">Maps and Mission Tips</span>
             </h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
+            <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto">
                 Click maps to enlarge and zoom around
             </p>
         </header>
@@ -209,14 +209,14 @@
         <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-200">1. Thank You, Come Again</h2>
+                <h2 class="text-2xl font-semibold mb-4 text-slate-200">1. Thank You, Come Again</h2>
                 <div class="image-container rounded-lg" data-image-src="m1.jpg" data-caption="Thank You, Come Again Map">
-                    <img src="m1.jpg" alt="Map for Thank You, Come Again" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Map+Missing'">
+                    <img src="m1.jpg" alt="Map for Thank You, Come Again" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Click to view full size</span>
                     </div>
                 </div>
-                <div class="tips-text text-gray-300 leading-relaxed">
+                <div class="tips-text text-slate-300 leading-relaxed">
                     <p class="mb-3">All hostiles and objectives are located on a single floor.</p>
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Crystal Leighton:</strong> Found in the small room marked “STAFF ONLY,” located to the left of the starting area.</li>
@@ -227,26 +227,26 @@
             </section>
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-200">2. 23 Megabytes a Second</h2>
+                <h2 class="text-2xl font-semibold mb-4 text-slate-200">2. 23 Megabytes a Second</h2>
                 <div class="image-container rounded-lg" data-image-src="m20.jpg" data-caption="23 Megabytes a Second - Ground Floor">
-                    <img src="m20.jpg" alt="Ground Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
+                    <img src="m20.jpg" alt="Ground Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Ground Floor</span>
                     </div>
                 </div>
                 <div class="image-container rounded-lg" data-image-src="m21.jpg" data-caption="23 Megabytes a Second - First Floor">
-                    <img src="m21.jpg" alt="First Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=First+Floor+Map+Missing'">
+                    <img src="m21.jpg" alt="First Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=First+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">First Floor</span>
                     </div>
                 </div>
                 <div class="image-container rounded-lg" data-image-src="m22.jpg" data-caption="23 Megabytes a Second - Top Floor">
-                    <img src="m22.jpg" alt="Top Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Top+Floor+Map+Missing'">
+                    <img src="m22.jpg" alt="Top Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Top+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Top Floor</span>
                     </div>
                 </div>
-                <div class="tips-text text-gray-300 leading-relaxed">
+                <div class="tips-text text-slate-300 leading-relaxed">
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Ground Floor:</strong> Simply clear it.</li>
                         <li><strong>First Floor:</strong> Only one apartment (Apartment 13), which contains the server farm evidence.</li>
@@ -261,32 +261,32 @@
             </section>
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-200">3. Twisted Nerve</h2>
+                <h2 class="text-2xl font-semibold mb-4 text-slate-200">3. Twisted Nerve</h2>
                 <div class="image-container rounded-lg" data-image-src="m30.jpg" data-caption="Twisted Nerve - Ground Floor">
-                    <img src="m30.jpg" alt="Ground Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
+                    <img src="m30.jpg" alt="Ground Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Ground Floor</span>
                     </div>
                 </div>
                 <div class="image-container rounded-lg" data-image-src="m31.jpg" data-caption="Twisted Nerve - First Floor">
-                    <img src="m31.jpg" alt="First Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=First+Floor+Map+Missing'">
+                    <img src="m31.jpg" alt="First Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=First+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">First Floor</span>
                     </div>
                 </div>
                 <div class="image-container rounded-lg" data-image-src="m32.jpg" data-caption="Twisted Nerve - Second Floor">
-                    <img src="m32.jpg" alt="Second Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Second+Floor+Map+Missing'">
+                    <img src="m32.jpg" alt="Second Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Second+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Second Floor</span>
                     </div>
                 </div>
                 <div class="image-container rounded-lg" data-image-src="m33.jpg" data-caption="Twisted Nerve - Underground Tunnel">
-                    <img src="m33.jpg" alt="Underground Tunnel Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Underground+Tunnel+Map+Missing'">
+                    <img src="m33.jpg" alt="Underground Tunnel Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Underground+Tunnel+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Underground Tunnel</span>
                     </div>
                 </div>
-                <div class="tips-text text-gray-300 leading-relaxed">
+                <div class="tips-text text-slate-300 leading-relaxed">
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Left House (not fumigated):</strong>
                             <ul class="list-circle ml-5 mt-1">
@@ -307,51 +307,51 @@
             </section>
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-200">4. The Spider</h2>
+                <h2 class="text-2xl font-semibold mb-4 text-slate-200">4. The Spider</h2>
                 <div class="image-container rounded-lg" data-image-src="m40.jpg" data-caption="The Spider - Ground Floor">
-                    <img src="m40.jpg" alt="Ground Floor Map for The Spider" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
+                    <img src="m40.jpg" alt="Ground Floor Map for The Spider" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Ground Floor</span>
                     </div>
                 </div>
                 <div class="image-container rounded-lg" data-image-src="m41.jpg" data-caption="The Spider - Top Floor / Roof">
-                    <img src="m41.jpg" alt="Top Floor Map for The Spider" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Top+Floor+Map+Missing'">
+                    <img src="m41.jpg" alt="Top Floor Map for The Spider" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Top+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Top Floor / Roof</span>
                     </div>
                 </div>
-                <div class="tips-text text-gray-300 leading-relaxed">
+                <div class="tips-text text-slate-300 leading-relaxed">
                     <p class="mb-3">No soft objective to complete or special evidence to report.</p>
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Market (start area):</strong> Simply clear it.</li>
                         <li><strong>Ground Floor:</strong> Clear the area. Note: Brixley is often around the dressing room in the center.</li>
                         <li><strong>Roof:</strong> Simply clear it.</li>
                     </ul>
-                    <p class="mt-3 italic text-gray-400">*If civilians are hard to locate, check the homeless tent areas.</p>
+                    <p class="mt-3 italic text-slate-400">*If civilians are hard to locate, check the homeless tent areas.</p>
                 </div>
             </section>
 
             <section class="mission-card p-6 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-200">5. A Lethal Obsession</h2>
+                <h2 class="text-2xl font-semibold mb-4 text-slate-200">5. A Lethal Obsession</h2>
                 <div class="image-container rounded-lg" data-image-src="m50.jpg" data-caption="A Lethal Obsession - Ground Floor">
-                    <img src="m50.jpg" alt="Ground Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Ground+Floor+Map+Missing'">
+                    <img src="m50.jpg" alt="Ground Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Ground Floor</span>
                     </div>
                 </div>
                 <div class="image-container rounded-lg" data-image-src="m51.jpg" data-caption="A Lethal Obsession - First Floor">
-                    <img src="m51.jpg" alt="First Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=First+Floor+Map+Missing'">
+                    <img src="m51.jpg" alt="First Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=First+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">First Floor</span>
                     </div>
                 </div>
                 <div class="image-container rounded-lg" data-image-src="m52.jpg" data-caption="A Lethal Obsession - Second Floor">
-                    <img src="m52.jpg" alt="Second Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/333/FFF?text=Second+Floor+Map+Missing'">
+                    <img src="m52.jpg" alt="Second Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Second+Floor+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Second Floor</span>
                     </div>
                 </div>
-                <div class="tips-text text-gray-300 leading-relaxed">
+                <div class="tips-text text-slate-300 leading-relaxed">
                     <p class="mb-3">Pie or Mirror every single door and cut tripwires.</p>
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Ground floor:</strong> Federal documents evidence.</li>
@@ -362,13 +362,13 @@
             </section>
 
             <section class="mission-card p-6 rounded-xl shadow-lg flex items-center justify-center text-center">
-                <p class="text-xl font-semibold text-gray-300">Other mission data to come as I play them, this page will be updated over time, thank you for your patience.</p>
+                <p class="text-xl font-semibold text-slate-300">Other mission data to come as I play them, this page will be updated over time, thank you for your patience.</p>
             </section>
 
         </main>
 
-        <footer class="text-center mt-12 pt-8 border-t border-gray-700 text-gray-500 text-sm">
-            <p> *Made openly for the benefit of the whole community as a simple, helpful guide. Maps sourced from <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3137562299" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" target="_blank" rel="noopener noreferrer">this public post</a>.</p>
+        <footer class="text-center mt-12 pt-8 border-t border-slate-700 text-slate-500 text-sm">
+            <p>Made openly for the benefit of the community as a simple, helpful guide. Maps sourced from <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3137562299" class="text-indigo-400 hover:text-indigo-300 transition-colors duration-200" target="_blank" rel="noopener noreferrer">this public post</a>.</p>
         </footer>
     </div>
 
