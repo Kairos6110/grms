@@ -169,6 +169,42 @@
             cursor: pointer;
         }
 
+        /* Mission Selector */
+        .mission-selector {
+            background-color: #1E293B; /* Same as card background */
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .mission-selector select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            background-color: #334155; /* Slate-700 for input */
+            color: #E2E8F0; /* Light text */
+            border: 1px solid #475569; /* Slate-600 border */
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1.5;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%204%205%22%3E%3Cpath%20fill%3D%22%23E2E8F0%22%20d%3D%22M2%200L0%202h4zm0%205L0%203h4z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow */
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 0.8em;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .mission-selector select:focus {
+            outline: none;
+            border-color: #6366F1; /* Indigo-500 on focus */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Focus ring */
+        }
+
+
         /* Responsive adjustments for overall layout */
         @media (max-width: 768px) {
             .container {
@@ -206,9 +242,28 @@
             </p>
         </header>
 
+        <div class="mission-selector max-w-xl mx-auto">
+            <label for="mission-select" class="block text-slate-300 text-lg font-semibold mb-2 text-center">Jump to a Mission:</label>
+            <select id="mission-select">
+                <option value="">-- Select a Mission --</option>
+                <option value="thank-you-come-again">1. Thank You, Come Again</option>
+                <option value="megabytes-a-second">2. 23 Megabytes a Second</option>
+                <option value="twisted-nerve">3. Twisted Nerve</option>
+                <option value="the-spider">4. The Spider</option>
+                <option value="a-lethal-obsession">5. A Lethal Obsession</option>
+                <option value="ides-of-march">6. Ides of March</option>
+                <option value="sinuous-trail">7. Sinuous Trail</option>
+                <option value="ends-of-the-earth">8. Ends of the Earth</option>
+                <option value="greased-palms">9. Greased Palms</option>
+                <option value="valley-of-the-dolls">10. Valley of the Dolls</option>
+                <option value="elephant">11. Elephant</option>
+                <option value="rust-belt">12. Rust Belt</option>
+            </select>
+        </div>
+
         <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="thank-you-come-again" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">1. Thank You, Come Again</h2>
                 <div class="image-container rounded-lg" data-image-src="m1.jpg" data-caption="Thank You, Come Again Map">
                     <img src="m1.jpg" alt="Map for Thank You, Come Again" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
@@ -226,7 +281,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="megabytes-a-second" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">2. 23 Megabytes a Second</h2>
                 <div class="image-container rounded-lg" data-image-src="m20.jpg" data-caption="23 Megabytes a Second - Ground Floor">
                     <img src="m20.jpg" alt="Ground Floor Map for 23 Megabytes a Second" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
@@ -260,7 +315,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="twisted-nerve" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">3. Twisted Nerve</h2>
                 <div class="image-container rounded-lg" data-image-src="m30.jpg" data-caption="Twisted Nerve - Ground Floor">
                     <img src="m30.jpg" alt="Ground Floor Map for Twisted Nerve" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
@@ -306,7 +361,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="the-spider" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">4. The Spider</h2>
                 <div class="image-container rounded-lg" data-image-src="m40.jpg" data-caption="The Spider - Ground Floor">
                     <img src="m40.jpg" alt="Ground Floor Map for The Spider" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
@@ -331,7 +386,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="a-lethal-obsession" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">5. A Lethal Obsession</h2>
                 <div class="image-container rounded-lg" data-image-src="m50.jpg" data-caption="A Lethal Obsession - Ground Floor">
                     <img src="m50.jpg" alt="Ground Floor Map for A Lethal Obsession" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
@@ -362,7 +417,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="ides-of-march" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">6. Ides of March</h2>
                 <div class="image-container rounded-lg" data-image-src="m60.jpg" data-caption="Ides of March Map">
                     <img src="m60.jpg" alt="Map for Ides of March" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
@@ -376,7 +431,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="sinuous-trail" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">7. Sinuous Trail</h2>
                 <div class="image-container rounded-lg" data-image-src="m70.jpg" data-caption="Sinuous Trail - Ground Floor">
                     <img src="m70.jpg" alt="Ground Floor Map for Sinuous Trail" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
@@ -404,7 +459,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="ends-of-the-earth" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">8. Ends of the Earth</h2>
                 <div class="image-container rounded-lg" data-image-src="m80.jpg" data-caption="Ends of the Earth - Ground Floor">
                     <img src="m80.jpg" alt="Ground Floor Map for Ends of the Earth" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
@@ -432,7 +487,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="greased-palms" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">9. Greased Palms</h2>
                 <div class="image-container rounded-lg" data-image-src="m90.jpg" data-caption="Greased Palms - Ground Floor">
                     <img src="m90.jpg" alt="Ground Floor Map for Greased Palms" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
@@ -465,7 +520,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="valley-of-the-dolls" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">10. Valley of the Dolls</h2>
                 <div class="image-container rounded-lg" data-image-src="M102.JPG" data-caption="Valley of the Dolls - Floor 2">
                     <img src="M102.JPG" alt="Floor 2 Map for Valley of the Dolls" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Floor+2+Map+Missing'">
@@ -500,7 +555,7 @@
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="elephant" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">11. Elephant</h2>
                 <div class="image-container rounded-lg" data-image-src="m11.jpg" data-caption="Elephant - Ground Floor">
                     <img src="m11.jpg" alt="Ground Floor Map for Elephant" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
@@ -515,7 +570,7 @@
                     </div>
                 </div>
                 <div class="tips-text text-slate-300 leading-relaxed">
-                    <p class="mb-3">This mission requires extreme speed — you HAVE to run and gun and listen for beeps, only about 10 minutes before the school blows up. Any delay could result in hostages dying or bombs detonating. There are always two bombs, randomly placed, and each takes 15 seconds to defuse. Keep moving and plan quickly. Known Bomb Locations (Prioritize These):</p>
+                    <p class="mb-3">This mission requires extreme speed — you HAVE to run and gun and listen for beeps, you have only about 10 minutes before the school blows up. Any delay could result in hostages dying or bombs detonating. There are always two bombs, randomly placed, and each takes 15 seconds to defuse. Keep moving and plan quickly.<br><br>Known Bomb Locations (Prioritize These):</p>
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Ground Floor:</strong>
                             <ul class="list-circle ml-5 mt-1">
@@ -535,11 +590,11 @@
                         </li>
                         <li>They are never outside.</li>
                     </ul>
-                    <p class="mt-3">Splitting up can save time. Don't worry about securing civilians until the 2 bombs have been defused so you don't waste time.</p>
+                    <p class="mt-3">Splitting up saves time. There are only around 4-5 active shooters. Don't worry about securing civilians until the 2 bombs have been defused so you don't waste time.</p>
                 </div>
             </section>
 
-            <section class="mission-card p-6 rounded-xl shadow-lg">
+            <section id="rust-belt" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">12. Rust Belt</h2>
                 <div class="image-container rounded-lg" data-image-src="m12g.jpg" data-caption="Rust Belt - Ground">
                     <img src="m12g.jpg" alt="Ground Floor Map for Rust Belt" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Map+Missing'">
@@ -605,6 +660,17 @@
         modal.addEventListener('click', function(e) {
             if (e.target === modal || e.target === modalImg) {
                 modal.classList.remove('show');
+            }
+        });
+
+        // Mission selector functionality
+        document.getElementById('mission-select').addEventListener('change', function() {
+            const selectedId = this.value;
+            if (selectedId) {
+                const targetElement = document.getElementById(selectedId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
         });
     </script>
