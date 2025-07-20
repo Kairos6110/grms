@@ -26,11 +26,13 @@
             border: 1px solid #334155; /* Subtle border (slate-700 equivalent) */
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            display: flex; /* Added for consistent spacing */
-            flex-direction: column; /* Added for consistent spacing */
+            display: flex;
+            flex-direction: column;
+            width: 100%; /* Ensure cards take full available width within their grid column */
             max-width: 500px; /* Limit max width of card for better appearance on very large screens */
             margin-left: auto; /* Center cards in the single column */
             margin-right: auto; /* Center cards in the single column */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
 
         .mission-card:hover {
@@ -99,10 +101,10 @@
 
         /* Text styling for tips */
         .tips-text {
-            flex-grow: 1; /* Added for consistent spacing */
-            display: flex; /* Added for consistent spacing */
-            flex-direction: column; /* Added for consistent spacing */
-            justify-content: space-between; /* Added for consistent spacing */
+            flex-grow: 1; /* Allows the text content to grow and fill available space */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the start */
         }
         
         .tips-text ul {
@@ -467,6 +469,8 @@
                         <span class="image-overlay-text">Click to view full size</span>
                     </div>
                 </div>
+                <div class="image-container rounded-lg" style="visibility: hidden; padding-bottom: 0; margin-bottom: 0;">
+                    </div>
                 <div class="tips-text text-slate-300 leading-relaxed">
                     <p class="mb-3">Peek or mirror every single door and cut tripwires.</p>
                     <p class="mb-3">Check map for locations.</p>
@@ -650,6 +654,8 @@
                         <span class="image-overlay-text">Underground</span>
                     </div>
                 </div>
+                <div class="image-container rounded-lg" style="visibility: hidden; padding-bottom: 0; margin-bottom: 0;">
+                    </div>
                 <div class="tips-text text-slate-300 leading-relaxed">
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Soft Objectives:</strong>
@@ -749,6 +755,6 @@
             }
         }
 
-    </script>
+    </script>   
 </body>
 </html>
