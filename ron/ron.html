@@ -501,7 +501,7 @@
                 <div class="tips-text text-slate-300 leading-relaxed">
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Special evidence:</strong> 'bag of cash' on the couch in the bedroom (First Floor).</li>
-                        <li><strong>3D Printers Weapon Lab:</strong> Located on the Second Floor.</li>
+                        <li><strong>3D Printers Weapon Lab:</b> Located on the Second Floor.</li>
                     </ul>
                 </div>
             </section>
@@ -710,28 +710,22 @@
         });
 
         // Mission selector functionality
-        document.getElementById('mission-select').addEventListener('change', function() {
-            const selectedId = this.value;
-            if (selectedId) {
-                const targetElement = document.getElementById(selectedId);
-                if (targetElement) {
-                    // Check if the element is already active (selected in the dropdown)
-                    // If the user re-selects the same item, force a scroll
-                    if (this.dataset.lastSelected === selectedId) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    } else {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                    this.dataset.lastSelected = selectedId; // Store the last selected value
-                }
-            }
-        });
+       const missionSelect = document.getElementById('mission-select');
 
-        // Set the initial value of data-lastSelected when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            const selectElement = document.getElementById('mission-select');
-            selectElement.dataset.lastSelected = selectElement.value;
-        });
+missionSelect.addEventListener('change', handleMissionSelect);
+missionSelect.addEventListener('click', handleMissionSelect); // catches re-clicks of same option
+
+function handleMissionSelect() {
+    const selectedId = missionSelect.value;
+    if (selectedId) {
+        const targetElement = document.getElementById(selectedId);
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'auto', block: 'start' });
+            missionSelect.dataset.lastSelected = selectedId;
+        }
+    }
+}
+
     </script>
 </body>
 </html>
