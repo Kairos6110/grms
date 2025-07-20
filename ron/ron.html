@@ -26,6 +26,11 @@
             border: 1px solid #334155; /* Subtle border (slate-700 equivalent) */
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            display: flex; /* Added for consistent spacing */
+            flex-direction: column; /* Added for consistent spacing */
+            max-width: 500px; /* Limit max width of card for better appearance on very large screens */
+            margin-left: auto; /* Center cards in the single column */
+            margin-right: auto; /* Center cards in the single column */
         }
 
         .mission-card:hover {
@@ -42,7 +47,8 @@
         .image-container {
             position: relative;
             width: 100%;
-            padding-bottom: 75%; /* 4:3 Aspect Ratio (height / width * 100). Adjust as needed, e.g., 56.25% for 16:9 */
+            /* Original padding-bottom for 4:3 aspect ratio */
+            padding-bottom: 75%; 
             height: 0;
             overflow: hidden;
             border-radius: 0.75rem; /* More rounded corners */
@@ -92,6 +98,13 @@
         }
 
         /* Text styling for tips */
+        .tips-text {
+            flex-grow: 1; /* Added for consistent spacing */
+            display: flex; /* Added for consistent spacing */
+            flex-direction: column; /* Added for consistent spacing */
+            justify-content: space-between; /* Added for consistent spacing */
+        }
+        
         .tips-text ul {
             list-style-type: disc;
             margin-left: 1.5rem;
@@ -244,6 +257,16 @@
                 scroll-padding-top: 120px; /* Adjust for smaller screens if header height changes */
             }
         }
+
+        /* Desktop adjustments for image size */
+        @media (min-width: 769px) {
+            .image-container {
+                /* Limit the width of the image container itself to prevent images from becoming too wide */
+                max-width: 350px; /* Adjust this value as needed */
+                margin-left: auto; /* Center the image container within the card */
+                margin-right: auto; /* Center the image container within the card */
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -280,7 +303,7 @@
             </div>
         </div>
 
-        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+        <main class="grid grid-cols-1 gap-8 mt-8 items-stretch">
 
             <section id="thank-you-come-again" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">1. Thank You, Come Again</h2>
@@ -501,7 +524,7 @@
                 <div class="tips-text text-slate-300 leading-relaxed">
                     <ul class="list-disc ml-5 space-y-2">
                         <li><strong>Special evidence:</strong> 'bag of cash' on the couch in the bedroom (First Floor).</li>
-                        <li><strong>3D Printers Weapon Lab:</b> Located on the Second Floor.</li>
+                        <li><strong>3D Printers Weapon Lab:</strong> Located on the Second Floor.</li>
                     </ul>
                 </div>
             </section>
@@ -710,21 +733,21 @@
         });
 
         // Mission selector functionality
-       const missionSelect = document.getElementById('mission-select');
+        const missionSelect = document.getElementById('mission-select');
 
-missionSelect.addEventListener('change', handleMissionSelect);
-missionSelect.addEventListener('click', handleMissionSelect); // catches re-clicks of same option
+        missionSelect.addEventListener('change', handleMissionSelect);
+        missionSelect.addEventListener('click', handleMissionSelect); // catches re-clicks of same option
 
-function handleMissionSelect() {
-    const selectedId = missionSelect.value;
-    if (selectedId) {
-        const targetElement = document.getElementById(selectedId);
-        if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'auto', block: 'start' });
-            missionSelect.dataset.lastSelected = selectedId;
+        function handleMissionSelect() {
+            const selectedId = missionSelect.value;
+            if (selectedId) {
+                const targetElement = document.getElementById(selectedId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'auto', block: 'start' });
+                    missionSelect.dataset.lastSelected = selectedId;
+                }
+            }
         }
-    }
-}
 
     </script>
 </body>
