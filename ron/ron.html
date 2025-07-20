@@ -170,12 +170,21 @@
         }
 
         /* Mission Selector */
+        .mission-selector-container {
+            position: sticky; /* Makes the element stick */
+            top: 0; /* Sticks to the top of the viewport */
+            z-index: 50; /* Ensure it stays above other content when scrolling */
+            background-color: #0F172A; /* Match body background to avoid transparency issues when sticking */
+            padding-top: 1rem; /* Add some padding at the top */
+            padding-bottom: 1rem; /* Add some padding at the bottom */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add subtle shadow when sticky */
+        }
+
         .mission-selector {
             background-color: #1E293B; /* Same as card background */
             border-radius: 0.75rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             padding: 1rem;
-            margin-bottom: 2.5rem;
         }
 
         .mission-selector select {
@@ -204,6 +213,10 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Focus ring */
         }
 
+        /* Add this to adjust the scroll position */
+        html {
+            scroll-padding-top: 140px; /* Adjust this value based on the height of your sticky header + desired offset */
+        }
 
         /* Responsive adjustments for overall layout */
         @media (max-width: 768px) {
@@ -227,6 +240,9 @@
             .image-overlay-text {
                 font-size: 1rem;
             }
+            html {
+                scroll-padding-top: 120px; /* Adjust for smaller screens if header height changes */
+            }
         }
     </style>
 </head>
@@ -242,27 +258,29 @@
             </p>
         </header>
 
-        <div class="mission-selector max-w-xl mx-auto">
-            <label for="mission-select" class="block text-slate-300 text-lg font-semibold mb-2 text-center">Jump to a Mission:</label>
-            <select id="mission-select">
-                <option value="">-- Select a Mission --</option>
-                <option value="thank-you-come-again">1. Thank You, Come Again</option>
-                <option value="megabytes-a-second">2. 23 Megabytes a Second</option>
-                <option value="twisted-nerve">3. Twisted Nerve</option>
-                <option value="the-spider">4. The Spider</option>
-                <option value="a-lethal-obsession">5. A Lethal Obsession</option>
-                <option value="ides-of-march">6. Ides of March</option>
-                <option value="sinuous-trail">7. Sinuous Trail</option>
-                <option value="ends-of-the-earth">8. Ends of the Earth</option>
-                <option value="greased-palms">9. Greased Palms</option>
-                <option value="valley-of-the-dolls">10. Valley of the Dolls</option>
-                <option value="elephant">11. Elephant</option>
-                <option value="rust-belt">12. Rust Belt</option>
-                <option value="sins-of-the-father">13. Sins of The Father</option>
-            </select>
+        <div class="mission-selector-container">
+            <div class="mission-selector max-w-xl mx-auto">
+                <label for="mission-select" class="block text-slate-300 text-lg font-semibold mb-2 text-center"></label>
+                <select id="mission-select">
+                    <option value="">-- Select a Mission --</option>
+                    <option value="thank-you-come-again">1. Thank You, Come Again</option>
+                    <option value="megabytes-a-second">2. 23 Megabytes a Second</option>
+                    <option value="twisted-nerve">3. Twisted Nerve</option>
+                    <option value="the-spider">4. The Spider</option>
+                    <option value="a-lethal-obsession">5. A Lethal Obsession</option>
+                    <option value="ides-of-march">6. Ides of March</option>
+                    <option value="sinuous-trail">7. Sinuous Trail</option>
+                    <option value="ends-of-the-earth">8. Ends of the Earth</option>
+                    <option value="greased-palms">9. Greased Palms</option>
+                    <option value="valley-of-the-dolls">10. Valley of the Dolls</option>
+                    <option value="elephant">11. Elephant</option>
+                    <option value="rust-belt">12. Rust Belt</option>
+                    <option value="sins-of-the-father">13. Sins of The Father</option>
+                </select>
+            </div>
         </div>
 
-        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
 
             <section id="thank-you-come-again" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">1. Thank You, Come Again</h2>
@@ -697,9 +715,22 @@
             if (selectedId) {
                 const targetElement = document.getElementById(selectedId);
                 if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Check if the element is already active (selected in the dropdown)
+                    // If the user re-selects the same item, force a scroll
+                    if (this.dataset.lastSelected === selectedId) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    this.dataset.lastSelected = selectedId; // Store the last selected value
                 }
             }
+        });
+
+        // Set the initial value of data-lastSelected when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectElement = document.getElementById('mission-select');
+            selectElement.dataset.lastSelected = selectElement.value;
         });
     </script>
 </body>
