@@ -56,7 +56,7 @@
             border-radius: 0.75rem; /* More rounded corners */
             cursor: pointer;
             margin-bottom: 1.5rem;
-            background-color: #334155; /* Dark blue for image placeholders (slate-700 equivalent) */
+            background-color: #a8a8a8; /* Set background color to a8a8a8 for map images */
             display: flex; /* Flexbox for centering content within */
             align-items: center;
             justify-content: center;
@@ -70,6 +70,7 @@
             height: 100%;
             object-fit: contain; /* Ensures the entire image is visible without cropping, maintaining aspect ratio */
             border-radius: 0.75rem;
+            background-color: #a8a8a8; /* Also ensure the image itself has this background to fill transparent areas */
         }
 
         .image-overlay {
@@ -155,6 +156,7 @@
             max-height: 85%; /* Adjusted max-height to make space for caption */
             object-fit: contain;
             border-radius: 0.75rem;
+            background-color: #a8a8a8; /* Ensure modal image background is a8a8a8 */
         }
 
         .modal-caption {
@@ -215,7 +217,7 @@
             cursor: pointer;
             font-size: 1rem;
             line-height: 1.5;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%204%205%22%3E%3Cpath%20fill%3D%22%23E2E8F0%22%20d%3D%22M2%200L0%202h4zm0%205L0%203h4z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%204%205%22%3E%3Cpath%20fill%3D%23E2E8F0%22%20d%3D%22M2%200L0%202h4zm0%205L0%203h4z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow */
             background-repeat: no-repeat;
             background-position: right 0.75rem center;
             background-size: 0.8em;
@@ -301,6 +303,9 @@
                     <option value="elephant">11. Elephant</option>
                     <option value="rust-belt">12. Rust Belt</option>
                     <option value="sins-of-the-father">13. Sins of The Father</option>
+                    <option value="neon-tomb">14. Neon Tomb</option>
+                    <option value="buy-cheap-buy-twice">15. Buy Cheap Buy Twice</option>
+                    <option value="carriers-of-the-vine">16. Carriers of the Vine</option>
                 </select>
             </div>
         </div>
@@ -690,7 +695,84 @@
                 </div>
                 <div class="tips-text text-slate-300 leading-relaxed">
                     <ul class="list-disc ml-5 space-y-2">
-                        <li>No soft objectives just secure everything.</li>
+                        <li>Peek or Mirror every single door and cut tripwires. No soft objectives just secure everything.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="neon-tomb" class="mission-card p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4 text-slate-200">14. Neon Tomb</h2>
+                <div class="image-container rounded-lg" data-image-src="m14g.jpg" data-caption="Neon Tomb - Ground Floor">
+                    <img src="m14g.jpg" alt="Ground Floor Map for Neon Tomb" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Floor+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Ground Floor</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m14f1.jpg" data-caption="Neon Tomb - Floor 1">
+                    <img src="m14f1.jpg" alt="Floor 1 Map for Neon Tomb" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Floor+1+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Floor 1</span>
+                    </div>
+                </div>
+                <div class="tips-text text-slate-300 leading-relaxed">
+                    <ul class="list-disc ml-5 space-y-2">
+                        <li>No soft objectives, just secure everything.</li>
+                        <li>Be prepared for suicide bombers (wearing explosives belt). They often detonate themselves running to you so keep some distance and use every LTL items to subdue them and arrest safely.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="buy-cheap-buy-twice" class="mission-card p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4 text-slate-200">15. Buy Cheap Buy Twice</h2>
+                <div class="image-container rounded-lg" data-image-src="m15g.jpg" data-caption="Buy Cheap Buy Twice - Ground Map">
+                    <img src="m15g.jpg" alt="Ground Floor Map for Buy Cheap Buy Twice" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Ground Map</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m15f1.jpg" data-caption="Buy Cheap Buy Twice - Floor 1">
+                    <img src="m15f1.jpg" alt="Floor 1 Map for Buy Cheap Buy Twice" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Floor+1+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Floor 1</span>
+                    </div>
+                </div>
+                <div class="tips-text text-slate-300 leading-relaxed">
+                    <ul class="list-disc ml-5 space-y-2">
+                        <li><strong>Soft Objectives:</strong>
+                            <ul class="list-circle ml-5 mt-1">
+                                <li>Money or drugs in the garage.</li>
+                                <li>Whiteboard in the office.</li>
+                            </ul>
+                        </li>
+                        <li>Undercover officer is upstairs.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="carriers-of-the-vine" class="mission-card p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4 text-slate-200">16. Carriers of the Vine</h2>
+              
+                <div class="image-container rounded-lg" data-image-src="m16g.jpg" data-caption="Carriers of the Vine - Ground">
+                    <img src="m16g.jpg" alt="Ground Map for Carriers of the Vine" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Ground</span>
+                    </div>
+                </div>
+                  <div class="image-container rounded-lg" data-image-src="m16ug.png" data-caption="Carriers of the Vine - Underground">
+                    <img src="m16ug.png" alt="Underground Map for Carriers of the Vine" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Underground+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Underground</span>
+                    </div>
+                </div>
+                <div class="image-container rounded-lg" data-image-src="m16f1.png" data-caption="Carriers of the Vine - Floor 1">
+                    <img src="m16f1.png" alt="Floor 1 Map for Carriers of the Vine" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Floor+1+Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Floor 1</span>
+                    </div>
+                </div>
+                <div class="tips-text text-slate-300 leading-relaxed">
+                    <ul class="list-disc ml-5 space-y-2">
+                        <li><strong>Soft Objective:</strong> Conspiracy evidence (map drawings) in the first big house.</li>
                     </ul>
                 </div>
             </section>
@@ -701,15 +783,12 @@
 
         </main>
 
-        <footer class="text-center mt-12 pt-8 border-t border-slate-700 text-slate-500 text-sm">
-            <p>Made openly for the benefit of the community as a simple, helpful guide. Maps sourced from <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3137562299" class="text-indigo-400 hover:text-indigo-300 transition-colors duration-200" target="_blank" rel="noopener noreferrer">this public post</a>.</p>
-        </footer>
-    </div>
+        <div id="imageModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <div id="caption" class="modal-caption"></div>
+        </div>
 
-    <div id="imageModal" class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="img01">
-        <div id="caption" class="modal-caption"></div>
     </div>
 
     <script>
@@ -755,6 +834,6 @@
             }
         }
 
-    </script>   
+    </script>
 </body>
 </html>
