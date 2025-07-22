@@ -242,13 +242,7 @@
                 padding-right: 1rem;
             }
 
-            h1 {
-                font-size: 3rem; /* Smaller heading on mobile */
-            }
-
-            h1 span:last-child {
-                font-size: 1.8rem;
-            }
+           
 
             .mission-card {
                 padding: 1.25rem;
@@ -271,17 +265,38 @@
                 margin-right: auto; /* Center the image container within the card */
             }
         }
+
+        /* New styles for the logo */
+        .header-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem; /* Adjust as needed */
+        }
+
+       .header-logo {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-width: 400px; /* Default for mobile */
+}
+
+@media (min-width: 768px) {
+    .header-logo {
+        max-width: 600px; /* On desktop and larger */
+    }
+}
+
     </style>
 </head>
 <body class="antialiased">
     <div class="container mx-auto px-4 py-8 md:py-12">
         <header class="text-center mb-10 md:mb-16">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-slate-100">
-                <span class="block">READY OR NOT</span>
-                <span class="block text-xl md:text-3xl font-light text-slate-400 mt-2">Game Guide</span>
-            </h1>
+            <div class="header-logo-container">
+                <img src="toplogo.png" alt="Ready Or Not Logo" class="header-logo">
+            </div>
             <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto">
-                Click on the images to enlarge and zoom around
+               The Ultimate Game Guide<br><br>*Click images to  enlarge and zoom around*
             </p>
         </header>
 
@@ -322,7 +337,7 @@
                         <span class="image-overlay-text">Click to view full size</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m1i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m1i.jpg" data-caption="Intel/OBJs">
                     <img src="m1i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -358,7 +373,7 @@
                         <span class="image-overlay-text">Top Floor</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m2i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m2i.jpg" data-caption="Intel/OBJs">
                     <img src="m2i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -404,7 +419,7 @@
                         <span class="image-overlay-text">Underground Tunnel</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m3i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m3i.jpg" data-caption="Intel/OBJs">
                     <img src="m3i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -444,7 +459,7 @@
                         <span class="image-overlay-text">Top Floor / Roof</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m4i.png" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m4i.png" data-caption="Intel/OBJs">
                     <img src="m4i.png" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -481,7 +496,7 @@
                         <span class="image-overlay-text">Second Floor</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m5i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m5i.jpg" data-caption="Intel/OBJs">
                     <img src="m5i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -508,7 +523,7 @@
                 </div>
                 <div class="image-container rounded-lg" style="visibility: hidden; padding-bottom: 0; margin-bottom: 0;">
                     </div>
-                       <div class="image-container rounded-lg" data-image-src="m6i.jpg" data-caption="Intel/OBJs">
+                        <div class="image-container rounded-lg" data-image-src="m6i.jpg" data-caption="Intel/OBJs">
                     <img src="m6i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -568,7 +583,7 @@
                         <span class="image-overlay-text">Second Floor</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m8i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m8i.jpg" data-caption="Intel/OBJs">
                     <img src="m8i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -596,7 +611,7 @@
                         <span class="image-overlay-text">First Floor</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m9i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m9i.jpg" data-caption="Intel/OBJs">
                     <img src="m9i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -647,7 +662,7 @@
                         <span class="image-overlay-text">Underground</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m10i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m10i.jpg" data-caption="Intel/OBJs">
                     <img src="m10i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -676,7 +691,7 @@
                         <span class="image-overlay-text">Floor 1</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m11i.png" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m11i.png" data-caption="Intel/OBJs">
                     <img src="m11i.png" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -710,7 +725,7 @@
             <section id="rust-belt" class="mission-card p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-slate-200">12. Rust Belt</h2>
                 <div class="image-container rounded-lg" data-image-src="m12g.jpg" data-caption="Rust Belt - Ground">
-                    <img src="m12g.jpg" alt="Ground Floor Map for Rust Belt" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Map+Missing'">
+                    <img src="m12g.jpg" alt="Ground Map for Rust Belt" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Ground+Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Ground</span>
                     </div>
@@ -723,7 +738,7 @@
                 </div>
                 <div class="image-container rounded-lg" style="visibility: hidden; padding-bottom: 0; margin-bottom: 0;">
                     </div>
-                       <div class="image-container rounded-lg" data-image-src="m12i.jpg" data-caption="Intel/OBJs">
+                        <div class="image-container rounded-lg" data-image-src="m12i.jpg" data-caption="Intel/OBJs">
                     <img src="m12i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -761,6 +776,12 @@
                         <span class="image-overlay-text">Floor 1</span>
                     </div>
                 </div>
+                    <div class="image-container rounded-lg" data-image-src="m13i.jpg" data-caption="Intel/OBJs">
+                    <img src="m13i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
+                    <div class="image-overlay">
+                        <span class="image-overlay-text">Intel/OBJs</span>
+                    </div>
+                </div>
                 <div class="tips-text text-slate-300 leading-relaxed">
                     <ul class="list-disc ml-5 space-y-2">
                         <li>Peek or Mirror every single door and cut tripwires. No soft objectives just secure everything.</li>
@@ -782,7 +803,7 @@
                         <span class="image-overlay-text">Floor 1</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m14i.png" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m14i.png" data-caption="Intel/OBJs">
                     <img src="m14i.png" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -810,7 +831,7 @@
                         <span class="image-overlay-text">Floor 1</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m15i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m15i.jpg" data-caption="Intel/OBJs">
                     <img src="m15i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -850,7 +871,7 @@
                         <span class="image-overlay-text">Floor 1</span>
                     </div>
                 </div>
-                  <div class="image-container rounded-lg" data-image-src="m16i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m16i.jpg" data-caption="Intel/OBJs">
                     <img src="m16i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -883,31 +904,30 @@
                         <span class="image-overlay-text">Floor 2</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m17i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m17i.jpg" data-caption="Intel/OBJs">
                     <img src="m17i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
                     </div>
-                
                 </div>
                 <div class="tips-text text-slate-300 leading-relaxed">
-             <ul class="list-disc ml-5 space-y-2">
-  <li>
-    <strong>No soft objectives to report.</strong> Recommended priority is to defuse both bombs. They are always located on the top floor of each main hospital building (unlike random placements in the 'Elephant' mission they always are in the same spots).
+                   <ul class="list-disc ml-5 space-y-2">
+    <li>
+        <strong>No soft objectives to report.</strong> Recommended priority is to defuse both bombs. They are always located on the top floor of each main hospital building (unlike random placements in the 'Elephant' mission they always are in the same spots).
 
-    <ul class="list-disc ml-5 mt-2 space-y-1">
-      <li>
-        <strong>Bomb #1:</strong><br>
-        Located in the first building, top floor, in the largest room (with bathrooms and visible wires).<br>
-        Access via either main staircase.
-      </li>
-      <li>
-        <strong>Bomb #2:</strong><br>
-        After crossing the interior bridge, enter the first double doors on the left, then turn right.<br>
-        Located in another large, top-floor room with visible wires.
-      </li>
-    </ul>
-  </li>
+        <ul class="list-disc ml-5 mt-2 space-y-1">
+            <li>
+                <strong>Bomb #1:</strong><br>
+                Located in the first building, top floor, in the largest room (with bathrooms and visible wires).<br>
+                Access via either main staircase.
+            </li>
+            <li>
+                <strong>Bomb #2:</strong><br>
+                After crossing the interior bridge, enter the first double doors on the left, then turn right.<br>
+                Located in another large, top-floor room with visible wires.
+            </li>
+        </ul>
+    </li>
 </ul>
 
                 </div>
@@ -933,7 +953,7 @@
                         <span class="image-overlay-text">Floor 2</span>
                     </div>
                 </div>
-                   <div class="image-container rounded-lg" data-image-src="m18i.jpg" data-caption="Intel/OBJs">
+                    <div class="image-container rounded-lg" data-image-src="m18i.jpg" data-caption="Intel/OBJs">
                     <img src="m18i.jpg" alt="Intel/OBJs" class="rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x450/334155/E2E8F0?text=Map+Missing'">
                     <div class="image-overlay">
                         <span class="image-overlay-text">Intel/OBJs</span>
@@ -1017,7 +1037,8 @@
         This is a guide for <strong>Ready Or Not</strong>, made openly for all players to enjoy and use as a reference.<br>
         Maps from <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3137562299" target="_blank" class="underline text-slate-300">this post</a>,
         soft objectives references from <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3113593191" target="_blank" class="underline text-slate-300">this post</a>,
-        and other screenshots from YouTube and in-game.<br>
+        and other screenshots from YouTube and in-game.<br><br><a href="mailto:rakha6727@gmail.com"  class="underline text-slate-300">Contact</a>
+<br>
     </p>
 </footer>
 
