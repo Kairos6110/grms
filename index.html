@@ -479,7 +479,7 @@
             <span class="status-time" id="pdt-time"></span>
             <span class="status-time" id="edt-time"></span>
             <span class="status-time" id="zulu-time"></span>
-            <span class="status-time" id="sgt-time"></span>
+            <span class="status-time" id="eua-time"></span>
         </div>
         <div class="status-indicators">
             </div>
@@ -515,9 +515,9 @@
                 const zuluOptions = { timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false };
                 document.getElementById('zulu-time').textContent = `ZULU ${now.toLocaleTimeString('en-US', zuluOptions).replace(':', '')}`;
 
-                // SGT (UTC+8)
-                const sgtOptions = { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', hour12: false };
-                document.getElementById('sgt-time').textContent = `SGT ${now.toLocaleTimeString('en-US', sgtOptions).replace(':', '')}`;
+                // Central European Summer Time (CEST) - UTC+2
+                const euaOptions = { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit', hour12: false };
+                document.getElementById('eua-time').textContent = `EUA ${now.toLocaleTimeString('en-US', euaOptions).replace(':', '')}`;
             }
             
             setInterval(updateTimezones, 1000);
