@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Recon AI Ops</title>
+    <script src="https://js.puter.com/v2/"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #556B2F; /* Dark Olive Green */
+            --background-color: #000000;
+            --text-color: #b2c2a3;
+            --loader-light: #1a200f;
+            --highlight-color: #8FBC8F; /* Dark Sea Green */
+            --emphasis-color: #DAF7A6; /* Light Green */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            font-family: 'Roboto Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem; /* Mobile first font size */
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .game-toggle {
+            background-color: transparent;
+            border: none;
+            color: var(--primary-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 50%;
+        }
+
+        .game-toggle.active {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            font-weight: 700;
+        }
+
+
+        #rollButton {
+            font-size: 3.5rem; /* Mobile first font size */
+            background-color: transparent;
+            border: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        #rollButton:hover:not(:disabled) {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            transform: scale(1.05);
+        }
+        
+        #rollButton:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        #rollButton:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        #output {
+            background-color: #0a0a0a;
+            border: 1px solid var(--primary-color);
+            padding: 25px;
+            text-align: left;
+            min-height: 200px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            white-space: pre-wrap; /* Use pre-wrap to respect newlines from the AI response */
+        }
+        
+        /* Simple Loader Animation */
+        .loader {
+            border: 5px solid var(--loader-light);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Media Query for larger screens */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+
+            #rollButton {
+                font-size: 5rem;
+                padding: 20px 40px;
+            }
+            
+            #output {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ghost Recon AI Ops</h1>
+        <div class="toggle-container">
+            <button id="breakpointToggle" class="game-toggle active">BREAKPOINT</button>
+            <button id="wildlandsToggle" class="game-toggle">WILDLANDS</button>
+        </div>
+        <button id="rollButton" title="Roll for a new operation">🎲</button>
+        <div id="output">Game set to BREAKPOINT (Auroa AO). Click the dice to generate a unique, random roleplay mission using in-game locations. Have fun and use your imagination and creativity to elaborate on the objectives.</div>
+    </div>
+
+    <script>
+        // --- GAME DATA ---
+        const breakpointGameData = {
+            "Golem Island Sector 1": ['Ancient Harbor','Golem Island Sattelite Dish','Golem Island Heliport','Chemical Pipeline','Chemical Refinery'],
+            "Golem Island Sector 2": ["Golem Island Testing Zone","Missile Site Ruins","Camp Phoenix","Camp Salamander","Forgotten Sanctuary"],
+            "Golem Island Sector 3": ["Red Phoenix Outpost","Lava Shield","Lavaduct","Scandium Mine","No Man's Land","Prototype Workshop"],
+            "Cape North": ["Skell Foundation Campus","Darkwood Island Port","Bat SAM Site","Construction Site","Campus Data Farm","Underwater Cable Station","Campus Relay Station","A.I Experimental Center","Sentinel Corp. Location"],
+            "Driftwood Islets": ["Driftwood Islets Testing Zone","Camp Kodiak","Ancient Sanctuary","Ancient Cemetery"],
+            "Wild Coast": ["Electric Engine Factory","Outpost Blue Tiger","Toxic Storage Depot","Anchor Point Station","Drone Station W031","Engine R&D Center","Shark Bank Station","Control Station Tiger 01","Youth Spring","Wind Farm W03","Hybrid Engine Factory","Wild Coast Freight Yard","Storage Depot","Checkpoint Tiger Foxtrot","Ancient Harbor"],
+            "Smugglers Coves": ["Ancient Harbor","Maunga Nui Port","Smuggler Coves Freight Yard","Spanish Fortress","Drone Station W011","Wind Farm W01","Foxglove Station","Auroa Materials Deposit","Oleander Station","Polymorph Modeling","Outpost Red Tiger","Checkpoint Tiger Bravo","Checkpoint Tiger Charlie","Checkpoint Tiger Delta","Composite Factory","Emergency Center"],
+            "Sinking Country": ["Ancient Harbor","Howard Airfield","Howard Port","Radar Station North","Anti-Aircraft Ruins","Harrier SAM Site","Osprey SAM Site","Sparrowhawk SAM Site","Sentinel Corp. Land Base","Equipment Depot","Ammunition Depot","Checkpoint Tiger Kilo","Checkpoint Tiger Golf","Checkpoint Tiger India","Checkpoint Tiger Juliet","Bunker Edgehod North","Bunker Edgehod South","Camp Tiger"],
+            "Whalers Bay": ["Aconite Station","Checkpoint Weasel Charlie","Checkpoint Weasel Delta","Storage Depot","Mechanical R&D Center","Fanny Bay Port","Land Chassis Factory","Whalers Bay Airfield","Wind Farm W02","Drone Station W061","Blue Cove Station","Ancient Harbor","Construction Site","Checkpoint Weasel Echo","Air Chassis Factory"],
+            "Mount Hodgson": ["Bald Peak Mine","Chem-Extraction Complex","Silent Valley Mine","Drone Station W041","Checkpoint Tiger Echo","Mining Control Center"],
+            "Fen Bog": ["BlueCorp Startup","Andersons Farm","Longford Farm","Whitestone Farm","Airship Air Station","Shipping Center","Fen Bog Port","Recycling Facility","Photovoltaic Park W01","Fen Bog Testing Zone","Control Station Tiger 03","Checkpoint Tiger Bravo","Checkpoint Tiger Hotel","Drone Station W052","Control Station Tiger 02","Drone Station W051","Hogweed Station","Ancient Village"],
+            "Good Hope Mountain": ["Red Weasel Outpost","Checkpoint Weasel India","Camp Weasel","Checkpoint Weasel Hotel","Bunker Edgehod South","Natural Hazards Control","Auroa Survival Shelter","Drone Station W111","Auroa Weather Station","Checkpoint Weasel Alpha","Checkpoint Weasel Golf"],
+            "Silent Mountain": ["Pumping Station","Auroa Data Farm","Battery Farm","Auroa Intranet Control","Submarine Cable Control","Hemlock Station","O'Connors Mine","Mathilda's Palace","Camp Black Widow","Drone Station W071"],
+            "New Argyll": ["Control Station Tiger 04","Meal Packaging Center","Fish Processing Center","Cold Storage Center","New Argyll Winery","Juice Processing Center","Brewery","Long Valley Residences","Skell Estate","Outpost Black Tiger","Ancient Fort","Ancient Sacred Site"],
+            "Infinity": ["Skell Foundation Head Office","Checkpoint Viper Golf","Control Station Viper 04","Alpha Centauri Residences","Skell Security","Checkpoint Viper Delta","Skell Technology Head Office","Polaris Residences","Checkpoint Viper Charlie","Vega Residences","Infinity Medical Center","Checkpoint Viper Echo","Canopus District","Jace Skell Conference Hall","Rigel Residences","Sirius Residences","Outpost Green Viper","Auroa Eco-Museum","Antares District","Infinity Transport Hub","Auroa Airport"],
+            "Channels": ["Oceanic Power Plant","Ancient Village","Electric Grid Control","Channels R&D Center","Channels Port","Red Shark Outpost","Navy Fuelling Station","Cold War Ruins","Main Pumping Station","Auroa Power Plant","Step Up Startup","Vulture SAM Site","Checkpoint Shark Charlie","Eagle SAM Site","Sentinel Corp. Location"],
+            "Restricted Area 01": ["Maintenance Area","Checkpoint Fox Charlie","Grandview Mansion","Construction Site","Checkpoint Fox Alpha","Control Station Viper 01","Camp Ferret","Outpost Red Ferret","Assembly Hall Omega 02","Checkpoint Weasel Bravo","Arrow Testing Zone","Checkpoint Ferret Bravo","Gold Trail Testing Zone","Gate 07","Gate 03","Nugget Cliff","Omega Operations","Checkpoint Fox Echo","Training Center","Gate 06","Gate 05","Stony Creek Village","Gate 04","Checkpoint Fox Delta","Devil Forest Gold Mine","Omega R&D Center","Assembly Hall Omega 01","Drone Station W161","Russell Gold Mine","Freeman Residences","Outpost Red Fox","Control Station Fox 01","Control Station Fox 02","Prototype Workshop","Camp Fox","Gate 02","Gate 01"],
+            "Lake Country": ["Skell Security Assembly Hall","Ancient Village","Red Viper Outpost","Prototype Workshop","Checkpoint Viper Alpha","Skell Security R&D Center","Two Lakes Residences","Skell Security Operations","Maintenance Area","Ancient Fort","Camp Viper","Drone Station W121"],
+            "New Stirling": ["Dunback Farm","Forsyth Farm","Ardmore Farm","World SeedVault","Control Station Viper 03","New Stirling Freight Yard","Glenfield Farm","Drone Station W131","Checkpoint Viper Hotel","Ettrick Residences","Checkpoint Viper India","Sutherland Vineyard","Glenorchy Orchard","Agronomy Center","Kelso Farm","Mossburn Hopfield","Drone Station W132","Kinloch Farm","Control Station Viper 02","Burnside Orchard","Blue Viper Outpost","Checkpoint Viper Foxtrot","Checkpoint Viper Bravo","Ancient Village"],
+            "Seal Islands": ["Fuel Storage","West Radar Station","Buzzard SAM Site","Anti Aircraft Battery","Emelius Port","Ammunition Storage","Owl SAM Site","Checkpoint Shark Alpha","Control Station Shark 01","Naval Base Auroa Airfield","Sentinel Corp. Naval Base","Falcon SAM Site","Shark Base","Camp Seal Cove","Abandoned Barracks","Checkpoint Shark Bravo","Condor SAM site"],
+            "Liberty": ["Jace Skell Dam","Auroa Solar Power Plant","Detention Center","Checkpoint Fox Foxtrot","John Dewey Residences","Maunga Nui Eco Park","Ayn Rand Residences","Frederic Bastiat Residences","Liberty Airport","Autumn Lake District","Liberty Port","Winter Park","Auroa Parliament","Parliament Shopping Street","Thomas Jefferson Residences","Adam Smith District","Construction Site (Liberty capital)","Construction Site (Liberty outskirts east)","Control Station Fox 01","Drone Station W191","East Park","Island District","Drone Station W192","Benjamin Franklin Residences","Liberty Transport Hub","Richard Cobden Residences","Jane Addams Residences","Control Station Fox 02","Ancient Fort","Checkpoint Fox Bravo","Auroa Hospital","Cryogenization Center","Cryohope","Eternity","Gate 06","Gate 05","Gate 07"],
+            "Windy Islands": ["Auroa Recycling Factory","Garbage Dump","Incineration Plant","Drone Station S01","Windy Islands Port"]
+        };
+
+        const wildlandsGameData = {
+            "BARVECHOS": ["Bartolome Farm","Checkpoint","Matico","La Leproserna","Barvechos Mine Quarry","Gas Station Via-B Gas","Outpost","Outpost","Outpost","Nidia Flores' Hacienda","Outpost","Checkpoint","Barvechos Base","Makeshift Runway","Outpost","Barvechos","Macoya Cooperative","Barvechos Mine","Outpost","Lieutenant House","Pucamayu","Los Fisgones","Santa Maria Farm","Carretera 3","Nueva Plata Site"],
+            "CAIMANES": ["Malpaso Farm","Gas Station","La Frontera","Riverine Checkpoint","Makeshift Hospital","Rebel Campsite","Outpost","Ingani","Camargo Campsite","Caimanes Base","San Miguel Ruins","Puerto Chico","Combat Outpost","River Market","Los Hombres Jaguares","Outpost","Gas Station Via-B Gas","Rebel Campsite","Frontera","Buchon House","Las Anguila Wreck","Child Hunt"],
+            "ESPIRITU SANTO": ["Buchone Chapel","Outpost","Outpost","Alta Garcia Mine","Alta Gracia","Pilgrim House","Shrine of Truth","Santa Muerte Sanctuary","Espiritu Santo Base","Observation Post","Pilgrim House","Experimental Farm 03","Lajosa Farm","Guari","Guari Mine","Los Humildes Peregrinos","Outpost","Huanca Farm","Observation Post","Miski Secure Barn","Miski Farm","Outpost","Shrine of Purity","Coca Warehouse","Bahia Floresta","Huayani Farm","Buchon House","Shrine of Loyalty"],
+            "FLOR DEL ORO": ["Hoalaca Ruins","Nupucu","Combat Outpost","Combat Outpost","Los Tramperos","Train Freight Yard","Combat Outpost","Rocha","Rocha Sawmill","Checkpoint","Halcone House","Armadillo Hunting Lodge","Gas Station Via-B Gas","M.O.B. Jaguar","Unidad Train Freight Yard","Checkpoint","Unidad Military Hospital","Huma Chua Sawmill","La Fortaleza","Huma Chua","Observation Post","Makeshift Runway","Chorrilos Wood Storage","Checkpoint","Checkpoint","Chorrillos","F.O.B. Serpiente","Checkpoint"],
+            "INCA CAMINA": ["Outpost","Inca Camina Base","Inca Chaca","Refugio de Pastores","Crash Site","Inca Ruins","Inca Road","Nevado Llamiru","San Martin Mountain Hut","Crash Site","Trecking Campsite","Nuevo Mondo","Cable Car Station","Lookout","Train Wrecks","La Cabaña de Pesca","Gas Station Via-B Gas","Inca Camina Freight Yard","Checkpoint","Julpe Alto","Improvised Runway","Archaeological Site","Checkpoint","Santa Catalina Chapel","Nevado Llamiru Garage","Ancient Cemetery of Miners","Sicario House","Refugio de Pastores"],
+            "ITACUA": ["Buena Vida","Cotani","Checkpoint","Yopil","Santa Maria","Culta","Hunt Lodge","Santa Catalina Chapel","Outpost","Vieja Granja","F.O.B. Armadillo","Baurecito Ruins","Campo de Futbol el Yayo","Colque Ranch","Atollo Farm","Mendez Farm","Sicario House","Pantoja","Observation Post","Outpost","Bocca Farm","Checkpoint","La Casa Del Mexicano","Itacua Base","Khochi"],
+            "KOANI": ["Narco-Slaughter","Huertas Mine","Koani Railway Camp","Santa Blanca Living District","Huertas","Truck Depot","Crashed Plane","Checkpoint","Combat Outpost","Outpost","Locotal Mine","Outpost","A Prehistoric Site","Koani Lithium Mine","Truck Stop Mamani","Gas Station Via-B Gas","Salt Hotel","Combat Outpost","El Arbol de Piedra","Outpost","Improvised Runway","Salt Miner's House","Sacani Salt Mines","Mina de Sal","Outpost","El Albergue","Sacani","Unidad Campsite","Shamanic Site","Train Cemetery","El Buen Sal","Makeshift Runway","Salt Mine Condori","Koani Air Base","Crashed Plane"],
+            "LA CRUZ": ["Hoyito","F.O.B. Vibora","Rioja Ranch","Combat Outpost","San Rodrigo Monastery","Outpost","Buchon House","Makeshift Runway","Santa Elena","La Cruz Freight Yard","Outpost","Outpost","La Hacha Buena","Rebel Campsite","Outpost","Cemetery El Bosque Quemado","Isque","La Cruz Base","Burned Forest","Luluni Ruins","Carrasco Farm","El Pequeño Lago","Outpost"],
+            "LIBERTAD": ["Forestry Site","Checkpoint","Observation Post","Pa Kollu","La Guarida de Tres Brujas","Outpost","Shrine of Wealth","Bolivar Square","Libertad","Checkpoint","F.O.B. Oso Hormiguero","Los Cuatros Hermanos","Los Viejos Pinos","Viloma Tres Gas Field","Outpost","Oso","Viloma Dos Oil Field","Viloma Uno Oil Field","Viloma Refinery","Chem Precursors Storage","Viloma","Libertad Airport","Road Market","Narco-Slaughter","Chemical Institute Via-B Gas","Libertad Base","Gas Station Via-B Gas","Outpost","Viloma Cuatro Gas Field","Combat Outpost","El Escondite del Cazador"],
+            "MALCA": ["Outpost","Banado","Santa Muerte Idol","Chacori Farm","Uma Marca","Uma Marca Mine","El Establo","Combat Outpost","Outpost","Icoya","Sicario House","El Pais de la Felicidad","Holy Malca Base","Los Crios de la Muerte","La Buena Muerte"],
+            "MEDIA LUNA": ["Combat Outpost","Rebel Campsite","Makeshift Runway","El Cañon","Combat Outpost","La Loma","F.O.B. Buitre","El Acantilado","Chipaya Farm","Checkpoint","El Puente del Diablo","Shooting Range","Combat Outpost","Checkpoint","Acevedo","Rebel Campsite","Checkpoint","Archaeology Site","Observation Post","Cardoza","M.O.B. Condor","Junin"],
+            "MOJOCOYO": ["Makeshift Runway","Cocaine Hideout","Gas Station Via-B Gas","Capachunco","Checkpoint","Prison Camp","Mojocoyo Base","Quispe Farm","La Vieja Granja","Panua Village","Private Helipad","Cocaine Hideout","Sacrificial Site","Chullpas","Rancho Sabala","Lieutenant House","Almacén de Quinua","Barrera Farm","Cocaine Hideout","Abandoned Prospecting Site","Cocaine Hideout","Outpost","Chacatal","Sicario House","La Curva de la Muerte"],
+            "MONTE PUNCU": ["Secure Barn 01","Experimental Farm 01","Outpost","Chaca Barraca","Rebel Campsite","Outpost","Rebel Campsite","A Car Wreck","Agronomic Center","La Cumbre","Rojas Farm","El Yayo Cooperative","Las Tumbas del Camino","Las Tumbas del Camino","Santa Blanca Campsite","Klaus Barbie House"],
+            "MONTUYOC": ["San Francisco Monastery","Montuyoc Training Base","Pre Columbian Necropolis","Gas Station Via-B Gas","Sicarios Boot Camp","Supply Depot","Laguna Colorada Baths","Makeshift Runway","Checkpoint","Mapooca Farm","Tupac Katari Tomb","Outpost","Vieja Granja","Araca Village","Choza Padre Mine","Hunter Shelter","Laguna Colorada","Lafuente Farm","Choza Padre","Inca Corral Farm","Condor Cairn"],
+            "OCORO": ["Outpost","Buchon House","Coca Paste Factory","Outpost","A Fisherman's House","Puerto Grande","Zona Narco Prohibida","Outpost","Combat Outpost","Zona Narco Prohibida","Zona Narco Prohibida","Puerto Nuevo","Nenma Freight Yard","Moko","Zona Narco Prohibida","Zona Narco Prohibida","Campo Ana","Outpost","Pachamama Scars","Ocoro Dispensary","Checkpoint","Gas Station Via-B Gas","Santa Rosa","El Altiplano Verde","Outpost","Gas Station Via-B Gas","Checkpoint","Outpost","Outpost","Checkpoint","Pujio","Outpost","Ocoro Base","Los Mosquitos"],
+            "PN AGUA VERDE": ["Outpost","La Torre de Arroyo Baya","Arroyo Baya","La Nube Blanca","Playa Sirena","Outpost","Secret Cocaine Hideout","Patuja Mansion","Ajuga Mansion","Kantuta Mansion","Tajibo Mansion","Playa Tajibo","Rio Del Jaguar","Siren Island","Buchon House","Riverine Checkpoint","Goyo","Agua Verde Base","Paraiso Casino","Halcone House","Outpost","Paraiso Agua Verde","Checkpoint","Alicia Town"],
+            "PUCARA": ["Horco Farm","Charamokho Village","Makeshift Runway","Riverine Docks","Outpost","Olico Super Dam","Todos Santos Town","Santa Muerte Tomb","Todos Santos Rock Quarry","Old Silver Mine","Santa Muerte Tomb","Sueño Mausoleum","Pucara Base","El Nido de Cóndores","Outpost","Santa Muerte Tomb","Pilca Village","Pilca Mine","Pucara","Outpost"],
+            "REMANZO": ["Las Mulas","Poco Irrigation Tank","Poco","F.O.B. Puma","Outpost","Remanzo Base","Test Center","Ovejas Real Slaughterhouse","Buying Office","Marcavi","Outpost","Observation Post","San Vicente","Factory Electro Energy Drink","Liquid Cocaine Lab","Gas Station"],
+            "SAN MATEO": ["Checkpoint","La Casa Abandonada","Train Station","La Carcel Del Pueblo","Abandoned House","San Mateo Base","Makeshift Runway","Flores Farm","Prison Rosario","Rebel Campsite","Gas Station Via-B Gas","Outpost","Narco-Muro","Outpost","Outpost","Sicario House","Boot Camp","Valle Verde","El Vaquero","Restaurante Humacha","Makeshift Runway","Checkpoint"],
+            "TABACAL": ["Rebel Campsite","Killasisa Farm","Makeshift Runway","Secure Barn West","La Cote Molinos","Outpost","Tabacal Base","Outpost","Buchone House","SNPC Freight Yard","El Sicario Invencible","Crashed Plane","Barrientos Coop","Gas Station Via-B Gas","Bella Selva","El Cocalero Fallecido","Secure Barn East","Jaruma Cooperative","Pilpintu Farm","Observation Post"],
+            "VILLA VERDE": ["Outpost","Lafuente Farm","Pinaicobo Farm","La Buena Pesca","Villa Verde","El Yayo Cooperative","Camacho Farm","Coca Drying Site","Outpost","Gas Station Via-B Gas","Makeshift Runway","La Gran Colina","La Marqueza","Precursor's Storage","Outpost","Pyrolusite Laboratory Dos","Outpost","Lookout","Puerto de la Coca","Villa Verde Base","Maco","Pyrolusite Laboratory Uno","Forest Parking","Palmeras","Mama Coca Shrine","Leipez Cooperative","Prospecting Black Site","Ore Storage","F.O.B. Tucan","Illegal Pyrolusite Mine","Road Market","Observation Post","Boicobu Farm","Imaybe Glade","Quya Farm","Quya Secure Barn"]
+        };
+
+        const opAdjectives = ["Silent", "Iron", "Broken", "Rolling", "Crimson", "Arctic", "Desert", "Vengeful", "Gilded", "Obsidian"];
+        const opNouns = ["Dagger", "Serpent", "Hammer", "Thunder", "Anvil", "Phoenix", "Fury", "Justice", "Shield", "Arrow"];
+
+        const rollButton = document.getElementById('rollButton');
+        const outputDiv = document.getElementById('output');
+        const breakpointToggle = document.getElementById('breakpointToggle');
+        const wildlandsToggle = document.getElementById('wildlandsToggle');
+        
+        let currentGame = 'BREAKPOINT'; // Default game
+
+        // --- Event Listeners for Toggle ---
+        breakpointToggle.addEventListener('click', () => {
+            if (currentGame !== 'BREAKPOINT') {
+                currentGame = 'BREAKPOINT';
+                breakpointToggle.classList.add('active');
+                wildlandsToggle.classList.remove('active');
+                outputDiv.innerHTML = 'Game set to BREAKPOINT (Auroa AO). Click the dice to generate a unique, random roleplay mission using in-game locations. Have fun and use your imagination and creativity to elaborate on the objectives.';
+            }
+        });
+
+        wildlandsToggle.addEventListener('click', () => {
+            if (currentGame !== 'WILDLANDS') {
+                currentGame = 'WILDLANDS';
+                wildlandsToggle.classList.add('active');
+                breakpointToggle.classList.remove('active');
+                outputDiv.innerHTML = 'Game set to WILDLANDS (Bolivia AO). Click the dice to generate a unique, random roleplay mission using in-game locations. Have fun and use your imagination and creativity to elaborate on the objectives.';
+            }
+        });
+
+        rollButton.addEventListener('click', generateOperation);
+
+        // --- Main Function to Generate Operation ---
+        async function generateOperation() {
+            // Show loader and disable the button to prevent multiple clicks
+            outputDiv.innerHTML = `<div class="loader"></div><p style="text-align: center;">Transmitting mission request to command... Awaiting OPORD.</p>`;
+            rollButton.disabled = true;
+
+            const gameData = (currentGame === 'BREAKPOINT') ? breakpointGameData : wildlandsGameData;
+            
+            // 1. Select a random province
+            const provinces = Object.keys(gameData);
+            const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];
+
+            // 2. Select up to 6 unique random locations from that province
+            const locationsPool = [...gameData[randomProvince]];
+            // Shuffle the array
+            for (let i = locationsPool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [locationsPool[i], locationsPool[j]] = [locationsPool[j], locationsPool[i]];
+            }
+            const sliceCount = Math.min(6, locationsPool.length);
+            const selectedLocations = locationsPool.slice(0, sliceCount);
+
+            // 3. Generate a random operation name
+            const randomAdj = opAdjectives[Math.floor(Math.random() * opAdjectives.length)];
+            const randomNoun = opNouns[Math.floor(Math.random() * opNouns.length)];
+            const operationName = `${randomAdj} ${randomNoun}`;
+            
+            // 4. Construct a clear and simple AI prompt
+            const locationsString = selectedLocations.join(', ');
+            const enemyForces = (currentGame === 'BREAKPOINT') ? "Sentinel Corp and the Wolves" : "the Santa Blanca cartel and corrupt Unidad forces";
+            const areaOfOperations = (currentGame === 'BREAKPOINT') ? `${randomProvince} province, Auroa` : `${randomProvince} province, Bolivia`;
+
+            const prompt = `You are now a MILSIM gaming operation writer. I will give you a template and instructions below framed by * *, please generate a realistic military operation with military lingo throughout and respect all instructions, especially the order (SITUATION AND MISSION first, CONCEPT OF OPERATION second, OBJECTIVES third). Throughout all the text refer to the team in the first person ('we') and don't split the team.
+
+OPERATION: ${operationName}
+
+SITUATION AND MISSION:
+*The Area of Operations is ${areaOfOperations}. The primary enemy forces are ${enemyForces}. The section below framed by [] contains the key locations the team needs to address (each separated by a comma). Generate a single, cohesive storyline describing the situation the team needs to handle based on the objectives you will generate for these locations. Be creative but use realistic military objectives. Ensure objectives are varied and richly detailed. Do not write separate paragraphs for each location. Make sure the section framed by [] is NOT included in your output.
+[${locationsString}]
+*
+
+CONCEPT OF OPERATION:
+*Generate a short paragraph describing how the team will leave HQ via helicopter and land in the AO, then we will move on with our objectives.*
+
+OBJECTIVES:
+*Generate a list of objectives based on the SITUATION AND MISSION paragraph you generated above. Each objective should be marked with a letter like Alpha, Bravo, Charlie, etc., and be one very brief sentence. There should be exactly ${selectedLocations.length} objectives listed, one for each location.*
+
+*Generate a list at the bottom of the operation named "HVTs possibly present in the AO:" containing a few HVT profiles to act as secondary objectives.
+`;
+
+            try {
+                // Call the AI with a reliable model and streaming enabled
+                const stream = await puter.ai.chat(prompt, {
+                    model: "gpt-5-nano", // Using a stable, powerful model for reliability
+                    stream: true
+                });
+
+                let fullResponse = "";
+                outputDiv.textContent = ""; // Clear loader and prepare for text stream
+
+                for await (const part of stream) {
+                    if (part?.text) {
+                        fullResponse += part.text;
+                        outputDiv.textContent = fullResponse; // Update the UI in real-time
+                    }
+                }
+                
+                // Check if the AI returned an empty response after the stream is done
+                if (fullResponse.trim() === "") {
+                    outputDiv.textContent = "Mission data not received. The AI returned an empty response. Please try again.";
+                } else {
+                    console.log("Mission received, OPORD complete.");
+                      console.log("Full AI Response:\n", fullResponse);
+                }
+
+            } catch (error) {
+                console.error("Error calling Puter AI:", error);
+                outputDiv.textContent = "Mission generation failed. Command offline. Please check console for error details and try again.";
+            } finally {
+                // Re-enable the button once the process is finished or an error occurs
+                rollButton.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
