@@ -35,8 +35,10 @@
             
             /* FIX 1 & 2: Use 100lvh (Large Viewport Height) for mobile reliability */
             /* Add min-height for compatibility, and use lvh as the primary height */
-            height: 100lvh;
-            min-height: 100lvh;
+/* FIX 1: Use 95% of the Large Viewport Height (lvh is the most stable mobile unit) */
+      /* This sets the *initial* container height to 95% of the stable viewport */
+      height: 95lvh; 
+      min-height: 95lvh;
             
             display: flex;
             flex-direction: column;
