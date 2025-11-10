@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TacWord v1.3</title>
+    <title>TacWord v1.5</title>
     <style>
         :root {
             --bg-color: #1a1c18;
@@ -15,8 +15,6 @@
             --success-color: #4b5320;
         }
 
-        /* Essential for using safe-area-inset-* variables */
-        /* You already had viewport-fit=cover in the meta tag, but including the rule for completeness */
         html {
             height: 100%;
         }
@@ -26,44 +24,61 @@
             touch-action: manipulation; /* Prevents double-tap zoom on mobile */
         }
 
-       body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Courier New', Courier, monospace; 
-    
-    
-    height: 80lvh; 
-    min-height: 80lvh;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    
-    /* NEW: Apply padding to respect all system system bars/notches */
-    padding: max(0px, env(safe-area-inset-top)) max(0px, env(safe-area-inset-right)) max(0px, env(safe-area-inset-bottom)) max(0px, env(safe-area-inset-left));
-}
+        /* --- REFACTORED --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            
+            /* * CHANGE 1: Use 100% height to fill the entire viewport.
+             * This replaces the problematic 80lvh.
+             */
+            height: 100%;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+            /* CHANGE 2: Removed 'overflow: hidden;'. 
+             * This is no longer needed and could hide content.
+             * The #play-area already handles its own scrolling.
+             */
+            
+            /* * KEPT: This padding is essential. It creates the "safe area" 
+             * on mobile, pushing the game container away from notches 
+             * and system navigation bars.
+             */
+            padding: max(0px, env(safe-area-inset-top)) max(0px, env(safe-area-inset-right)) max(0px, env(safe-area-inset-bottom)) max(0px, env(safe-area-inset-left));
+        }
 
-        /* Main Game Container */
-      /* Main Game Container */
-#game-container {
-    width: 100%;
-    max-width: 500px;
-    /* MODIFIED: Calculate the height based on 100% of the body's drawable area 
-       MINUS the top/bottom padding (20px each) defined below. */
-    height: calc(100% - 40px); 
-    max-height: 800px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px; /* 20px top and 20px bottom padding is inside the height calculation */
-    background: radial-gradient(circle at center, var(--panel-color) 0%, var(--bg-color) 100%);
-    border: 4px solid var(--accent-color);
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-    position: relative;
-}
+        /* --- REFACTORED --- */
+        #game-container {
+            width: 100%;
+            max-width: 500px; /* Constrains for desktop */
+            
+            /* * CHANGE 3: Use 100% height.
+             * This makes the container fill 100% of its parent (the <body>).
+             * Because the body has safe-area padding, this container will
+             * perfectly fill the available, safe screen space.
+             * The 'box-sizing: border-box' (from *) ensures its own
+             * padding is included, so no 'calc()' is needed.
+             */
+            height: 100%;
+            
+            /* Constrains for very tall screens/desktop */
+            max-height: 800px; 
+            
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background: radial-gradient(circle at center, var(--panel-color) 0%, var(--bg-color) 100%);
+            border: 4px solid var(--accent-color);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+            position: relative;
+        }
 
         /* Header & UI Elements */
         header {
@@ -190,7 +205,7 @@
 
         /* Controls */
         #controls {
-            margin-top: auto;
+            margin-top: auto; /* This pins it to the bottom */
             display: flex;
             justify-content: center;
             padding-top: 20px;
@@ -513,7 +528,7 @@
             let scrambled;
             // Keep scrambling until it doesn't match the original
             do {
-                      // Fisher-Yates shuffle
+                // Fisher-Yates shuffle
                 for (let i = arr.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [arr[i], arr[j]] = [arr[j], arr[i]];
