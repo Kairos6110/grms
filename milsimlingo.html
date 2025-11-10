@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TacWord</title>
+    <title>TacWord v1.2</title>
     <style>
         :root {
             --bg-color: #1a1c18;
@@ -26,46 +26,44 @@
             touch-action: manipulation; /* Prevents double-tap zoom on mobile */
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Courier New', Courier, monospace; /* Fallback for a rugged look */
-            
-            /* FIX 1 & 2: Use 100lvh (Large Viewport Height) for mobile reliability */
-            /* Add min-height for compatibility, and use lvh as the primary height */
-/* FIX 1: Use 95% of the Large Viewport Height (lvh is the most stable mobile unit) */
-      /* This sets the *initial* container height to 95% of the stable viewport */
-      height: 95lvh; 
-      min-height: 95lvh;
-            
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            
-            /* FIX 3: Add padding to respect the safe area insets (mobile navigation bars) */
-            /* Fallback value for safe-area-inset-bottom if not supported */
-            padding-bottom: max(0px, env(safe-area-inset-bottom)); 
-        }
+       body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Courier New', Courier, monospace; 
+    
+    /* MODIFIED: Use 100lvh for maximum stable height */
+    height: 100lvh; 
+    min-height: 100lvh;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    
+    /* NEW: Apply padding to respect all system system bars/notches */
+    padding: max(0px, env(safe-area-inset-top)) max(0px, env(safe-area-inset-right)) max(0px, env(safe-area-inset-bottom)) max(0px, env(safe-area-inset-left));
+}
 
         /* Main Game Container */
-        #game-container {
-            width: 100%;
-            max-width: 500px;
-            /* Use 100% of body's height (which is now 100lvh - safe-area) */
-            height: 100%; 
-            max-height: 800px;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            background: radial-gradient(circle at center, var(--panel-color) 0%, var(--bg-color) 100%);
-            border: 4px solid var(--accent-color);
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-            position: relative;
-        }
+      /* Main Game Container */
+#game-container {
+    width: 100%;
+    max-width: 500px;
+    /* MODIFIED: Calculate the height based on 100% of the body's drawable area 
+       MINUS the top/bottom padding (20px each) defined below. */
+    height: calc(100% - 40px); 
+    max-height: 800px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px; /* 20px top and 20px bottom padding is inside the height calculation */
+    background: radial-gradient(circle at center, var(--panel-color) 0%, var(--bg-color) 100%);
+    border: 4px solid var(--accent-color);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+    position: relative;
+}
 
         /* Header & UI Elements */
         header {
@@ -198,6 +196,7 @@
             padding-top: 20px;
             flex-shrink: 0; /* Prevent controls from shrinking */
         }
+
 
         .btn-tactical {
             background-color: var(--alert-color);
