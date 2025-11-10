@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>TacWord</title>
     <style>
         :root {
@@ -13,6 +13,12 @@
             --text-color: #c2c5bb;
             --alert-color: #2b3024;
             --success-color: #4b5320;
+        }
+
+        /* Essential for using safe-area-inset-* variables */
+        /* You already had viewport-fit=cover in the meta tag, but including the rule for completeness */
+        html {
+            height: 100%;
         }
 
         * {
@@ -26,19 +32,29 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: 'Courier New', Courier, monospace; /* Fallback for a rugged look */
-            height: 100vh;
+            
+            /* FIX 1 & 2: Use 100lvh (Large Viewport Height) for mobile reliability */
+            /* Add min-height for compatibility, and use lvh as the primary height */
+            height: 100lvh;
+            min-height: 100lvh;
+            
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            
+            /* FIX 3: Add padding to respect the safe area insets (mobile navigation bars) */
+            /* Fallback value for safe-area-inset-bottom if not supported */
+            padding-bottom: max(0px, env(safe-area-inset-bottom)); 
         }
 
         /* Main Game Container */
         #game-container {
             width: 100%;
             max-width: 500px;
-            height: 100%;
+            /* Use 100% of body's height (which is now 100lvh - safe-area) */
+            height: 100%; 
             max-height: 800px;
             display: flex;
             flex-direction: column;
@@ -66,13 +82,13 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-      .sub-header {
-      display: flex;
-      justify-content: space-between; /* Adjusted for two counters */
-      font-weight: bold;
-      font-size: 1.0rem; /* Slightly reduced font size for layout */
-      margin-top: 10px;
-    }
+        .sub-header {
+            display: flex;
+            justify-content: space-between; /* Adjusted for two counters */
+            font-weight: bold;
+            font-size: 1.0rem; /* Slightly reduced font size for layout */
+            margin-top: 10px;
+        }
         #score-board, #words-left-board { /* New selector for words left */
             color: var(--highlight-color);
             padding: 0 10px;
@@ -181,7 +197,7 @@
             flex-shrink: 0; /* Prevent controls from shrinking */
         }
 
-       .btn-tactical {
+        .btn-tactical {
             background-color: var(--alert-color);
             color: white;
             border: none;
@@ -308,10 +324,11 @@
         // --- Configuration ---
     const WORD_LIST = [
         { term: "ROGER", hint: "Confirmation that the previous message was received and understood." },
+        { term: "COPY", hint: "Confirmation that the previous message was received and understood." },
         { term: "WILCO", hint: "Confirmation that the previous message was received and will be acted upon." },
         { term: "BREACH", hint: "The action of forcibly entering a locked or barricaded room/structure." },
         { term: "BLACK", hint: "The term used to mean you're out of ammo. I am _ on ammo." },
-        { term: "WINCHESTER", hint: "The term used to mean you're out of ammo. I am _ ." },
+        { term: "WINCHESTER", hint: "The term used to mean you're out of ammo." },
         { term: "OPSEC", hint: "Measures taken to protect sensitive information." },
         { term: "CONTACT", hint: "Visual or auditory confirmation of enemy forces." },
         { term: "WHEELS UP", hint: "The aircraft has left the ground." },
@@ -319,8 +336,8 @@
         { term: "RABBIT", hint: "An enemy who is running away trying to escape." },
         { term: "SQUIRTER", hint: "An enemy who is running away trying to escape." },
         { term: "CQC", hint: "Tactics for tight spaces." },
-        { term: "BAR", hint: "A summary given *before* an event or mission." },
-        { term: "AAR", hint: "A breakdown /report conducted *after* the operation ends." },
+        { term: "BAR", hint: "A summary given before a mission." },
+        { term: "AAR", hint: "What is written after a mission." },
         { term: "BIRD", hint: "Referring to rotary-wing transportation or air support." },
         { term: "ETA", hint: "The projected time of arrival at the destination." },
         { term: "FUBAR", hint: "A state of complete and irredeemable mess." },
@@ -349,15 +366,15 @@
         { term: "HAHO", hint: "When you jump and deploy parachute almost immediatly." },
         { term: "DIAMOND", hint: "A four-person patrol formation, good for 360-degree security." },
         { term: "OVERWATCH", hint: "A dedicated position providing supporting fire or security for another moving element." },
-        { term: "SOP", hint: "Standard Operating Procedure—a set of established, mandatory rules for specific tasks." },
-        { term: "ROE", hint: "Rules of Engagement—the limitations on the use of force." },
-        { term: "SITREP", hint: "Situation Report—a formal briefing on the current status of the mission or unit." },
+        { term: "SOP", hint: "A set of established, mandatory rules for specific tasks." },
+        { term: "ROE", hint: "The limitations on the use of force." },
+        { term: "SITREP", hint: "SA formal briefing on the current status of the mission or unit." },
         { term: "CAS", hint: "Air strikes conducted close to friendly forces." },
         { term: "QRF", hint: "A unit on standby ready to respond to an emergency or aid a pinned down element." },
         { term: "DEAD MAN SWITCH", hint: "A system or action that will trigger if an operator is incapacitated (e.g., in explosives/traps)." },
         { term: "GHOSTING", hint: "Moving through an area with extreme stealth and minimal noise." },
         { term: "RECON", hint: "Gaining information by visual or other means about enemy activities or terrain." },
-        { term: "E&E", hint: "Tactics used by isolated personnel to return to friendly lines." },
+        { term: "ESCAPE EVADE", hint: "Tactics used by isolated personnel to return to friendly lines." },
         { term: "BREAK CONTACT", hint: "A command to disengage from the enemy and move quickly to a safe distance." },
         { term: "RALLY POINT", hint: "A pre-designated location where a dispersed unit can reassemble." },
         { term: "GOT YOUR SIX", hint: "A verbal confirmation that a team member is covering the person's rear arc (the 6 o'clock position)." },
@@ -366,11 +383,16 @@
         { term: "SUPPRESSIVE FIRE", hint: "Firing high volumes of rounds at a target to restrict their movement and ability to engage." },
         { term: "DANGER CLOSE", hint: "Indicates that supporting fire (like CAS) is near enough to friendly forces to risk casualties." },
         { term: "TANGO", hint: "Commonly used to refer to a hostile target." },
-        { term: "IED", hint: "Improvised Explosive Device—a homemade bomb or trap." },
+        { term: "IED", hint: "A homemade bomb or trap." },
         { term: "GRID", hint: "A set of numbers used to pinpoint a precise location on a map or GPS." },
-        { term: "STAND-TO", hint: "A period, typically dawn and dusk, where all personnel are fully alert and manned at defensive positions." },
-        { term: "RTB", hint: "Return To Base—a command or report indicating the unit is heading back to the main operating location." },
+        { term: "STAND TO", hint: "Used to order all troops to assume defensive positions equipped and alert, ready for immediate action.eaning a state of heightened readiness" },
+        { term: "RTB", hint: "A command or report indicating the unit is heading back to the main operating location." },
+        { term: "FOB", hint: "Secure military base near the front lines for launching operations and providing support." },
+        { term: "EOD", hint: "The act of disarming and disposing of explosive devices" },
         { term: "HOT LZ", hint: "A landing zone currently under effective enemy fire." },
+        { term: "CHARLIE MIKE", hint: "Term meaning to move on, continue with the mission." },
+        { term: "MEDEVAC", hint: "Evacuation of injured personnel." },
+        { term: "SSE", hint: "The act of collecting, exploiting, and analyzing intel found at a captured location" },
         { term: "COLD LZ", hint: "A landing zone confirmed to be free of enemy fire." }
     ];
 
@@ -420,7 +442,7 @@
             
             // 3. Show start instructions and initial counter setup
             els.overlayBtn.onclick = hideOverlayAndNext; // Set initial action to start game
-            showOverlay("BRIEFING:", `REASSEMBLE WORDS.<br>USE THE HINT TO IDENTIFY THE LINGO.<br>TAP LETTERS TO ORDER THEM.`, "START");
+            showOverlay("MISSION", `REASSEMBLE WORDS.<br>USE THE HINT TO IDENTIFY LINGO.<br>TAP LETTERS TO ORDER THEM.<br>REACH THE END!`, "START");
             renderCounters();
         }
 
@@ -430,8 +452,8 @@
         }
         
         function renderCounters() {
-             els.score.textContent = `SCORE: ${state.score}`;
-             els.wordsLeft.textContent = `WORDS LEFT: ${state.remainingWordIndices.length}`;
+            els.score.textContent = `SCORE: ${state.score}`;
+            els.wordsLeft.textContent = `WORDS LEFT: ${state.remainingWordIndices.length}`;
         }
 
 
@@ -440,7 +462,7 @@
                 // All words have been decoded!
                 showOverlay(
                     "MISSION ACCOMPLISHED!", 
-                    `CONGRATULATIONS, OPERATOR!<br>You have decoded all **${WORD_LIST.length}** tactical words.<br><br>**FINAL SCORE: ${state.score}**`, 
+                    `CONGRATULATIONS, OPERATOR!<br>You have decoded all ${WORD_LIST.length} tactical words.<br><br>FINAL SCORE: ${state.score}`, 
                     "RESTART PROTOCOL"
                 );
                 // Change the button action to reset and style it
@@ -490,7 +512,7 @@
             let scrambled;
             // Keep scrambling until it doesn't match the original
             do {
-                     // Fisher-Yates shuffle
+                      // Fisher-Yates shuffle
                 for (let i = arr.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -595,8 +617,8 @@
         function giveUp() {
             // Show overlay with hint
             showOverlay(
-                "MISSION FAILED", 
-                `CORRECT INTEL: <span class="fail-text">${state.currentWord}</span><br><br><span class="hint">${state.currenthint}</span><br><br>NO POINTS AWARDED`, 
+                "OBJECTIVE FAILED", 
+                `TERM: <span class="fail-text">${state.currentWord}</span><br><br><span class="hint">${state.currenthint}</span><br><br>NO POINTS AWARDED`, 
                 state.remainingWordIndices.length > 0 ? "NEXT WORD" : "FINAL REPORT"
             );
         }
