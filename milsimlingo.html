@@ -68,13 +68,18 @@
 
       .sub-header {
       display: flex;
-      justify-content: center;
+      justify-content: space-between; /* Adjusted for two counters */
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.0rem; /* Slightly reduced font size for layout */
       margin-top: 10px;
     }
-        #score-board {
+        #score-board, #words-left-board { /* New selector for words left */
             color: var(--highlight-color);
+            padding: 0 10px;
+        }
+        
+        #words-left-board {
+            color: #ccc;
         }
 
         /* Game Area */
@@ -177,19 +182,18 @@
         }
 
        .btn-tactical {
-    background-color: var(--alert-color);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-family: inherit;
-    font-size: 1rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-    cursor: pointer;
-    /* clip-path was here, now removed for straight edges */
-    transition: background-color 0.2s;
-}
+            background-color: var(--alert-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-family: inherit;
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
 
         .btn-tactical:hover {
             border-color: #2b3024;
@@ -240,6 +244,10 @@
 
         .win-text { color: var(--highlight-color); }
         .fail-text { color: #e74c3c; }
+        .reset-btn { 
+            background-color: var(--success-color) !important; 
+            border: 2px solid var(--highlight-color);
+        } 
 
         /* CRT Monitor effect overlay (subtle scanlines) */
         .scanlines {
@@ -262,14 +270,13 @@
         <header>
             <h1>TacWord</h1>
             <div class="sub-header">
-                
-                <span id="score-board">SCORE: 0</span>
+                <span id="words-left-board">WORDS LEFT: 0</span> <span id="score-board">SCORE: 0</span>
             </div>
         </header>
 
         <main id="play-area">
             <div id="hint-container">
-      
+    
                 <div id="hint-display">Loading...</div>
             </div>
 
@@ -299,87 +306,82 @@
 
     <script>
         // --- Configuration ---
- const WORD_LIST = [
-    { term: "ROGER", hint: "Confirmation that the previous message was received and understood." },
-    { term: "WILCO", hint: "Confirmation that the previous message was received and **will be complied with**." },
-    { term: "BREACH", hint: "The action of forcibly entering a locked or barricaded room/structure." },
-    { term: "BLACK", hint: "The term used to mean you're out of ammo. I am _ on ammo." },
+    const WORD_LIST = [
+        { term: "ROGER", hint: "Confirmation that the previous message was received and understood." },
+        { term: "WILCO", hint: "Confirmation that the previous message was received and will be acted upon." },
+        { term: "BREACH", hint: "The action of forcibly entering a locked or barricaded room/structure." },
+        { term: "BLACK", hint: "The term used to mean you're out of ammo. I am _ on ammo." },
         { term: "WINCHESTER", hint: "The term used to mean you're out of ammo. I am _ ." },
-    { term: "OPSEC", hint: "Measures taken to protect sensitive information." },
-    { term: "CONTACT", hint: "Visual or auditory confirmation of enemy forces." },
-    { term: "WHEELS UP", hint: "The aircraft has left the ground." },
-    { term: "WHEELS DOWN", hint: "The aircraft has touched the ground." },
-    { term: "RABBIT", hint: "An enemy who is running away trying to escape." },
-    { term: "SQUIRTER", hint: "An enemy who is running away trying to escape." },
+        { term: "OPSEC", hint: "Measures taken to protect sensitive information." },
+        { term: "CONTACT", hint: "Visual or auditory confirmation of enemy forces." },
+        { term: "WHEELS UP", hint: "The aircraft has left the ground." },
+        { term: "WHEELS DOWN", hint: "The aircraft has touched the ground." },
+        { term: "RABBIT", hint: "An enemy who is running away trying to escape." },
+        { term: "SQUIRTER", hint: "An enemy who is running away trying to escape." },
         { term: "CQC", hint: "Tactics for tight spaces." },
-    { term: "BAR", hint: "A summary given *before* an event or mission." },
-    { term: "AAR", hint: "A breakdown /report conducted *after* the operation ends." },
-    { term: "BIRD", hint: "Referring to rotary-wing transportation or air support." },
-    { term: "ETA", hint: "The projected time of arrival at the destination." },
-    { term: "FUBAR", hint: "A state of complete and irredeemable mess." },
-    { term: "INTERNAL", hint: "The action of moving into a structure." },
-    { term: "EXTERNAL", hint: "The action of leaving a structure." },
-    { term: "HOLD", hint: "Maintain the current location and defensive stance." },
-    { term: "HVT", hint: "A primary, priority target with significant importance." },
-    { term: "KLICK", hint: "A unit of distance often used in field communications (metric)." },
-    { term: "LOOK ALIVE", hint: "Check your surroundings for threats or changes." },
-    { term: "GET LOW", hint: "Drop immediately to the ground due to nearby danger." },
-    { term: "LZ", hint: "The designated spot for aircraft pickup or drop-off." },
-    { term: "NODS", hint: "Equipment used to enhance vision in low-light conditions." },
-    { term: "FRAG READY", hint: "An explosive projectile is prepared to be thrown." },
-    { term: "FRAG OUT", hint: "A thrown explosive projectile is now live." },
-    { term: "FLASH READY", hint: "A device designed to disorient is prepared to be thrown." },
-    { term: "FLASH OUT", hint: "A thrown disorientation device is now live." },
-    { term: "SMOKE UP", hint: "Warning for an incoming enemy missile lock." },
-    { term: "ALL CLEAR", hint: "Confirmation that the general area is safe and secured." },
-    { term: "CLEARED HOT", hint: "Permission to use full, unrestricted force." },
-    { term: "CEASE FIRE", hint: "Immediate command to stop all current shooting." },
-    { term: "BASE CLEAR", hint: "Confirmation that the main facility is free of threats." },
-    { term: "EXECUTE", hint: "The signal to simultaneously engage targets." },
-    { term: "COC", hint: "The established sequence of authority and reporting." },
-    { term: "HELOCAST", hint: "Inserting personnel into a water landing zone from a hovering or low-flying helicopter." },
-    { term: "HALO", hint: "When you jump and deploy parachute near the ground" },
-    { term: "HAHO", hint: "When you jump and deploy parachute almost immediatly." },
-    { term: "DIAMOND", hint: "A four-person patrol formation, good for 360-degree security." },
-    { term: "OVERWATCH", hint: "A dedicated position providing supporting fire or security for another moving element." },
-    { term: "SOP", hint: "Standard Operating Procedure—a set of established, mandatory rules for specific tasks." },
-    { term: "ROE", hint: "Rules of Engagement—the limitations on the use of force." },
-    { term: "SITREP", hint: "Situation Report—a formal briefing on the current status of the mission or unit." },
-    { term: "CAS", hint: "Air strikes conducted close to friendly forces." },
-    { term: "QRF", hint: "A unit on standby ready to respond to an emergency or aid a pinned down element." },
-    { term: "DEAD MAN SWITCH", hint: "A system or action that will trigger if an operator is incapacitated (e.g., in explosives/traps)." },
-    { term: "GHOSTING", hint: "Moving through an area with extreme stealth and minimal noise." },
-    { term: "RECON", hint: "Gaining information by visual or other means about enemy activities or terrain." },
-    { term: "E&E", hint: "Escape and Evasion—tactics used by isolated personnel to return to friendly lines." },
-    { term: "BREAK CONTACT", hint: "A command to disengage from the enemy and move quickly to a safe distance." },
-    { term: "RALLY POINT", hint: "A pre-designated location where a dispersed unit can reassemble." },
-    { term: "GOT YOUR SIX", hint: "A verbal confirmation that a team member is covering the person's rear arc (the 6 o'clock position)." },
-    { term: "BOUNDING OVERWATCH", hint: "A basic tactic where one element fires to suppress the enemy while the other element moves forward." },
+        { term: "BAR", hint: "A summary given *before* an event or mission." },
+        { term: "AAR", hint: "A breakdown /report conducted *after* the operation ends." },
+        { term: "BIRD", hint: "Referring to rotary-wing transportation or air support." },
+        { term: "ETA", hint: "The projected time of arrival at the destination." },
+        { term: "FUBAR", hint: "A state of complete and irredeemable mess." },
+        { term: "INTERNAL", hint: "The action of moving into a structure." },
+        { term: "EXTERNAL", hint: "The action of leaving a structure." },
+        { term: "HOLD", hint: "Maintain the current location and defensive stance." },
+        { term: "HVT", hint: "A primary, priority target with significant importance." },
+        { term: "KLICK", hint: "A unit of distance often used in field communications (metric)." },
+        { term: "LOOK ALIVE", hint: "Check your surroundings for threats or changes." },
+        { term: "GET LOW", hint: "Drop immediately to the ground due to nearby danger." },
+        { term: "LZ", hint: "The designated spot for aircraft pickup or drop-off." },
+        { term: "NODS", hint: "Equipment used to enhance vision in low-light conditions." },
+        { term: "FRAG READY", hint: "An explosive projectile is prepared to be thrown." },
+        { term: "FRAG OUT", hint: "A thrown explosive projectile is now live." },
+        { term: "FLASH READY", hint: "A device designed to disorient is prepared to be thrown." },
+        { term: "FLASH OUT", hint: "A thrown disorientation device is now live." },
+        { term: "SMOKE UP", hint: "Warning for an incoming enemy missile lock." },
+        { term: "ALL CLEAR", hint: "Confirmation that the general area is safe and secured." },
+        { term: "CLEARED HOT", hint: "Permission to use full, unrestricted force." },
+        { term: "CEASE FIRE", hint: "Immediate command to stop all current shooting." },
+        { term: "BASE CLEAR", hint: "Confirmation that the main facility is free of threats." },
+        { term: "EXECUTE", hint: "The signal to simultaneously engage targets." },
+        { term: "COC", hint: "The established sequence of authority and reporting." },
+        { term: "HELOCAST", hint: "Inserting personnel into a water landing zone from a hovering or low-flying helicopter." },
+        { term: "HALO", hint: "When you jump and deploy parachute near the ground" },
+        { term: "HAHO", hint: "When you jump and deploy parachute almost immediatly." },
+        { term: "DIAMOND", hint: "A four-person patrol formation, good for 360-degree security." },
+        { term: "OVERWATCH", hint: "A dedicated position providing supporting fire or security for another moving element." },
+        { term: "SOP", hint: "Standard Operating Procedure—a set of established, mandatory rules for specific tasks." },
+        { term: "ROE", hint: "Rules of Engagement—the limitations on the use of force." },
+        { term: "SITREP", hint: "Situation Report—a formal briefing on the current status of the mission or unit." },
+        { term: "CAS", hint: "Air strikes conducted close to friendly forces." },
+        { term: "QRF", hint: "A unit on standby ready to respond to an emergency or aid a pinned down element." },
+        { term: "DEAD MAN SWITCH", hint: "A system or action that will trigger if an operator is incapacitated (e.g., in explosives/traps)." },
+        { term: "GHOSTING", hint: "Moving through an area with extreme stealth and minimal noise." },
+        { term: "RECON", hint: "Gaining information by visual or other means about enemy activities or terrain." },
+        { term: "E&E", hint: "Tactics used by isolated personnel to return to friendly lines." },
+        { term: "BREAK CONTACT", hint: "A command to disengage from the enemy and move quickly to a safe distance." },
+        { term: "RALLY POINT", hint: "A pre-designated location where a dispersed unit can reassemble." },
+        { term: "GOT YOUR SIX", hint: "A verbal confirmation that a team member is covering the person's rear arc (the 6 o'clock position)." },
+        { term: "BOUNDING OVERWATCH", hint: "A basic tactic where one element fires to suppress the enemy while the other element moves forward." },
         { term: "LEAPFROG", hint: "A basic tactic where one element fires to suppress the enemy while the other element moves forward." },
-    { term: "SUPPRESSIVE FIRE", hint: "Firing high volumes of rounds at a target to restrict their movement and ability to engage." },
-    { term: "DANGER CLOSE", hint: "Indicates that supporting fire (like CAS) is near enough to friendly forces to risk casualties." },
-    { term: "TANGO", hint: "Commonly used to refer to a hostile target." },
-    { term: "IED", hint: "Improvised Explosive Device—a homemade bomb or trap." },
-    { term: "GRID", hint: "A set of numbers used to pinpoint a precise location on a map or GPS." },
-    { term: "STAND-TO", hint: "A period, typically dawn and dusk, where all personnel are fully alert and manned at defensive positions." },
-    { term: "RTB", hint: "Return To Base—a command or report indicating the unit is heading back to the main operating location." },
-    { term: "HOT LZ", hint: "A landing zone currently under effective enemy fire." },
-    { term: "COLD LZ", hint: "A landing zone confirmed to be free of enemy fire." }
-];
+        { term: "SUPPRESSIVE FIRE", hint: "Firing high volumes of rounds at a target to restrict their movement and ability to engage." },
+        { term: "DANGER CLOSE", hint: "Indicates that supporting fire (like CAS) is near enough to friendly forces to risk casualties." },
+        { term: "TANGO", hint: "Commonly used to refer to a hostile target." },
+        { term: "IED", hint: "Improvised Explosive Device—a homemade bomb or trap." },
+        { term: "GRID", hint: "A set of numbers used to pinpoint a precise location on a map or GPS." },
+        { term: "STAND-TO", hint: "A period, typically dawn and dusk, where all personnel are fully alert and manned at defensive positions." },
+        { term: "RTB", hint: "Return To Base—a command or report indicating the unit is heading back to the main operating location." },
+        { term: "HOT LZ", hint: "A landing zone currently under effective enemy fire." },
+        { term: "COLD LZ", hint: "A landing zone confirmed to be free of enemy fire." }
+    ];
 
         // --- Game State ---
-        let state = {
-            score: 0,
-            currentWord: "",
-            currenthint: "", // NEW: To store the hint/hint
-            originalPool: [], // Array of {id, char}
-            currentSlots: []  // Array of {char, originId} or null
-        };
+        let state; // State is now initialized in setupNewGame()
 
         // --- DOM Elements ---
         const els = {
             score: document.getElementById('score-board'),
-            hintDisplay: document.getElementById('hint-display'), // NEW: Hint element
+            wordsLeft: document.getElementById('words-left-board'),
+            hintDisplay: document.getElementById('hint-display'), 
             answerSlots: document.getElementById('answer-slots'),
             letterPool: document.getElementById('letter-pool'),
             giveUpBtn: document.getElementById('give-up-btn'),
@@ -391,18 +393,75 @@
 
         // --- Core Logic ---
 
-        function init() {
-            // Load initial High Score if we wanted localstorage, but keeping it simple.
-            els.giveUpBtn.addEventListener('click', giveUp);
-            els.overlayBtn.addEventListener('click', hideOverlayAndNext);
+        function setupNewGame() {
+            // **FULL STATE RESET**: Re-initialize the entire state object.
+            state = {
+                score: 0,
+                currentWord: "",
+                currenthint: "", 
+                originalPool: [], 
+                currentSlots: [], 
+                remainingWordIndices: [] 
+            };
             
-            // Show start instructions
-            showOverlay("BRIEFING:", "REASSEMBLE WORDS.<br>USE THE HINT TO IDENTIFY THE LINGO.<br>TAP LETTERS TO ORDER THEM.", "START MISSION");
+            // Populate remainingWordIndices with all available word indices
+            for (let i = 0; i < WORD_LIST.length; i++) {
+                state.remainingWordIndices.push(i);
+            }
+        }
+
+        function init() {
+            // 1. Reset state completely before doing anything else
+            setupNewGame();
+
+            // 2. Set up permanent event listeners
+            els.giveUpBtn.addEventListener('click', giveUp);
+            // The initial overlay button action is set below, and resetGame handles the final restart.
+            
+            // 3. Show start instructions and initial counter setup
+            els.overlayBtn.onclick = hideOverlayAndNext; // Set initial action to start game
+            showOverlay("BRIEFING:", `REASSEMBLE WORDS.<br>USE THE HINT TO IDENTIFY THE LINGO.<br>TAP LETTERS TO ORDER THEM.`, "START");
+            renderCounters();
+        }
+
+        function resetGame() {
+            // Used for the final "RESTART PROTOCOL" button to guarantee a fresh load.
+            window.location.reload(); 
+        }
+        
+        function renderCounters() {
+             els.score.textContent = `SCORE: ${state.score}`;
+             els.wordsLeft.textContent = `WORDS LEFT: ${state.remainingWordIndices.length}`;
+        }
+
+
+        function checkCompletion() {
+            if (state.remainingWordIndices.length === 0) {
+                // All words have been decoded!
+                showOverlay(
+                    "MISSION ACCOMPLISHED!", 
+                    `CONGRATULATIONS, OPERATOR!<br>You have decoded all **${WORD_LIST.length}** tactical words.<br><br>**FINAL SCORE: ${state.score}**`, 
+                    "RESTART PROTOCOL"
+                );
+                // Change the button action to reset and style it
+                els.overlayBtn.onclick = resetGame;
+                els.overlayBtn.classList.add('reset-btn');
+                return true;
+            }
+            return false;
         }
 
         function nextRound() {
-            // Pick a random word object
-            const wordData = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
+            if (checkCompletion()) return;
+
+            // Pick a random index from the remaining pool
+            const randomIndexInPool = Math.floor(Math.random() * state.remainingWordIndices.length);
+            const wordIndex = state.remainingWordIndices[randomIndexInPool];
+            
+            // Remove the index from the remaining pool so it isn't used again
+            state.remainingWordIndices.splice(randomIndexInPool, 1);
+
+            const wordData = WORD_LIST[wordIndex];
             state.currentWord = wordData.term.toUpperCase();
             state.currenthint = wordData.hint;
             
@@ -431,7 +490,7 @@
             let scrambled;
             // Keep scrambling until it doesn't match the original
             do {
-                 // Fisher-Yates shuffle
+                     // Fisher-Yates shuffle
                 for (let i = arr.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -445,8 +504,8 @@
         // --- Rendering & Interaction ---
 
         function render() {
-            els.score.textContent = `SCORE: ${state.score}`;
-            els.hintDisplay.textContent = state.currenthint; // NEW: Update hint text
+            renderCounters(); // Update counters on every render
+            els.hintDisplay.textContent = state.currenthint; 
 
             // 1. Render Answer Slots
             els.answerSlots.innerHTML = '';
@@ -524,21 +583,21 @@
             if (formedWord === state.currentWord) {
                 // WIN!
                 state.score += 10;
-                // NEW: Show overlay with hint
+                // Show overlay with hint
                 showOverlay(
                     "OBJECTIVE COMPLETE", 
                     `WORD DECODED: <span class="win-text">${state.currentWord}</span><br><br><span class="hint">${state.currenthint}</span><br><br>+10 POINTS`, 
-                    "NEXT WORD"
+                    state.remainingWordIndices.length > 0 ? "NEXT WORD" : "FINAL REPORT"
                 );
             }
         }
 
         function giveUp() {
-            // NEW: Show overlay with hint
+            // Show overlay with hint
             showOverlay(
                 "MISSION FAILED", 
                 `CORRECT INTEL: <span class="fail-text">${state.currentWord}</span><br><br><span class="hint">${state.currenthint}</span><br><br>NO POINTS AWARDED`, 
-                "NEXT WORD"
+                state.remainingWordIndices.length > 0 ? "NEXT WORD" : "FINAL REPORT"
             );
         }
 
@@ -548,16 +607,29 @@
             els.msgTitle.textContent = title;
             els.msgText.innerHTML = text;
             els.overlayBtn.textContent = btnText || "CONTINUE";
+            
+            // Check if the button should be the final "RESTART PROTOCOL" button
+            const isResetButton = btnText === "RESTART PROTOCOL";
+            
+            // Manage the 'reset-btn' class
+            if (isResetButton) {
+                els.overlayBtn.classList.add('reset-btn');
+                // The action is set in checkCompletion, we rely on that.
+            } else {
+                els.overlayBtn.classList.remove('reset-btn');
+                els.overlayBtn.onclick = hideOverlayAndNext; // Normal flow action
+            }
+
             els.overlay.classList.add('active');
         }
 
         function hideOverlayAndNext() {
             els.overlay.classList.remove('active');
-            // If it was the start screen, this kicks off the first real round.
             nextRound();
         }
 
         // --- Start ---
+        // Ensure the game starts and resets all state variables upon page load.
         init();
 
     </script>
