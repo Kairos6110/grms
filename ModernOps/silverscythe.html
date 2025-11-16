@@ -116,7 +116,7 @@
         }
 
         /* Image Style for actual images - MODIFIED for original aspect ratio */
-        .phase-card img {
+        .phase-card img, .parameters-section img {
             width: 100%;
             height: auto; /* Allow image to maintain its aspect ratio */
             object-fit: contain; /* Ensures the whole image is visible if parent container had fixed dimensions */
@@ -294,30 +294,41 @@
         <hr>
 
         <div class="parameters-section">
-            <h2>Survival Parameters to Apply</h2>
+            <h2>Mission Survival Rules</h2>
             
-            <h3>Loadout Conditions:</h3>
+            <h3>1. Starting Conditions</h3>
             <ul>
-                <li>Start with your operator uniform and SIDEARM ONLY.</li>
-                <li>No backpack, no primary weapon, and zero tactical items (all the “items on the wheel” such as Flash, Frag, Binos, etc.) since the team was forced to jump without full gear due to the aircraft emergency.</li>
+                <li>Begin with only a suppressed pistol.</li>
+                <li>Act as you would in a real combat survival scenario.</li>
+                <li>No backpack and no item-wheel items - 
+ reason: the team bailed out during an aircraft emergency and lost most gear.</li>
             </ul>
 
-            <h3>Field Survival:</h3>
+            <h3>2. Enemy Weapon Use</h3>
             <ul>
-                <li>Operate as you would in a real combat survival scenario. Scavenge gear from downed hostiles. "Rebuild as you go".</li>
-                <li>Roleplay picking up water, rations, navigation maps, binoculars and other field items.</li>
-                <li>Any weapons recovered from enemy forces are considered basic-line: IRON SIGHTS ONLY (remove optics to maintain scenario realism just as in real life many militia and local indig rely on unmodded weapons which is the survival setting intended here.)</li>
+                <li>Any weapon taken from enemy forces must have all attachments removed.</li>
+                <li>Iron sights only, and no suppressors on rifles.</li>
+                <li>Reason: The enemy is a low-tech local militia with only basic gear (no optics, no grenades, no suppressors, etc.).</li>
+     <img src="iron.jpg" alt="Example of a rifle with only iron sights, illustrating the rule to remove all attachments." onclick="openModal(this)">
             </ul>
+       
 
-            <h3>Communications:</h3>
+            <h3>3. Vehicles</h3>
             <ul>
-                <li>All radios lost on bailout so maintain line-of-sight communication ONLY, this makes us operate as a tight knit cohesive fireteam.</li>
+                <li>No helicopters.</li>
+                <li>Ground vehicles and watercraft are allowed.</li>
+                <li>Reason: Airspace is heavily defended — anything airborne gets shot down immediately.</li>
             </ul>
+            
+            <hr>
 
-            <h3>Mobility:</h3>
-            <ul>
-                <li>No helicopters, AO remains hot with active SAM coverage. This is a boots-on-ground survival op (the roleplay is that anything getting off the ground would be shot by AA, ground vehicules and boats are of course usable.)</li>
-            </ul>
+            <h3>Example Run</h3>
+            <ol>
+                <li>Start at the bivouac with pistols only.</li>
+                <li>Move to the South Island, ambush a two-man patrol, and recover two basic rifles (stripped bare). Take their boat and travel to the AA ruins.</li>
+                <li>At the ruins, fight using only basic rifles and free the POWs. On the base you recover binoculars and a map. From this point, you may use the tac map and binoculars, but still no item-wheel gear due to the low-tech militia scenario.</li>
+     <img src="bino.jpg" alt="Example of a rifle with only iron sights, illustrating the rule to remove all attachments." onclick="openModal(this)">
+            </ol>
         </div>
         
         <div class="intent">
@@ -337,7 +348,7 @@
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("img01");
 
-        /**
+        /
          * Opens the modal with the clicked image source.
          * @param {HTMLImageElement} img - The image element that was clicked.
          */
@@ -348,7 +359,7 @@
             document.body.style.overflow = 'hidden';
         }
 
-        /**
+        /
          * Closes the modal. Only closes if the click is on the close button or outside the image.
          * @param {Event} event - The click event.
          */
