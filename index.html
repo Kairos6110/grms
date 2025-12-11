@@ -533,53 +533,80 @@
   </div>
 
   <div class="status-bar">
-    <div id="timezone-clocks">
-      <span class="status-time" id="pdt-time"></span>
-      <span class="status-time" id="edt-time"></span>
-      <span class="status-time" id="zulu-time"></span>
-      <span class="status-time" id="eua-time"></span>
-    </div>
-    <div class="status-indicators">
-      </div>
+  <div id="timezone-clocks">
+    <span class="status-time" id="pacific-time"></span>
+    <span class="status-time" id="central-time"></span>
+    <span class="status-time" id="eastern-time"></span>
+    <span class="status-time" id="berlin-time"></span>
   </div>
+  <div class="status-indicators">
+  </div>
+</div>
 
-  <div class="footer">
+<div class="footer">
+
+</div>
+
+ <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+   const gridItems = document.querySelectorAll('.grid-item:not(#discordLink)');
+   const discordItem = document.getElementById('discordLink');
+   const iframeContainer = document.getElementById('contentIframeContainer');
+   const closeButton = document.getElementById('closeIframeButton');
+   const iframeTitle = document.getElementById('iframeTitle');
+   const iframeContentWrapper = document.getElementById('iframeContentWrapper'); // New reference for the wrapper
+
+   // Update multiple timezone clocks
+   function updateTimezones() {
+    const now = new Date();
+
+        // Base options for time formatting (24-hour clock, no seconds)
+        const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+        // Options including the short timezone abbreviation
+        const fullOptions = { ...timeOptions, timeZoneName: 'short' };
+
+
+    // Pacific Time (Los Angeles)
+    const pacificOptions = { timeZone: 'America/Los_Angeles', ...fullOptions };
+        const pacificTimeString = now.toLocaleTimeString('en-US', pacificOptions);
+    document.getElementById('pacific-time').textContent = `${pacificTimeString.replace(':', '')}`;
+
+    // Central Time (Chicago)
+        const centralOptions = { timeZone: 'America/Chicago', ...fullOptions };
+        const centralTimeString = now.toLocaleTimeString('en-US', centralOptions);
+    document.getElementById('central-time').textContent = `${centralTimeString.replace(':', '')}`;
+
+    // Eastern Time (New York)
+        const easternOptions = { timeZone: 'America/New_York', ...fullOptions };
+        const easternTimeString = now.toLocaleTimeString('en-US', easternOptions);
+    document.getElementById('eastern-time').textContent = `${easternTimeString.replace(':', '')}`;
+
+    // Europe (Berlin)
+   const berlinOptions = {
+    timeZone: 'Europe/Berlin',
+    // Specify only hour and minute to control the format
+    hour: '2-digit',
+    minute: '2-digit',
+    // Use the 24-hour clock to avoid AM/PM
+    hour12: false
+};
+ // 1. Get the time string (e.g., "15:01")
+const berlinTimeString = now.toLocaleTimeString('en-US', berlinOptions);
+
+// 2. Remove the colon and append "EUR"
+const formattedTimeString = berlinTimeString.replace(':', '') + ' EUR';
+
+// 3. Update the DOM
+document.getElementById('berlin-time').textContent = formattedTimeString;
     
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const gridItems = document.querySelectorAll('.grid-item:not(#discordLink)');
-      const discordItem = document.getElementById('discordLink');
-      const iframeContainer = document.getElementById('contentIframeContainer');
-      const closeButton = document.getElementById('closeIframeButton');
-      const iframeTitle = document.getElementById('iframeTitle');
-      const iframeContentWrapper = document.getElementById('iframeContentWrapper'); // New reference for the wrapper
+        // Run every minute
+        setTimeout(updateTimezones, 60000); 
+   }
 
-      // Update multiple timezone clocks
-      function updateTimezones() {
-        const now = new Date();
-
-        // PDT (UTC-7)
-        const pdtOptions = { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', hour12: false };
-        document.getElementById('pdt-time').textContent = `PDT ${now.toLocaleTimeString('en-US', pdtOptions).replace(':', '')}`;
-
-        // EDT (UTC-4)
-        const edtOptions = { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false };
-        document.getElementById('edt-time').textContent = `EDT ${now.toLocaleTimeString('en-US', edtOptions).replace(':', '')}`;
-
-        // Zulu (UTC+0)
-        const zuluOptions = { timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false };
-        document.getElementById('zulu-time').textContent = `ZULU ${now.toLocaleTimeString('en-US', zuluOptions).replace(':', '')}`;
-
-        // Central European Summer Time (CEST) - UTC+2
-        const euaOptions = { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit', hour12: false };
-        document.getElementById('eua-time').textContent = `EUA ${now.toLocaleTimeString('en-US', euaOptions).replace(':', '')}`;
-      }
-      
-      setInterval(updateTimezones, 1000);
-      updateTimezones(); // Initial call to display time immediately
+      // Initial call to display time immediately
+      updateTimezones();
 
       // Initialize particles.js
       particlesJS('particles-js', {
