@@ -615,7 +615,7 @@
 const berlinTimeString = now.toLocaleTimeString('en-US', berlinOptions);
 
 // 2. Remove the colon and append "EUR"
-const formattedTimeString = berlinTimeString.replace(':', '') + ' EUR';
+const formattedTimeString = berlinTimeString.replace(':', '') + ' CET';
 
 // 3. Update the DOM
 document.getElementById('berlin-time').textContent = formattedTimeString;
@@ -831,4 +831,5 @@ document.getElementById('berlin-time').textContent = formattedTimeString;
     });
   </script>
 </body>
+
 </html>
