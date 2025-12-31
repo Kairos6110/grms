@@ -78,20 +78,22 @@ img {
 <p style="font-family:arial;color:white"><u>Instructions (click again to close):</u></p>
 <p style="font-family:arial;color:white">
 
-1. Click on the underlined word "provinces" to view the locations of all regions on the map. This is helpful if you wish to select two provinces that are in close proximity.
+1. Click the underlined word <u>provinces</u> to view all regions on the map and help choose nearby provinces.
 <br><br>
-2. Choose one or more provinces, specify the number of locations/objectives you want to randomize, and then click the "Generate random operation" button.
+2. Select one or more provinces, set the number of locations/objectives to randomize, then click <b>Generate random operation</b>.
 <br><br>
-3. A random operation will be generated below. For each province selected you will find a map displaying all the main locations. This allows you to quickly visualize the placement of your random locations and also provides context about what surrounds them, should you want to add more afterwards.
+3. The generated operation appears below with maps showing key locations for each selected province.
 <br><br>
-4. Finally, you can click the "Copy AI prompt" button to copy to your clipboard a customized prompt that includes the randomized objectives. Paste the prompt into your personal <a href="https://gemini.google.com" target="_blank">AI</a>, and it will generate a fairly comprehensive operation template to use as a starting point. Fine tune the prompt as needed and regenerate in AI a few times until you get good results/inspiration. This is very useful for sparking creativity.
+4. Click <b>Copy AI prompt</b> to copy a customized prompt. Paste it into your preferred <a href="https://gemini.google.com" target="_blank">AI</a> to generate an operation template. Refine and regenerate as needed for inspiration.
 <br><br>
-
-Enjoy! 
-
+5. You can also click <b>Generate OP</b> to create a full OPORD directly using Gemini via Puter.
 <br><br>
-Please feel free to share this tool.<br>I developed it with the intention of benefiting the entire Ghost Recon Breakpoint community.<br><br>-Kairos
+Feel free to share this tool.<br>
+I built it for all the Ghost Recon Breakpoint community.
+<br><br>
+-Kairos
 </p>
+
   </div>
 </div>
 
@@ -437,26 +439,54 @@ OBJECTIVES :
     GenAIButton.style.color = "white";
     GenAIButton.style.border = "1px solid gray";
     GenAIButton.style.marginTop = "10px"; // Add space between buttons
-    GenAIButton.textContent = "Generate Op (AI) 🤖";
+    GenAIButton.textContent = "Generate Op (AI) ✨";
 
-    // 4. CREATE OUTPUT BOX (Hidden by default)
+   // 4. CREATE OUTPUT BOX (Hidden by default)
     var AIOutputBox = document.createElement("div");
     AIOutputBox.setAttribute('style', 'font-family: courier new, monospace; white-space: pre-wrap; text-align: left; background: rgba(0,0,0,0.8); color: #cccccc; padding: 15px; border: 1px solid gray; margin-top: 15px; width: 90%; display: none;');
+
+    // 4.5 CREATE "COPY OUTPUT" BUTTON (Hidden by default)
+    var CopyOutputButton = document.createElement("button");
+    CopyOutputButton.style.width = "285px";
+    CopyOutputButton.style.height = "30px";
+    CopyOutputButton.style.fontSize = "100%";
+    CopyOutputButton.style.background = "#222"; // Slightly lighter black to distinguish
+    CopyOutputButton.style.color = "white";
+    CopyOutputButton.style.border = "1px solid gray";
+    CopyOutputButton.style.marginTop = "5px";
+    CopyOutputButton.style.cursor = "pointer";
+    CopyOutputButton.style.display = "none"; // Hidden until content is generated
+    CopyOutputButton.textContent = "Copy Generated Op 📄";
+
+    // Listener for Copy Output
+    CopyOutputButton.addEventListener("click", function() {
+        navigator.clipboard.writeText(AIOutputBox.textContent)
+            .then(() => {
+                alert('Full Operation copied to clipboard!');
+            })
+            .catch(err => {
+                console.error('Error copying text:', err);
+            });
+    });
     
     // Listener for Generate
     GenAIButton.addEventListener("click", async function() {
-        // Show the box and set loading state
+        // Show the box, hide copy button while loading
         AIOutputBox.style.display = "block";
+        CopyOutputButton.style.display = "none";
         AIOutputBox.innerHTML = "<i>Establishing Uplink... Interpreting Mission Data...<br>Please Wait...</i>";
 
         try {
             // Send to Puter.js
             const response = await puter.ai.chat(finalPrompt, {
-                model: "google/gemini-2.5-flash" // Or use "google/gemini-flash"
+                model: "google/gemini-2.5-flash" 
             });
 
             // Display Result
             AIOutputBox.textContent = response.message.content;
+            
+            // Show the Copy Output button now that text exists
+            CopyOutputButton.style.display = "block";
 
         } catch (err) {
             AIOutputBox.innerHTML = "<span style='color:red'>Uplink Failed. Error: " + err.message + "</span>";
@@ -466,9 +496,10 @@ OBJECTIVES :
 
     // 5. APPEND EVERYTHING TO THE BOX
     opordBoxT.appendChild(AIButton);
-    opordBoxT.appendChild(document.createElement("br")); // New break
+    opordBoxT.appendChild(document.createElement("br")); 
     opordBoxT.appendChild(GenAIButton);
     opordBoxT.appendChild(AIOutputBox);
+    opordBoxT.appendChild(CopyOutputButton); // <--- Add the new button to the DOM
 
     // --- END OF NEW AI SECTION ---
  var br = document.createElement("br")
