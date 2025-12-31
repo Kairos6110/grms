@@ -4,6 +4,7 @@
 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://js.puter.com/v2/"></script>
 <style>
 img {
     max-width: 100%;
@@ -118,9 +119,10 @@ img {
 <br><br>
 3. A random operation will be generated below. Maps will also be shown to help you locate objectives and explore other locations around.
 <br><br>
-4. Click the "Copy ChatGPT prompt" button to copy a custom prompt with the randomized objectives to your clipboard. Paste this prompt into your preferred AI tool (like ChatGPT, Grok, Gemini, Copilot, Claude, etc.) to generate a comprehensive operation template. Fine-tune the prompt as needed and regenerate it a few times until you're satisfied with the results.
+4. Click the "Copy AI prompt 📋" button to copy a custom prompt with the randomized objectives to your clipboard. Paste this prompt into your preferred AI tool (like ChatGPT, Grok, Gemini, Copilot, Claude, etc.) to generate a comprehensive operation template. Fine-tune the prompt as needed and regenerate it a few times until you're satisfied with the results.
 <br><br>
-
+5. Click the "Generate Op (AI) ✨" button to generate the op directly here using Gemini and Puter.
+<br><br>
 The resulting output is the unique, custom operation you can play in the game using a bit of roleplay. Enjoy! 
 
 <br><br>
@@ -1082,25 +1084,11 @@ const codenames = ['WIDOW','SPIDER','MAMBA','ADDER','APOLLO','AVALANCHE','BADGER
 		// Get first element from shuffled codenamesarray
 		codename = shuffledCodenames.slice(0, 1);
 		
-		
-					
-		 // Create a CHATGPT button element
-  var ChatGPTButton = document.createElement("button");
-    ChatGPTButton.style.width = "300px";
-	    ChatGPTButton.style.height = "40px";
-  ChatGPTButton.style.fontSize = "110%"; 
-  ChatGPTButton.style.background = "black"; 
-  ChatGPTButton.style.color = "white"; 
-  ChatGPTButton.style.border = "1px solid gray"; 
+		// ... existing code ...
+codename = shuffledCodenames.slice(0, 1);
 
-  // Set the text content of the ChatGPTButton
-  ChatGPTButton.textContent = "Copy ChatGPT prompt 📋";
-
-  // Add an event listener to the ChatGPTButton
-  ChatGPTButton.addEventListener("click", function() {
-
-// Custom Prompt
-  var promptText = `You are now a MILSIM gaming operation writer. Enemy faction is 'Santa Blanca Cartel'. All locations named 'FOB' or similar are enemy, not friendly. I will give you a template and instructions below framed by * *, please generate a realistic military operation with military lingo throughout and respect all instructions, especially the order (SITUATION AND MISSION first, CONCEPT OF OPERATION second, OBJECTIVES third). Throughout all the text refer to the team in the first person ('we') and don't split the team.
+// --- MOVED PROMPT GENERATION HERE ---
+var promptText = `You are now a MILSIM gaming operation writer. Enemy faction is 'Santa Blanca Cartel'. All locations named 'FOB' or similar are enemy, not friendly. I will give you a template and instructions below framed by * *, please generate a realistic military operation with military lingo throughout and respect all instructions, especially the order (SITUATION AND MISSION first, CONCEPT OF OPERATION second, OBJECTIVES third). Throughout all the text refer to the team in the first person ('we') and don't split the team.
 OPERATION: opCodename
 
 SITUATION AND MISSION:
@@ -1117,13 +1105,27 @@ OBJECTIVES :
 *Generate a list at the bottom of the operation named "---HVT profiles (integrate in the op as needed)---" containing a few HVT profiles to act as secondary objectives. Dont use a russian name for the HVT, only spanish male names.
 `;
 
+// Replace placeholders immediately
+promptText = promptText.replace("opCodename", codename);
+promptText = promptText.replace("randomSelection", randomSelection);
+// ------------------------------------
+					
+		 // Create a CHATGPT button element
+  var ChatGPTButton = document.createElement("button");
+    ChatGPTButton.style.width = "300px";
+	    ChatGPTButton.style.height = "40px";
+  ChatGPTButton.style.fontSize = "110%"; 
+  ChatGPTButton.style.background = "black"; 
+  ChatGPTButton.style.color = "white"; 
+  ChatGPTButton.style.border = "1px solid gray"; 
 
+  // Set the text content of the ChatGPTButton
+  ChatGPTButton.textContent = "Copy AI prompt 📋";
 
-//include the actual codename and objectives rolled in the prompt to copy to clipboard
-var promptText = promptText.replace("opCodename", codename);
-var promptText = promptText.replace("randomSelection", randomSelection);
-
-
+  // Add an event listener to the ChatGPTButton
+ // Add an event listener to the ChatGPTButton
+  ChatGPTButton.addEventListener("click", function() {
+    // Just use the promptText variable defined above
     navigator.clipboard.writeText(promptText)
       .then(() => {
         alert('Custom prompt has been copied to the clipboard. Now go to your ChatGPT, paste the prompt, fine tune as needed and enjoy the magic! It is recommended you regenerate in ChatGPT a few times until you get a good result.');
@@ -1134,6 +1136,78 @@ var promptText = promptText.replace("randomSelection", randomSelection);
   });
   
 opordBoxT.appendChild(ChatGPTButton);
+// --- START OF NEW AI SECTION ---
+
+    // 1. CREATE "GENERATE OP (AI)" BUTTON
+    var GenAIButton = document.createElement("button");
+    GenAIButton.style.width = "300px";
+    GenAIButton.style.height = "40px";
+    GenAIButton.style.fontSize = "110%";
+    GenAIButton.style.background = "black";
+    GenAIButton.style.color = "white";
+    GenAIButton.style.border = "1px solid gray";
+    GenAIButton.style.marginTop = "10px"; 
+    GenAIButton.textContent = "Generate Op (AI) ✨";
+
+    // 2. CREATE OUTPUT BOX (Hidden by default)
+    var AIOutputBox = document.createElement("div");
+    AIOutputBox.setAttribute('style', 'font-family: courier new, monospace; white-space: pre-wrap; text-align: left; background: rgba(0,0,0,0.8); color: #cccccc; padding: 15px; border: 1px solid gray; margin-top: 15px; width: 90%; display: none;');
+
+    // 3. CREATE "COPY OUTPUT" BUTTON (Hidden by default)
+    var CopyOutputButton = document.createElement("button");
+    CopyOutputButton.style.width = "300px";
+    CopyOutputButton.style.height = "30px";
+    CopyOutputButton.style.fontSize = "100%";
+    CopyOutputButton.style.background = "#222"; 
+    CopyOutputButton.style.color = "white";
+    CopyOutputButton.style.border = "1px solid gray";
+    CopyOutputButton.style.marginTop = "5px";
+    CopyOutputButton.style.cursor = "pointer";
+    CopyOutputButton.style.display = "none"; 
+    CopyOutputButton.textContent = "Copy Generated Op 📄";
+
+    // Listener for Copy Output
+    CopyOutputButton.addEventListener("click", function() {
+        navigator.clipboard.writeText(AIOutputBox.textContent)
+            .then(() => {
+                alert('Full Operation copied to clipboard!');
+            })
+            .catch(err => {
+                console.error('Error copying text:', err);
+            });
+    });
+    
+    // Listener for Generate
+    GenAIButton.addEventListener("click", async function() {
+        // Show the box, hide copy button while loading
+        AIOutputBox.style.display = "block";
+        CopyOutputButton.style.display = "none";
+        AIOutputBox.innerHTML = "<i>Establishing Uplink... Interpreting Mission Data...<br>Please Wait...</i>";
+
+        try {
+            // Send to Puter.js using the 'promptText' variable defined in your existing code
+            const response = await puter.ai.chat(promptText, {
+                model: "google/gemini-2.5-flash" 
+            });
+
+            // Display Result
+            AIOutputBox.textContent = response.message.content;
+            
+            // Show the Copy Output button now that text exists
+            CopyOutputButton.style.display = "block";
+
+        } catch (err) {
+            AIOutputBox.innerHTML = "<span style='color:red'>Uplink Failed. Error: " + err.message + "</span>";
+        }
+    });
+
+    // 4. APPEND EVERYTHING TO THE BOX
+    opordBoxT.appendChild(document.createElement("br")); 
+    opordBoxT.appendChild(GenAIButton);
+    opordBoxT.appendChild(AIOutputBox);
+    opordBoxT.appendChild(CopyOutputButton);
+
+    // --- END OF NEW AI SECTION ---
  var br = document.createElement("br")
 opordBoxT.appendChild(br);
  var br = document.createElement("br")
@@ -1161,8 +1235,7 @@ openChatGPTButton.addEventListener("click", function() {
 });
 
 
-// Append the new button to the DOM (like your original button)
-opordBoxT.appendChild(openChatGPTButton);
+
 
 // Add line breaks to match the spacing of your original code
 var br1 = document.createElement("br");
