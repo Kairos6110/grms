@@ -4,6 +4,7 @@
 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://js.puter.com/v2/"></script>
 <style>
 img {
     max-width: 100%;
@@ -380,24 +381,10 @@ const codenames = ['WIDOW','SPIDER','MAMBA','ADDER','APOLLO','AVALANCHE','BADGER
 		codename = shuffledCodenames.slice(0, 1);
 		
 		
-					
-		 // Create a AI button element
-  var AIButton = document.createElement("button");
-    AIButton.style.width = "285px";
-	    AIButton.style.height = "40px";
-  AIButton.style.fontSize = "110%"; 
-  AIButton.style.background = "black"; 
-  AIButton.style.color = "white"; 
-  AIButton.style.border = "1px solid gray"; 
+		// --- START OF NEW AI SECTION ---
 
-  // Set the text content of the AIButton
-  AIButton.textContent = "Copy AI prompt 📋";
-
-  // Add an event listener to the AIButton
-  AIButton.addEventListener("click", function() {
-
-// Custom Prompt
-  var promptText = `You are now a MILSIM gaming operation writer. I will give you a template and instructions below framed by * *, please generate a realistic military operation with military lingo throughout and respect all instructions, especially the order (SITUATION AND MISSION first, CONCEPT OF OPERATION second, OBJECTIVES third). Throughout all the text refer to the team in the first person ('we') and don't split the team.
+    // 1. PREPARE THE PROMPT (Moved up so both buttons can use it)
+    var promptTemplate = `You are now a MILSIM gaming operation writer. I will give you a template and instructions below framed by * *, please generate a realistic military operation with military lingo throughout and respect all instructions, especially the order (SITUATION AND MISSION first, CONCEPT OF OPERATION second, OBJECTIVES third). Throughout all the text refer to the team in the first person ('we') and don't split the team.
 OPERATION: opCodename
 
 SITUATION AND MISSION:
@@ -414,23 +401,76 @@ OBJECTIVES :
 *Generate a list at the bottom of the operation named "---HVT profiles (integrate in the op as needed)---" containing a few HVT profiles to act as secondary objectives. Dont use a russian name for the HVT, only english male names.
 `;
 
+    // Inject the specific variables for this roll
+    var finalPrompt = promptTemplate.replace("opCodename", codename);
+    finalPrompt = finalPrompt.replace("randomSelection", randomSelection);
 
 
-//include the actual codename and objectives rolled in the prompt to copy to clipboard
-var promptText = promptText.replace("opCodename", codename);
-var promptText = promptText.replace("randomSelection", randomSelection);
+    // 2. CREATE "COPY PROMPT" BUTTON
+    var AIButton = document.createElement("button");
+    AIButton.style.width = "285px";
+    AIButton.style.height = "40px";
+    AIButton.style.fontSize = "110%";
+    AIButton.style.background = "black";
+    AIButton.style.color = "white";
+    AIButton.style.border = "1px solid gray";
+    AIButton.textContent = "Copy AI prompt 📋";
+
+    // Listener for Copy
+    AIButton.addEventListener("click", function() {
+        navigator.clipboard.writeText(finalPrompt)
+            .then(() => {
+                alert('Custom prompt copied to clipboard!');
+            })
+            .catch(err => {
+                console.error('Error copying prompt:', err);
+            });
+    });
 
 
-    navigator.clipboard.writeText(promptText)
-      .then(() => {
-        alert('Custom prompt has been copied to the clipboard. Now go to your AI of choice (GEMINI recommended, but try any), paste the prompt, fine tune as needed and enjoy the magic! It is recommended you regenerate in AI a few times until you get a good result.');
-      })
-      .catch(err => {
-        console.error('Error copying prompt:', err);
-      });
-  });
-  
-opordBoxT.appendChild(AIButton);
+    // 3. CREATE "GENERATE WITH AI" BUTTON
+    var GenAIButton = document.createElement("button");
+    GenAIButton.style.width = "285px";
+    GenAIButton.style.height = "40px";
+    GenAIButton.style.fontSize = "110%";
+    GenAIButton.style.background = "black";
+    GenAIButton.style.color = "white";
+    GenAIButton.style.border = "1px solid gray";
+    GenAIButton.style.marginTop = "10px"; // Add space between buttons
+    GenAIButton.textContent = "Generate Op (AI) 🤖";
+
+    // 4. CREATE OUTPUT BOX (Hidden by default)
+    var AIOutputBox = document.createElement("div");
+    AIOutputBox.setAttribute('style', 'font-family: courier new, monospace; white-space: pre-wrap; text-align: left; background: rgba(0,0,0,0.8); color: #cccccc; padding: 15px; border: 1px solid gray; margin-top: 15px; width: 90%; display: none;');
+    
+    // Listener for Generate
+    GenAIButton.addEventListener("click", async function() {
+        // Show the box and set loading state
+        AIOutputBox.style.display = "block";
+        AIOutputBox.innerHTML = "<i>Establishing Uplink... Interpreting Mission Data...<br>Please Wait...</i>";
+
+        try {
+            // Send to Puter.js
+            const response = await puter.ai.chat(finalPrompt, {
+                model: "google/gemini-2.5-flash" // Or use "google/gemini-flash"
+            });
+
+            // Display Result
+            AIOutputBox.textContent = response.message.content;
+
+        } catch (err) {
+            AIOutputBox.innerHTML = "<span style='color:red'>Uplink Failed. Error: " + err.message + "</span>";
+        }
+    });
+
+
+    // 5. APPEND EVERYTHING TO THE BOX
+    opordBoxT.appendChild(AIButton);
+    opordBoxT.appendChild(document.createElement("br")); // New break
+    opordBoxT.appendChild(GenAIButton);
+    opordBoxT.appendChild(AIOutputBox);
+
+    // --- END OF NEW AI SECTION ---
  var br = document.createElement("br")
 opordBoxT.appendChild(br);
  var br = document.createElement("br")
